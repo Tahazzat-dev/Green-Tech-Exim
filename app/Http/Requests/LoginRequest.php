@@ -22,8 +22,10 @@ class LoginRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
-        ];
+         return [
+        'phone' => ['required'],
+        'pin' => ['required'],
+        'device_id' => ['required']
+    ];
     }
 }
