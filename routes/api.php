@@ -14,7 +14,7 @@ Route::get('/', function () {
 });
 
 Route::get('/health', function () {
-    return response()->json(['message' => 'API is working smoothly']);
+    return response()->json(["success" => true]);
 });
 
 // authentication
@@ -27,6 +27,7 @@ Route::post(
     '/login',
     [AuthController::class,'login']
 );
+
 
 Route::middleware('auth:sanctum')
     ->group(function () {

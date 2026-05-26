@@ -1,10 +1,14 @@
 <?php
 
 namespace App\Http\Controllers\Api;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -102,10 +106,18 @@ public function login(LoginRequest $request)
         ->createToken('mobile')
         ->plainTextToken;
 
-    return response()->json([
-        'token' => $token,
-        'user' => $user
-    ]);
+return response()->json([
+    'token' => $token,
+    'user' => [
+        'id' => $user->id,
+        'name' => $user->name,
+        'phone' => $user->phone,
+        'shop_name' => $user->shop_name,
+        'city_area' => $user->city_area,
+        'photo' => $user->photo,
+        'status' => $user->status,
+    ]
+]);
 }
 
 public function logout(Request $request)
