@@ -21,7 +21,7 @@
     --fs-xxs: clamp(10px, 1vw, 14px);
     --fs-xs: clamp(12px, 1.2vw, 15px);
     --fs-sm: clamp(14px, 1.2vw, 16px);
-    --fs-base: clamp(16px, 1.4vw, 18px);
+    --fs-base: clamp(16px, 2vw, 18px);
     --fs-md: clamp(18px, 1.6vw, 20px);
     --fs-lg: clamp(20px, 1.8vw, 22px);
     --fs-xl: clamp(22px, 2.2vw, 25px);
@@ -116,46 +116,55 @@ DARK THEME OVERRIDES
     h1 {
         font-size: var(--fs-xl);
         line-height: 120%;
-        color: var(--color-text-heading);
+        color: var(--color-text-body);
     }
 
     h2 {
         font-size: var(--fs-xl);
         line-height: 120%;
-        color: var(--color-text-heading);
+        color: var(--color-text-body);
     }
 
     h3 {
         font-size: var(--fs-xl);
         line-height: 120%;
-        color: var(--color-text-heading);
+        color: var(--color-text-body);
     }
 
     h4 {
         font-size: var(--fs-lg);
         line-height: 120%;
-        color: var(--color-text-heading);
+        color: var(--color-text-body);
     }
 
     h5 {
         font-size: var(--fs-md);
         line-height: 120%;
-        color: var(--color-text-heading);
+        color: var(--color-text-body);
     }
 
     h6 {
         font-size: var(--fs-base);
         line-height: 120%;
+        color: var(--color-text-body);
     }
 
     p {
-        font-size: var(--fs-sm);
+        font-size: var(--fs-base);
         line-height: 150%;
+        color: var(--color-text-body);
+    }
+
+    input,
+    textarea,
+    select {
+        font-size: var(--fs-base);
     }
 
     body {
         font-family: var(--font-sans);
         background-color: var(--color-bg-body);
+        color: var(--color-text-body);
         height: 100vh;
         height: 100dvh;
         color: var(--color-text-body);

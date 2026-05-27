@@ -1,18 +1,18 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Web\AuthController;
 use App\Http\Controllers\Web\AdminController;
+use App\Http\Controllers\Web\AuthController;
+use Illuminate\Support\Facades\Route;
 
 // Guest Routes (Admin Login View & Processing)
 Route::middleware('guest')->group(function () {
     Route::get('/', [AuthController::class, 'showLogin'])->name('login');
-    // Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
+    Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
 });
 
 // Protected Admin Dashboard Routes
 // Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
-    
+
 //     // Auth Management
 //     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 

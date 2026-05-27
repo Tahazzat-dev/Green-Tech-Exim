@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -26,7 +26,7 @@ class AuthController extends Controller
         $user = User::where('phone', $request->phone)->first();
 
         // Ensure user exists, is an Admin, and matches PIN hashes
-        if (!$user || $user->role !== 'admin' || !Hash::check($request->pin, $user->pin)) {
+        if (! $user || $user->role !== 'admin' || ! Hash::check($request->pin, $user->pin)) {
             return back()->withErrors(['phone' => 'Invalid administrative credentials.'])->withInput();
         }
 

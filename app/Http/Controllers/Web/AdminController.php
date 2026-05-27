@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use App\Models\Product;
 use App\Models\Category;
+use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -35,7 +35,7 @@ class AdminController extends Controller
     public function updateStatus(Request $request, User $user)
     {
         $request->validate([
-            'status' => 'required|in:pending,approved,disabled'
+            'status' => 'required|in:pending,approved,disabled',
         ]);
 
         $user->update(['status' => $request->status]);
@@ -48,9 +48,9 @@ class AdminController extends Controller
         // Wipe old device fingerprint so mobile app can claim new ID next login
         $user->update([
             'device_id' => null,
-            'status' => 'pending' // Re-route to pending verification block state 
+            'status' => 'pending', // Re-route to pending verification block state
         ]);
 
-        return back()->with('success', "Device lock released. User account set back to pending for new registration verification.");
+        return back()->with('success', 'Device lock released. User account set back to pending for new registration verification.');
     }
 }

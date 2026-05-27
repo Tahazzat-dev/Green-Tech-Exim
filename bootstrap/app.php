@@ -1,11 +1,12 @@
 <?php
 
+use App\Http\Middleware\AdminMiddleware;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Auth\AuthenticationException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
@@ -18,24 +19,24 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
-        'admin' =>
-            \App\Http\Middleware\AdminMiddleware::class,
-    ]);
+            'admin' => AdminMiddleware::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        
+
         // 1. Force JSON execution for all routes prefixed with 'api/*'
         $exceptions->shouldRenderJsonWhen(function (Request $request, Throwable $e) {
             if ($request->is('api/*')) {
                 return true;
             }
+
             return $request->expectsJson();
         });
 
         // 2. Map relative error context for API requests
         $exceptions->render(function (Throwable $e, Request $request) {
             if ($request->is('api/*')) {
-                
+
                 // Case A: Validation fails (e.g., missed fields, wrong formats)
                 if ($e instanceof ValidationException) {
                     return response()->json([
@@ -51,7 +52,7 @@ return Application::configure(basePath: dirname(__DIR__))
                     return response()->json([
                         'status' => 'error',
                         'type' => 'not_found',
-                        'message' => 'The requested endpoint or resource could not be found.'
+                        'message' => 'The requested endpoint or resource could not be found.',
                     ], 404);
                 }
 
@@ -60,7 +61,7 @@ return Application::configure(basePath: dirname(__DIR__))
                     return response()->json([
                         'status' => 'error',
                         'type' => 'unauthenticated',
-                        'message' => 'Unauthenticated. Missing or invalid bearer token.'
+                        'message' => 'Unauthenticated. Missing or invalid bearer token.',
                     ], 401);
                 }
 

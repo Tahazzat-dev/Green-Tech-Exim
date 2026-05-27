@@ -1,6 +1,6 @@
-<?php 
-use App\Http\Controllers\Api\AuthController;
+<?php
 
+use App\Http\Controllers\Api\AuthController;
 
 // public routes
 
@@ -9,31 +9,30 @@ Route::get('/', function () {
     return response()->json([
         'message' => 'Welcome to the Application API Engine',
         'version' => '1.0.0',
-        'status' => 'active'
+        'status' => 'active',
     ]);
 });
 
 Route::get('/health', function () {
-    return response()->json(["success" => true]);
+    return response()->json(['success' => true]);
 });
 
 // authentication
 Route::post(
     '/register',
-    [AuthController::class,'register']
+    [AuthController::class, 'register']
 );
 
 Route::post(
     '/login',
-    [AuthController::class,'login']
+    [AuthController::class, 'login']
 );
-
 
 Route::middleware('auth:sanctum')
     ->group(function () {
 
         Route::post(
             '/logout',
-            [AuthController::class,'logout']
+            [AuthController::class, 'logout']
         );
-});
+    });

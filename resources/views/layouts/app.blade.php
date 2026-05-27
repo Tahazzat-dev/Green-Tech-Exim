@@ -8,6 +8,10 @@
         'resources/css/app.css',
         'resources/js/app.js'
     ])
+
+
+    <!-- font awesome starter kit -->
+     <script src="https://kit.fontawesome.com/7a263e28c3.js" crossorigin="anonymous"></script>
 </head>
 <body class="bg-bg-body text-text-body w-full h-full min-h-screen flex flex-col" >
   @yield('content')
