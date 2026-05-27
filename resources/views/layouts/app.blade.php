@@ -9,19 +9,8 @@
         'resources/js/app.js'
     ])
 </head>
-<body class="bg-bg-body text-text-body w-full h-full min-h-screen" >
-
- @include('partials.header')
- <main>
-    @yield('content')
-  </main>
-</div>
-
-
-
-    
-
-
+<body class="bg-bg-body text-text-body w-full h-full min-h-screen flex flex-col" >
+  @yield('content')
 </body>
 </html>
 

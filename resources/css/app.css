@@ -49,7 +49,7 @@
 
     --color-input-placeholder: #00000072;
     --color-bg-sidebar: #e0f1ff;
-    --color-bg-header: #e0f1ff;
+    --color-bg-header: #0f1a5a;
 
     /* ---------- Radius ---------- */
     --radius-sm: 0.25rem;
@@ -92,7 +92,7 @@ DARK THEME OVERRIDES
 
     --color-bg-card: #1d2635;
     --color-bg-sidebar: #0a0e29;
-    --color-bg-header: #e0f1ff;
+    --color-bg-header: #0f1a5a;
 
     --color-border: #57606d;
     --color-ring: oklch(49.708% 0.06109 255.612);
