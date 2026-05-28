@@ -176,7 +176,7 @@
 
                 <div class="w-full">
                     <div class="w-full mb-5 flex items-center gap-2">
-                        <input class="size-5  border-2 border-red-500" type="checkbox" name="agreed" >
+                        <input class="size-4 rounded-md" type="checkbox" name="agreed" >
                         <p>I agree to the privacy policy</p>
                 </div>
                 
