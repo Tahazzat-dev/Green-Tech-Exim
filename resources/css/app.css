@@ -185,7 +185,7 @@ DARK THEME OVERRIDES
 
     p {
         font-size: var(--fs-base);
-        line-height: 150%;
+        line-height: 120%;
         color: var(--color-text-body);
     }
 

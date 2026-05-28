@@ -5,7 +5,7 @@
 <div class="shrink-0 w-full max-w-[500px] shadow-lg bg-background rounded-2xl my-4 p-4 md:p-5 lg:py-8 xl:py-10" >
         <div class="mb-8">
             <h1 class="font-bold text-center mt-2">Sign Up Form</h1>
-            <p class="mt-5" >To see our exclusive products, pricing, and more</p>
+            <p class="mt-5 mb-2" >To see our exclusive products, pricing, and more</p>
             <h4 class="font-semibold" >Please Register</h4>
         </div>
             <form method="POST" action="{{ route('signup.submit') }}" class="space-y-5">
