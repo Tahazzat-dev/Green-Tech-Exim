@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
@@ -36,10 +38,10 @@
     --color-text-body: oklch(0.279 0.041 260.031);
     --color-text-body-reverse: oklch(86.51% 0.006 254.14);
 
-    --color-primary: oklch(0.4839 0.1428 143.9312);
-    --color-primary-500: hsla(125, 64%, 27%, 0.89);
-    --color-secondary: oklch(0.6263 0.2566 29.0971);
-    --color-secondary-500: oklch(62.626% 0.25671 29.198 / 0.87);
+    --color-primary: #67af42;
+    --color-primary-500: #97cf3a;
+    --color-secondary: #10235a;
+    --color-secondary-500: #5872bf;
     --color-text-heading: oklch(0% 0 0);
     --color-bg-card: #f7f7f7;
 
@@ -48,8 +50,8 @@
     --color-ring: oklch(80.51% 0.088 243.32 / 0.8);
 
     --color-input-placeholder: #00000072;
-    --color-bg-sidebar: #e0f1ff;
-    --color-bg-header: #0f1a5a;
+    --color-bg-sidebar: #10235a;
+    --color-bg-header: #10235a;
 
     /* ---------- Radius ---------- */
     --radius-sm: 0.25rem;
@@ -112,6 +114,23 @@ DARK THEME OVERRIDES
         cursor: pointer;
     }
 
+    button.btn-primary {
+        background-image: linear-gradient(
+            to right,
+            var(--color-primary-500),
+            var(--color-primary)
+        );
+        color: white;
+    }
+    button.btn-secondary {
+        background-image: linear-gradient(
+            to right,
+            var(--color-secondary-500),
+            var(--color-secondary)
+        );
+        color: white;
+    }
+
     /*======= font sizes ======== */
     h1 {
         font-size: var(--fs-xl);
@@ -155,10 +174,20 @@ DARK THEME OVERRIDES
         color: var(--color-text-body);
     }
 
+    a {
+        font-size: var(--fs-base);
+        color: blue;
+    }
+
     input,
     textarea,
     select {
         font-size: var(--fs-base);
+    }
+
+    html {
+        width: 100%;
+        height: 100%;
     }
 
     body {

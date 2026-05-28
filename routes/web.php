@@ -6,8 +6,10 @@ use Illuminate\Support\Facades\Route;
 
 // Guest Routes (Admin Login View & Processing)
 Route::middleware('guest')->group(function () {
-    Route::get('/', [AuthController::class, 'showLogin'])->name('login');
-    Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
+    Route::get('/', [AuthController::class, 'showSignin'])->name('signin');
+    Route::post('/sign-in', [AuthController::class, 'signin'])->name('signin.submit');
+    Route::get('/sign-up', [AuthController::class, 'showSignUp'])->name('signup');
+    Route::post('/sign-up', [AuthController::class, 'signup'])->name('signup.submit');
 });
 
 // Protected Admin Dashboard Routes

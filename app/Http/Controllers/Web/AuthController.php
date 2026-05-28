@@ -10,13 +10,11 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function showLogin()
+    public function showSignin()
     {
-        // return view('auth.login');
-        return view('auth.login');
+        return view('auth.signin');
     }
-
-    public function login(Request $request)
+    public function signin(Request $request)
     {
         $request->validate([
             'phone' => 'required|string',
@@ -34,6 +32,12 @@ class AuthController extends Controller
         $request->session()->regenerate();
 
         return redirect()->route('admin.dashboard');
+    }
+
+
+     public function showSignup()
+    {
+        return view('auth.signup');
     }
 
     public function logout(Request $request)
