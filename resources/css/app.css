@@ -110,6 +110,21 @@ DARK THEME OVERRIDES
    BASE ELEMENTS
 =========================== */
 @layer base {
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus {
+        -webkit-text-fill-color: inherit !important;
+        font-size: var(--fs-base) !important;
+        font-family: inherit !important;
+        transition: background-color 50000s ease-in-out 0s;
+    }
+
+    .dark input:-webkit-autofill,
+    .dark input:-webkit-autofill:hover,
+    .dark input:-webkit-autofill:focus {
+        -webkit-text-fill-color: white !important;
+    }
+
     button {
         cursor: pointer;
     }
