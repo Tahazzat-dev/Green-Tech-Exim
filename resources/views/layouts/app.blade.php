@@ -19,7 +19,7 @@ x-init="$watch('theme', value => {
     <!-- font awesome starter kit -->
      <script src="https://kit.fontawesome.com/7a263e28c3.js" crossorigin="anonymous"></script>
 </head>
-<body class="relative bg-bg-body text-text-body w-full h-full min-h-screen flex flex-col" >
+<body class="relative bg-bg-body text-text-body w-full h-full overflow-y-auto  min-h-screen flex flex-col" >
   <div class="absolute top-4 right-4">
        <button @click="theme = theme === 'dark' ? 'light' : 'dark'"
 
