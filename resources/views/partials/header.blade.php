@@ -162,7 +162,7 @@
                 x-transition:leave-start="translate-x-0"
                 x-transition:leave-end="-translate-x-full"
                 @click.away="mobileMenuOpen = false"
-                class="relative flex w-full max-w-xs flex-col bg-white pb-4 shadow-2xl"
+                class="relative flex w-full max-w-xs flex-col gap-8 bg-white pb-4 shadow-2xl"
             >
                 <!-- Top Header: Logo & Close Button -->
                 <div class="flex bg-secondary py-4 gap-3 items-center justify-between px-6 border-b border-slate-100">
@@ -178,61 +178,30 @@
                 </div>
 
                 <!-- Navigation Links List (Stacked) -->
-                <div class="flex-1 overflow-y-auto px-4 py-4">
-                    <nav class="space-y-1">
-                        <a href="{{ route('signin') }}" 
-                           class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-base font-semibold {{ request()->routeIs('dashboard') ? 'text-indigo-600 bg-indigo-50/50' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
-                            <i data-lucide="layout-dashboard" class="h-5 w-5"></i> Dashboard
+                <div class="overflow-y-auto px-6 py-4">
+                    <nav class="space-y-1 flex flex-col gap-2.5">
+                        <a href="{{ route('signin') }}" class="flex items-center gap-3 pb-2.5 border-b border-slate-300"  >
+                            <svg class="size-7 text-secondary-500" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path d="M320 128C241 128 175.3 185.3 162.3 260.7C171.6 257.7 181.6 256 192 256L208 256C234.5 256 256 277.5 256 304L256 400C256 426.5 234.5 448 208 448L192 448C139 448 96 405 96 352L96 288C96 164.3 196.3 64 320 64C443.7 64 544 164.3 544 288L544 456.1C544 522.4 490.2 576.1 423.9 576.1L336 576L304 576C277.5 576 256 554.5 256 528C256 501.5 277.5 480 304 480L336 480C362.5 480 384 501.5 384 528L384 528L424 528C463.8 528 496 495.8 496 456L496 435.1C481.9 443.3 465.5 447.9 448 447.9L432 447.9C405.5 447.9 384 426.4 384 399.9L384 303.9C384 277.4 405.5 255.9 432 255.9L448 255.9C458.4 255.9 468.3 257.5 477.7 260.6C464.7 185.3 399.1 127.9 320 127.9z" /></svg>
+                            <span class="text-md font-semibold text-black" >Contact Us</span>
                         </a>
-                        <a href="{{ route('signin') }}" 
-                           class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-base font-medium {{ request()->routeIs('projects.*') ? 'text-indigo-600 bg-indigo-50/50' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
-                            <i data-lucide="folder-kanban" class="h-5 w-5 text-slate-400"></i> Projects
+                         <a href="{{ route('signin') }}" class="flex items-center gap-3 pb-2.5 border-b border-slate-300"  >
+                            <svg class="size-7 text-secondary-500" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path d="M448 256C501 256 544 213 544 160C544 107 501 64 448 64C395 64 352 107 352 160C352 165.4 352.5 170.8 353.3 176L223.6 248.1C206.7 233.1 184.4 224 160 224C107 224 64 267 64 320C64 373 107 416 160 416C184.4 416 206.6 406.9 223.6 391.9L353.3 464C352.4 469.2 352 474.5 352 480C352 533 395 576 448 576C501 576 544 533 544 480C544 427 501 384 448 384C423.6 384 401.4 393.1 384.4 408.1L254.7 336C255.6 330.8 256 325.5 256 320C256 314.5 255.5 309.2 254.7 304L384.4 231.9C401.3 246.9 423.6 256 448 256z"/></svg>
+                            <span class="text-md font-semibold text-black" >Contact Us</span>
                         </a>
-                        <a href="{{ route('signin') }}" 
-                           class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-base font-medium {{ request()->routeIs('tasks.*') ? 'text-indigo-600 bg-indigo-50/50' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
-                            <i data-lucide="check-square" class="h-5 w-5 text-slate-400"></i> Tasks
-                        </a>
-                        <a href="{{ route('signin') }}" 
-                           class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-base font-medium {{ request()->routeIs('analytics') ? 'text-indigo-600 bg-indigo-50/50' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
-                            <i data-lucide="line-chart" class="h-5 w-5 text-slate-400"></i> Analytics
-                        </a>
-                        <a href="{{ route('signin') }}" 
-                           class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-base font-medium {{ request()->routeIs('settings') ? 'text-indigo-600 bg-indigo-50/50' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
-                            <i data-lucide="settings" class="h-5 w-5 text-slate-400"></i> Settings
+                         <a href="{{ route('signin') }}" class="flex items-center gap-3 pb-2.5 border-b border-slate-300"  >
+                            <svg class="size-7 text-secondary-500" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path d="M569 337C578.4 327.6 578.4 312.4 569 303.1L425 159C418.1 152.1 407.8 150.1 398.8 153.8C389.8 157.5 384 166.3 384 176L384 256L272 256C245.5 256 224 277.5 224 304L224 336C224 362.5 245.5 384 272 384L384 384L384 464C384 473.7 389.8 482.5 398.8 486.2C407.8 489.9 418.1 487.9 425 481L569 337zM224 160C241.7 160 256 145.7 256 128C256 110.3 241.7 96 224 96L160 96C107 96 64 139 64 192L64 448C64 501 107 544 160 544L224 544C241.7 544 256 529.7 256 512C256 494.3 241.7 480 224 480L160 480C142.3 480 128 465.7 128 448L128 192C128 174.3 142.3 160 160 160L224 160z"/></svg>
+                            <span class="text-md font-semibold text-black" >Logout</span>
                         </a>
                     </nav>
                 </div>
 
-                <!-- Bottom Profile Info section (Always visible in mobile drawer bottom) -->
-                <div class="border-t border-slate-100 px-6 pt-4 pb-2">
-                        <div class="flex items-center gap-3">
-                            <img 
-                                class="h-11 w-11 rounded-full border border-slate-200 object-cover shadow-sm" 
-                             src="{{ Vite::asset('resources/images/user-placeholder.png') }}"
-                                alt="User profile"
-                            >
-                            <div>
-                                <p class="text-sm font-bold text-slate-800">User 1</p>
-                                <p class="text-xs text-slate-500">example@gmail.com</p>
-                            </div>
-                        </div>
-                        
-                        <div class="mt-4 space-y-1">
-                            <a href="{{ route('signin') }}" class="flex items-center gap-2 rounded-lg py-2 text-sm font-medium text-slate-600 hover:text-indigo-600">
-                                <i data-lucide="user" class="h-4 w-4 text-slate-400"></i> My Profile
-                            </a>
-                            
-                            <!-- Mobile Logout Form (The secure Laravel Way) -->
-                            <form method="POST" action="{{ route('logout') }}" id="mobile-logout-form" class="hidden">
-                                @csrf
-                            </form>
-                            <a href="{{ route('logout') }}" 
-                               onclick="event.preventDefault(); document.getElementById('mobile-logout-form').submit();"
-                               class="flex items-center gap-2 rounded-lg py-2 text-sm font-medium text-rose-600 hover:text-rose-700">
-                                <i data-lucide="log-out" class="h-4 w-4"></i> Sign Out
-                            </a>
-                        </div>
-                </div>
+                <!-- site logo -->
+                 <div class="w-full px-6">
+                    <img 
+                    src="{{ Vite::asset('resources/images/site-large-logo.png') }}"
+                    class="w-full max-w-60"
+                     alt="Site Large Logo">
+                 </div>
             </div>
         </div>
     </div>
