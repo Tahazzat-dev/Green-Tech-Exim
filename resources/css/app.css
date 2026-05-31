@@ -51,7 +51,7 @@
 
     --color-input-placeholder: #00000072;
     --color-bg-sidebar: #10235a;
-    --color-bg-header: #10235a;
+    --color-bg-header: #e4e7ed;
 
     /* ---------- Radius ---------- */
     --radius-sm: 0.25rem;
@@ -94,9 +94,9 @@ DARK THEME OVERRIDES
 
     --color-bg-card: #1d2635;
     --color-bg-sidebar: #0a0e29;
-    --color-bg-header: #0f1a5a;
+    --color-bg-header: #10161e;
 
-    --color-border: #57606d;
+    --color-border: #3b424d;
     --color-ring: oklch(49.708% 0.06109 255.612);
     --color-input-placeholder: #ffffff82;
 
@@ -270,4 +270,31 @@ DARK THEME OVERRIDES
 
 .bg-reverse {
     background-color: var(--color-bg-body);
+}
+
+/* header section style */
+.header-inner {
+    max-width: 1440px;
+}
+
+.nav-link {
+    color: white;
+    position: relative;
+    display: block;
+}
+
+.nav-link::before {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 0%;
+    height: 4px;
+    transition: 0.3s;
+    background-color: var(--color-secondary);
+    top: 100%;
+    left: 0;
+}
+
+.nav-link.active::before {
+    width: 100%;
 }

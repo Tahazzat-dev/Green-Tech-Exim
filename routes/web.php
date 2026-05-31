@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Web\AdminController;
 use App\Http\Controllers\Web\AuthController;
+use App\Http\Controllers\Web\TrophyController;
 use Illuminate\Support\Facades\Route;
 
 // Guest Routes (Admin Login View & Processing)
@@ -10,7 +11,19 @@ Route::middleware('guest')->group(function () {
     Route::post('/sign-in', [AuthController::class, 'signin'])->name('signin.submit');
     Route::get('/sign-up', [AuthController::class, 'showSignUp'])->name('signup');
     Route::post('/sign-up', [AuthController::class, 'signup'])->name('signup.submit');
-});
+    Route::post('/sign-up', [AuthController::class, 'logout'])->name('logout');
+
+
+    // ======== trophy controller ==========
+     Route::get('/trophies/{product}',[TrophyController::class, 'show'])->name('trophies.show');
+}); 
+
+
+
+// Route::middleware("auth")->group(function(){
+//     Route::get('/trophies/{product}',[TrophyController::class, 'show']);
+// });
+
 
 // Protected Admin Dashboard Routes
 // Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {

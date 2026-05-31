@@ -19,23 +19,7 @@ x-init="$watch('theme', value => {
     <!-- font awesome starter kit -->
      <script src="https://kit.fontawesome.com/7a263e28c3.js" crossorigin="anonymous"></script>
 </head>
-<body class="relative bg-bg-body text-text-body w-full h-full overflow-y-auto  min-h-screen flex flex-col" >
-  <div class="absolute top-4 right-4">
-       <button @click="theme = theme === 'dark' ? 'light' : 'dark'"
-
-        class="px-4 py-2 rounded-xl bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 transition"
-    >
-
-        <span x-show="theme=='dark'">
-            🌙
-        </span>
-
-        <span x-show="theme=='light'">
-            ☀️
-        </span>
-
-    </button>
-  </div>
+<body x-data="{ mobileMenuOpen: false, profileDropdownOpen: false }" class="relative bg-bg-body text-text-body w-full h-full overflow-y-auto  min-h-screen flex flex-col" >
   @yield('content')
 </body>
 </html>
