@@ -41,13 +41,13 @@
                        >
                         Trophies
                     </a>
-                    <a href="{{ route('signin') }}" 
-                      class="nav-link text-base font-medium {{ request()->routeIs('users') ? 'active' : '' }}"
+                    <a href="{{ route('admin.users') }}" 
+                      class="nav-link text-base font-medium {{ request()->routeIs('admin.users') ? 'active' : '' }}"
                       >
                         Users
                     </a>
-                    <a href="{{ route('signin') }}" 
-                       class="nav-link text-base font-medium {{ request()->routeIs('contacts') ? 'active' : '' }}"
+                    <a href="{{ route('admin.contacts') }}" 
+                       class="nav-link text-base font-medium {{ request()->routeIs('admin.contacts') ? 'active' : '' }}"
                        >
                         Contacts
                     </a>

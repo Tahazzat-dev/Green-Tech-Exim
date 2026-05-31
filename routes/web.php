@@ -21,7 +21,12 @@ Route::middleware('guest')->group(function () {
 
 
 // Route::middleware("auth")->group(function(){
-//     Route::get('/trophies/{product}',[TrophyController::class, 'show']);
+Route::prefix('/admin')->name('admin.')->group(function () {
+    Route::get('/contacts', [AdminController::class, 'contacts'])->name("contacts"); // name: admin.contacts
+    Route::get('/users', [AdminController::class, 'users'])->name("users");       // name: admin.users
+    Route::get('/trophies/{product}', [TrophyController::class, 'show'])->name('trophies.show'); // name: admin.trophies.show
+});
+   
 // });
 
 
