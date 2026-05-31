@@ -19,7 +19,7 @@ x-init="$watch('theme', value => {
     <!-- font awesome starter kit -->
      <script src="https://kit.fontawesome.com/7a263e28c3.js" crossorigin="anonymous"></script>
 </head>
-<body x-data="{ mobileMenuOpen: false, profileDropdownOpen: false }" class="relative bg-bg-body text-text-body w-full h-full overflow-y-auto  min-h-screen flex flex-col" >
+<body x-data="{ mobileMenuOpen: true, profileDropdownOpen: false }" class="relative bg-bg-body text-text-body w-full h-full overflow-y-auto  min-h-screen flex flex-col" >
   @yield('content')
 </body>
 </html>

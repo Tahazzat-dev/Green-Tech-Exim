@@ -47,9 +47,9 @@
                         Users
                     </a>
                     <a href="{{ route('signin') }}" 
-                       class="nav-link text-base font-medium {{ request()->routeIs('contact') ? 'active' : '' }}"
+                       class="nav-link text-base font-medium {{ request()->routeIs('contacts') ? 'active' : '' }}"
                        >
-                        Contact
+                        Contacts
                     </a>
                     <button @click="theme = theme === 'dark' ? 'light' : 'dark'" class="text-base w-auto transition" >
                         <span x-show="theme=='dark'">🌙</span>
@@ -63,17 +63,15 @@
                         <button 
                             @click="profileDropdownOpen = !profileDropdownOpen"
                             type="button" 
-                            class="flex items-center gap-2 rounded-full p-1 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 hover:bg-slate-50 transition-colors"
+                            class="flex items-center rounded-full border border-border focus-within:border-ring"
                             aria-haspopup="true"
                             :aria-expanded="profileDropdownOpen.toString()"
                         >
                             <img 
-                                class="h-9 w-9 rounded-full border border-slate-200 object-cover shadow-sm" 
+                                class="h-9 w-9 rounded-full" 
                                 src="{{ Vite::asset('resources/images/user-placeholder.png') }}"
                                 alt="User profile"
                             >
-                            <span class="text-sm font-semibold text-slate-700 pr-1">{{ auth()->user()->name ?? 'Olivia Wilde' }}</span>
-                            <i data-lucide="chevron-down" class="h-4 w-4 text-slate-400"></i>
                         </button>
 
                         <!-- Dropdown Menu -->
@@ -167,23 +165,16 @@
                 class="relative flex w-full max-w-xs flex-col bg-white pb-4 shadow-2xl"
             >
                 <!-- Top Header: Logo & Close Button -->
-                <div class="flex h-16 items-center justify-between px-6 border-b border-slate-100">
-                    <a href="{{ url('/') }}" class="flex items-center gap-2">
-                        <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600 text-white shadow">
-                            <i data-lucide="layers" class="h-4.5 w-4.5"></i>
-                        </div>
-                        <span class="text-lg font-bold tracking-tight text-slate-900">
-                            {{ config('app.name', 'Apex') }}<span class="text-indigo-600">Flow</span>
-                        </span>
-                    </a>
-                    <button 
-                        @click="mobileMenuOpen = false"
-                        type="button" 
-                        class="rounded-lg p-1.5 text-slate-500 hover:bg-slate-100 hover:text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                    >
-                        <span class="sr-only">Close menu</span>
-                        <i data-lucide="x" class="h-5 w-5"></i>
-                    </button>
+                <div class="flex bg-secondary py-4 gap-3 items-center justify-between px-6 border-b border-slate-100">
+                    <img 
+                                class="h-14 w-14 rounded-full border-2 border-white" 
+                                src="{{ Vite::asset('resources/images/user-placeholder.png') }}"
+                                alt="User profile"
+                      >
+                      <div class="grow text-white ">
+                        <h5 class="font-semibold text-xl" >Test User</h5>
+                        <p class="font-semibold" >01777342354</p>
+                      </div>
                 </div>
 
                 <!-- Navigation Links List (Stacked) -->
