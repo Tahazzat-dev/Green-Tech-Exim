@@ -8,7 +8,7 @@
             <p class="mt-5 mb-2" >To see our exclusive products, pricing, and more</p>
             <h4 class="font-semibold" >Please Register</h4>
         </div>
-            <form method="POST" action="{{ route('signup.submit') }}" class="space-y-5">
+            <form  enctype="multipart/form-data"  method="POST" action="{{ route('signup.submit') }}" class="space-y-5">
                 @csrf
 
                 <!-- @if ($errors->any())
@@ -71,21 +71,21 @@
                 <div class="w-full" >
                     <div class="flex rounded-lg overflow-hidden bg-bg-body">
                          <label
-                        for="shopName"
+                        for="shop_name"
                        class="shrink-0 bg-secondary dark:bg-secondary-500 rounded-lg flex items-center px-2 lg:px-3"
                     >
                     <svg class="min-w-5 size-5 lg:size-6  text-primary text-lg" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path d="M94.7 136.3C101.6 112.4 123.5 96 148.4 96L492.4 96C517.3 96 539.2 112.4 546.2 136.3L569.6 216.5C582.4 260.2 549.5 304 504 304C477.7 304 454.6 289.1 443.2 266.9C431.6 288.8 408.6 304 381.8 304C355.2 304 332.1 289 320.5 267C308.9 289 285.8 304 259.2 304C232.4 304 209.4 288.9 197.8 266.9C186.4 289 163.3 304 137 304C91.4 304 58.6 260.3 71.4 216.5L94.7 136.3zM160.4 416L480.4 416L480.4 349.6C488 351.2 495.9 352 503.9 352C518.2 352 531.9 349.4 544.4 344.8L544.4 496C544.4 522.5 522.9 544 496.4 544L144.4 544C117.9 544 96.4 522.5 96.4 496L96.4 344.8C108.9 349.4 122.5 352 136.9 352C145 352 152.8 351.2 160.4 349.6L160.4 416z"/></svg>
                        </label>
                         <input
-                        id="shopName"
+                        id="shop_name"
                         type="text"
-                        name="shopName"
-                        value="{{ old('shopName') }}"
+                        name="shop_name"
+                        value="{{ old('shop_name') }}"
                         placeholder="Enter your shop name"
                         class="text-text-body outline-0 py-1.5 lg:py-2 px-4  border-0 grow"
                     >
                     </div>
-                    @error('shopName')
+                    @error('shop_name')
                         <p class="text-red-500 text-sm mt-1">
                             {{ $message }}
                         </p>
@@ -96,51 +96,63 @@
                 <div class="w-full" >
                     <div class="flex rounded-lg overflow-hidden bg-bg-body">
                          <label
-                        for="location"
+                        for="city_area"
                        class="shrink-0 bg-secondary dark:bg-secondary-500 rounded-lg flex items-center px-2 lg:px-3"
                     >
                    <svg class="min-w-5 size-5 lg:size-6  text-primary text-lg" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path d="M94.7 136.3C101.6 112.4 123.5 96 148.4 96L492.4 96C517.3 96 539.2 112.4 546.2 136.3L569.6 216.5C582.4 260.2 549.5 304 504 304C477.7 304 454.6 289.1 443.2 266.9C431.6 288.8 408.6 304 381.8 304C355.2 304 332.1 289 320.5 267C308.9 289 285.8 304 259.2 304C232.4 304 209.4 288.9 197.8 266.9C186.4 289 163.3 304 137 304C91.4 304 58.6 260.3 71.4 216.5L94.7 136.3zM160.4 416L480.4 416L480.4 349.6C488 351.2 495.9 352 503.9 352C518.2 352 531.9 349.4 544.4 344.8L544.4 496C544.4 522.5 522.9 544 496.4 544L144.4 544C117.9 544 96.4 522.5 96.4 496L96.4 344.8C108.9 349.4 122.5 352 136.9 352C145 352 152.8 351.2 160.4 349.6L160.4 416z"/></svg>
                        </label>
                         <input
-                        id="location"
+                        id="city_area"
                         type="text"
-                        name="location"
-                        value="{{ old('location') }}"
+                        name="city_area"
+                        value="{{ old('city_area') }}"
                         placeholder="City / Area"
                         class="text-text-body outline-0 py-1.5 lg:py-2 px-4  border-0 grow"
                     >
                     </div>
-                    @error('location')
+                    @error('city_area')
                         <p class="text-red-500 text-sm mt-1">
                             {{ $message }}
                         </p>
                     @enderror
                 </div>
 
-                <!--Photo Upload -->
-                <div class="w-full" >
-                    <div class="flex rounded-lg overflow-hidden bg-bg-body">
-                         <label
-                        for="photo"
-                       class="shrink-0 bg-secondary dark:bg-secondary-500 rounded-lg flex items-center px-2 lg:px-3"
-                    >
-                   <svg class="min-w-5 size-5 lg:size-6  text-primary text-lg" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path d="M160 96C124.7 96 96 124.7 96 160L96 480C96 515.3 124.7 544 160 544L480 544C515.3 544 544 515.3 544 480L544 160C544 124.7 515.3 96 480 96L160 96zM224 176C250.5 176 272 197.5 272 224C272 250.5 250.5 272 224 272C197.5 272 176 250.5 176 224C176 197.5 197.5 176 224 176zM368 288C376.4 288 384.1 292.4 388.5 299.5L476.5 443.5C481 450.9 481.2 460.2 477 467.8C472.8 475.4 464.7 480 456 480L184 480C175.1 480 166.8 475 162.7 467.1C158.6 459.2 159.2 449.6 164.3 442.3L220.3 362.3C224.8 355.9 232.1 352.1 240 352.1C247.9 352.1 255.2 355.9 259.7 362.3L286.1 400.1L347.5 299.6C351.9 292.5 359.6 288.1 368 288.1z"/></svg>
-                       </label>
-                        <input
-                        id="photo"
-                        type="file"
-                        name="photo"
-                        value="{{ old('photo') }}"
-                        placeholder="Upload your photo"
-                        class="text-text-body outline-0 py-1.5 lg:py-2 px-4  border-0 grow"
-                    >
-                    </div>
-                    @error('photo')
-                        <p class="text-red-500 text-sm mt-1">
-                            {{ $message }}
-                        </p>
-                    @enderror
-                </div>
+               <div class="w-full" x-data="{ fileName: '' }">
+    <div class="flex rounded-lg overflow-hidden bg-bg-body relative items-center">
+        
+        <label
+            for="photo"
+            class="shrink-0 bg-secondary dark:bg-secondary-500 rounded-lg flex items-center px-2 lg:px-3 self-stretch cursor-pointer z-10"
+        >
+            <svg class="min-w-5 size-5 lg:size-6 text-primary text-lg" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+                <path d="M160 96C124.7 96 96 124.7 96 160L96 480C96 515.3 124.7 544 160 544L480 544C515.3 544 544 515.3 544 480L544 160C544 124.7 515.3 96 480 96L160 96zM224 176C250.5 176 272 197.5 272 224C272 250.5 250.5 272 224 272C197.5 272 176 250.5 176 224C176 197.5 197.5 176 224 176zM368 288C376.4 288 384.1 292.4 388.5 299.5L476.5 443.5C481 450.9 481.2 460.2 477 467.8C472.8 475.4 464.7 480 456 480L184 480C175.1 480 166.8 475 162.7 467.1C158.6 459.2 159.2 449.6 164.3 442.3L220.3 362.3C224.8 355.9 232.1 352.1 240 352.1C247.9 352.1 255.2 355.9 259.7 362.3L286.1 400.1L347.5 299.6C351.9 292.5 359.6 288.1 368 288.1z"/>
+            </svg>
+        </label>
+
+        <div class="relative grow flex items-center">
+            <span 
+                x-text="fileName ? fileName : 'Upload your photo'" 
+                :class="fileName ? 'text-text-body font-medium' : 'text-slate-400 dark:text-slate-500'"
+                class="absolute left-4 pointer-events-none text-sm lg:text-base truncate max-w-[calc(100%-2rem)]"
+            ></span>
+
+            <input
+                id="photo"
+                type="file"
+                name="photo"
+                accept="image/*"
+                @change="fileName = $event.target.files[0] ? $event.target.files[0].name : ''"
+                class="opacity-0 w-full py-1.5 lg:py-2 px-4 cursor-pointer z-0 outline-0 border-0"
+            >
+        </div>
+    </div>
+    
+    @error('photo')
+        <p class="text-red-500 text-sm mt-1">
+            {{ $message }}
+        </p>
+    @enderror
+</div>
                 
                 <!-- Pin -->
                 <div x-data="{show:false}" class="w-full" >
@@ -175,16 +187,16 @@
                 <div x-data="{show:false}" class="w-full" >
                     <div class="relative flex rounded-lg overflow-hidden bg-bg-body">
                          <label
-                        for="pin"
+                        for="pin_confirmation"
                         class="shrink-0 bg-secondary dark:bg-secondary-500 rounded-lg flex items-center px-2 lg:px-3"
                     >
                     <svg class="min-w-5 size-5 lg:size-6  text-primary text-lg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path d="M256 160L256 224L384 224L384 160C384 124.7 355.3 96 320 96C284.7 96 256 124.7 256 160zM192 224L192 160C192 89.3 249.3 32 320 32C390.7 32 448 89.3 448 160L448 224C483.3 224 512 252.7 512 288L512 512C512 547.3 483.3 576 448 576L192 576C156.7 576 128 547.3 128 512L128 288C128 252.7 156.7 224 192 224z" fill="currentColor" /></svg>
                        </label>
                         <input
-                        id="confirmPin"
+                        id="pin_confirmation"
                         :type="show ? 'text' : 'password'"
-                        name="confirmPin"
-                        value="{{ old('confirmPin') }}"
+                        name="pin_confirmation"
+                        value="{{ old('pin_confirmation') }}"
                         placeholder="Confirm pin number"
                         class="text-text-body outline-0 py-1.5 lg:py-2 px-4  border-0 grow"
                     >
@@ -193,7 +205,7 @@
                         <svg class="dark:text-white" x-show="!show" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path d="M73 39.1C63.6 29.7 48.4 29.7 39.1 39.1C29.8 48.5 29.7 63.7 39 73.1L567 601.1C576.4 610.5 591.6 610.5 600.9 601.1C610.2 591.7 610.3 576.5 600.9 567.2L504.5 470.8C507.2 468.4 509.9 466 512.5 463.6C559.3 420.1 590.6 368.2 605.5 332.5C608.8 324.6 608.8 315.8 605.5 307.9C590.6 272.2 559.3 220.2 512.5 176.8C465.4 133.1 400.7 96.2 319.9 96.2C263.1 96.2 214.3 114.4 173.9 140.4L73 39.1zM236.5 202.7C260 185.9 288.9 176 320 176C399.5 176 464 240.5 464 320C464 351.1 454.1 379.9 437.3 403.5L402.6 368.8C415.3 347.4 419.6 321.1 412.7 295.1C399 243.9 346.3 213.5 295.1 227.2C286.5 229.5 278.4 232.9 271.1 237.2L236.4 202.5zM357.3 459.1C345.4 462.3 332.9 464 320 464C240.5 464 176 399.5 176 320C176 307.1 177.7 294.6 180.9 282.7L101.4 203.2C68.8 240 46.4 279 34.5 307.7C31.2 315.6 31.2 324.4 34.5 332.3C49.4 368 80.7 420 127.5 463.4C174.6 507.1 239.3 544 320.1 544C357.4 544 391.3 536.1 421.6 523.4L357.4 459.2z" fill="currentColor" /></svg>
                     </button>
                     </div>
-                    @error('confirmPin')
+                    @error('pin_confirmation')
                         <p class="text-red-500 text-sm mt-1">
                             {{ $message }}
                         </p>
@@ -203,7 +215,7 @@
                 <div class="w-full">
                     <div class="w-full mb-5 flex items-center gap-2">
                         <input class="size-4 rounded-md" type="checkbox" name="agreed" >
-                        <p>I agree to the privacy policy</p>
+                        <label for="agreed" >I agree to the privacy policy</label>
                 </div>
                 
                 <button

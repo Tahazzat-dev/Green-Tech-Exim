@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\File;
 
 class AuthController extends Controller
 {
@@ -42,7 +43,7 @@ class AuthController extends Controller
 
     public function signup(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
 
         $validated = $request->validate([
             'name' => [
@@ -112,7 +113,7 @@ class AuthController extends Controller
                 'success',
                 'Registration submitted successfully. Please wait for admin approval.'
             );
-    }
+    }           
 
     public function logout(Request $request)
     {
