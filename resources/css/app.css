@@ -129,7 +129,9 @@ DARK THEME OVERRIDES
         cursor: pointer;
     }
 
-    button.btn-primary {
+    .btn-primary {
+        padding: 5px 10px;
+        border-radius: var(--radius-lg);
         background-image: linear-gradient(
             to right,
             var(--color-primary-500),
@@ -137,7 +139,9 @@ DARK THEME OVERRIDES
         );
         color: white;
     }
-    button.btn-secondary {
+    .btn-secondary {
+        padding: 5px 10px;
+        border-radius: var(--radius-lg);
         background-image: linear-gradient(
             to right,
             var(--color-secondary-500),

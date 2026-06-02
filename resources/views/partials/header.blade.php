@@ -49,6 +49,27 @@
                     <a href="{{ route('admin.contacts') }}" 
                        class="nav-link text-base font-medium {{ request()->routeIs('admin.contacts') ? 'active' : '' }}"
                        >
+                        
+                    </a>
+                
+                    <a href="{{ route('signin') }}" 
+                       class="nav-link text-base font-medium {{ request()->routeIs('categories') ? 'active' : '' }}"
+                       >
+                        Categories
+                    </a>
+                    <a href="{{ route('signin') }}" 
+                       class="nav-link text-base font-medium {{ request()->routeIs('trophies') ? 'active' : '' }}"
+                       >
+                        Trophies
+                    </a>
+                    <a href="{{ route('admin.users') }}" 
+                      class="nav-link text-base font-medium {{ request()->routeIs('admin.users') ? 'active' : '' }}"
+                      >
+                        Users
+                    </a>
+                    <a href="{{ route('admin.contacts') }}" 
+                       class="nav-link text-base font-medium {{ request()->routeIs('admin.contacts') ? 'active' : '' }}"
+                       >
                         Contacts
                     </a>
                     <button @click="theme = theme === 'dark' ? 'light' : 'dark'" class="text-base w-auto transition" >
@@ -92,21 +113,8 @@
                         >
                             <!-- User Card Info Inside Dropdown -->
                             <div class="border-b border-slate-100 px-3 py-3">
-                                <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">Signed in as</p>
-                                <p class="truncate text-sm font-bold text-slate-800">{{ auth()->user()->name ?? 'Olivia Wilde' }}</p>
-                                <p class="truncate text-xs text-slate-500">{{ auth()->user()->email ?? 'olivia.wilde@apexflow.io' }}</p>
-                            </div>
-                            <!-- Menu Links -->
-                            <div class="py-1">
-                                <a href="{{ route('signin') }}" class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-indigo-600 transition-colors" role="menuitem">
-                                    <i data-lucide="user" class="h-4 w-4 text-slate-400"></i> My Profile
-                                </a>
-                                <a href="{{ route('signin') }}" class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-indigo-600 transition-colors" role="menuitem">
-                                    <i data-lucide="settings" class="h-4 w-4 text-slate-400"></i> Settings
-                                </a>
-                                <a href="{{ route('signin') }}" class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-indigo-600 transition-colors" role="menuitem">
-                                    <i data-lucide="bell" class="h-4 w-4 text-slate-400"></i> Notifications
-                                </a>
+                                 <h5 class="mb-2 font-semibold" >Test User</h5>
+                                 <p class="text-base">01777342354</p>
                             </div>
                             <!-- Authentication Form Submission (The secure Laravel Way) -->
                             <div class="border-t border-slate-100 pt-1">
@@ -175,7 +183,7 @@
                         <h5 class="font-semibold text-xl text-white" >Test User</h5>
                         <p class="font-semibold text-white">01777342354</p>
                       </div>
-                      <button @click="theme = theme === 'dark' ? 'light' : 'dark'" class="text-base w-auto transition" >
+                      <button @click="theme = theme === 'dark' ? 'light' : 'dark'" class="!p-0 text-base w-auto transition" >
                         <span x-show="theme=='dark'">🌙</span>
                         <span x-show="theme=='light'">☀️</span>
                     </button>

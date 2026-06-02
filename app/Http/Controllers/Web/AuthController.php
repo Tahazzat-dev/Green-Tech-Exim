@@ -40,6 +40,80 @@ class AuthController extends Controller
         return view('auth.signup');
     }
 
+    public function signup(Request $request)
+    {
+        dd($request->all());
+
+        $validated = $request->validate([
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+
+            'phone' => [
+                'required',
+                'string',
+                'max:20',
+                'unique:users,phone',
+            ],
+
+            'shop_name' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+
+            'city_area' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+
+            'photo' => [
+                'nullable',
+                File::image()
+                    ->max(2 * 1024), // 2MB
+            ],
+
+            'pin' => [
+                'required',
+                'digits:4',
+                'confirmed',
+            ],
+        ]);
+
+        $photoPath = null;
+
+        if ($request->hasFile('photo')) {
+            $photoPath = $request
+                ->file('photo')
+                ->store('users', 'public');
+        }
+
+        User::create([
+            'name' => $validated['name'],
+            'phone' => $validated['phone'],
+            'shop_name' => $validated['shop_name'],
+            'city_area' => $validated['city_area'],
+            'photo' => $photoPath,
+            'pin' => Hash::make($validated['pin']),
+
+            // web registration
+            'device_id' => 'web-' . uniqid(),
+
+            // waiting for admin approval
+            'status' => 'pending',
+        ]);
+
+        return redirect()
+            ->route('signin')
+            ->with(
+                'success',
+                'Registration submitted successfully. Please wait for admin approval.'
+            );
+    }
+
     public function logout(Request $request)
     {
         Auth::logout();

@@ -11,7 +11,7 @@ Route::middleware('guest')->group(function () {
     Route::post('/sign-in', [AuthController::class, 'signin'])->name('signin.submit');
     Route::get('/sign-up', [AuthController::class, 'showSignUp'])->name('signup');
     Route::post('/sign-up', [AuthController::class, 'signup'])->name('signup.submit');
-    Route::post('/sign-up', [AuthController::class, 'logout'])->name('logout');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
     // ======== trophy controller ==========
