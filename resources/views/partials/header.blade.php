@@ -106,18 +106,18 @@
                             x-transition:leave="transition ease-in duration-75"
                             x-transition:leave-start="transform opacity-100 scale-100"
                             x-transition:leave-end="transform opacity-0 scale-95"
-                            class="absolute right-0 mt-2.5 w-64 origin-top-right rounded-xl border border-slate-200/80 bg-white p-2 shadow-xl ring-1 ring-black/5 focus:outline-none"
+                            class="absolute right-0 mt-2.5 w-64 origin-top-right rounded-xl border border-border bg-background p-2 shadow-xl ring-1 ring-black/5 focus:outline-none"
                             style="display: none;"
                             role="menu" 
                             aria-orientation="vertical"
                         >
                             <!-- User Card Info Inside Dropdown -->
-                            <div class="border-b border-slate-100 px-3 py-3">
+                            <div class="border-b  border-border px-3 py-3">
                                  <h5 class="mb-2 font-semibold" >Test User</h5>
                                  <p class="text-base">01777342354</p>
                             </div>
                             <!-- Authentication Form Submission (The secure Laravel Way) -->
-                            <div class="border-t border-slate-100 pt-1">
+                            <div class="border-t border-border pt-1">
                                 <form method="POST" action="{{ route('logout') }}" id="desktop-logout-form" class="hidden">
                                     @csrf
                                 </form>
@@ -180,7 +180,7 @@
                                 alt="User profile"
                       >
                       <div class="grow text-white">
-                        <h5 class="font-semibold text-xl text-white" >Test User</h5>
+                        <h5 class="font-semibold text-xl text-white dark:text-black" >Test User</h5>
                         <p class="font-semibold text-white">01777342354</p>
                       </div>
                       <button @click="theme = theme === 'dark' ? 'light' : 'dark'" class="!p-0 text-base w-auto transition" >
