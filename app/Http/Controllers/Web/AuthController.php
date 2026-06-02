@@ -16,24 +16,53 @@ class AuthController extends Controller
         return view('auth.signin');
     }
     public function signin(Request $request)
-    {
-        $request->validate([
-            'phone' => 'required|string',
-            'pin' => 'required|string',
-        ]);
+{
+    $request->validate([
+        'phone' => ['required', 'string'],
+        'pin' => ['required', 'string'],
+    ]);
 
-        $user = User::where('phone', $request->phone)->first();
+    $user = User::where('phone', $request->phone)->first();
 
-        // Ensure user exists, is an Admin, and matches PIN hashes
-        if (! $user || $user->role !== 'admin' || ! Hash::check($request->pin, $user->pin)) {
-            return back()->withErrors(['phone' => 'Invalid administrative credentials.'])->withInput();
-        }
+    if (!$user || !Hash::check($request->pin, $user->pin)) {
+        return back()
+            ->withErrors([
+                'pin' => 'Invalid phone number or PIN.'
+            ])
+            ->withInput();
+    }
 
-        Auth::login($user);
-        $request->session()->regenerate();
+    if ($user->status === 'pending') {
+        return back()
+            ->withErrors([
+                'pin' => 'Your account is pending approval.'
+            ]);
+    }
 
+    if ($user->status === 'rejected') {
+        return back()
+            ->withErrors([
+                'pin' => 'Your account has been rejected.'
+            ]);
+    }
+
+    if ($user->status === 'blocked') {
+        return back()
+            ->withErrors([
+                'pin' => 'Your account has been blocked.'
+            ]);
+    }
+
+    Auth::login($user);
+
+    $request->session()->regenerate();
+
+    if ($user->role === 'admin') {
         return redirect()->route('admin.dashboard');
     }
+
+    return redirect()->route('user.dashboard');
+}
 
 
      public function showSignup()

@@ -6,7 +6,7 @@
             <h4 class="text-base">Welcome Back</h4>
             <h1 class="font-bold mt-2">Please Sign In</h1>
         </div>
-            <form method="POST" action="{{ route('signin.submit') }}" class="space-y-5">
+            <form autocomplete="off"  method="POST" action="{{ route('signin.submit') }}" class="space-y-5">
                 @csrf
 
                 <!-- @if ($errors->any())
@@ -28,6 +28,7 @@
                         id="phone"
                         type="text"
                         name="phone"
+                        autocomplete="off"
                         value="{{ old('phone') }}"
                         placeholder="Enter your phone"
                         class="text-text-body outline-0 py-2 px-4  border-0 grow"
@@ -55,6 +56,7 @@
                         name="pin"
                         value="{{ old('pin') }}"
                         placeholder="Enter your pin"
+                        autocomplete="off"
                         class="text-text-body outline-0 py-2 px-4  border-0 grow"
                     >
                     <button @click="show=!show" class="size-6 absolute top-1/2 right-4 -translate-y-1/2" type="button">
