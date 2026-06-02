@@ -302,3 +302,11 @@ DARK THEME OVERRIDES
 .nav-link.active::before {
     width: 100%;
 }
+
+.link-text {
+    animation-duration: 0.3s;
+}
+
+.link-text:hover {
+    text-decoration: underline;
+}
