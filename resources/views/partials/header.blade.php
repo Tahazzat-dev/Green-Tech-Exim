@@ -179,8 +179,8 @@
                                 src="{{ Vite::asset('resources/images/user-placeholder.png') }}"
                                 alt="User profile"
                       >
-                      <div class="grow text-white">
-                        <h5 class="font-semibold text-xl text-white dark:text-black" >Test User</h5>
+                      <div class="grow">
+                        <h5 class="font-semibold text-xl text-white" >Test User</h5>
                         <p class="font-semibold text-white">01777342354</p>
                       </div>
                       <button @click="theme = theme === 'dark' ? 'light' : 'dark'" class="!p-0 text-base w-auto transition" >
