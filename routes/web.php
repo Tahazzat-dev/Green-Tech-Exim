@@ -3,6 +3,7 @@
 use App\Http\Controllers\Web\AdminController;
 use App\Http\Controllers\Web\AuthController;
 use App\Http\Controllers\Web\TrophyController;
+use App\Http\Controllers\Web\UserController;
 use Illuminate\Support\Facades\Route;
 
 // Guest Routes (Admin Login View & Processing)
@@ -16,6 +17,7 @@ Route::middleware('guest')->group(function () {
 
     // ======== trophy controller ==========
      Route::get('/trophies/{product}',[TrophyController::class, 'show'])->name('trophies.show');
+     Route::get('/contact-us', [UserController::class, 'showExecutives'])->name('executives');
 }); 
 
 
@@ -24,7 +26,7 @@ Route::middleware('guest')->group(function () {
 Route::prefix('/admin')->name('admin.')->group(function () {
     Route::get('/contacts', [AdminController::class, 'contacts'])->name("contacts"); // name: admin.contacts
     Route::get('/users', [AdminController::class, 'users'])->name("users");       // name: admin.users
-    Route::get('/trophies/{product}', [TrophyController::class, 'show'])->name('trophies.show'); // name: admin.trophies.show
+    Route::get('/trophies/{product}', [UserController::class, 'show'])->name('trophies.show'); // name: admin.trophies.show
 });
    
 // });

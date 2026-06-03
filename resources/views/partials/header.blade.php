@@ -41,10 +41,10 @@
                        >
                         Trophies
                     </a>
-                    <a href="{{ route('admin.users') }}" 
-                      class="nav-link text-base font-medium {{ request()->routeIs('admin.users') ? 'active' : '' }}"
+                    <a href="{{ route('executives') }}" 
+                      class="nav-link text-base font-medium {{ request()->routeIs('executives') ? 'active' : '' }}"
                       >
-                        Users
+                        Contact Us
                     </a>
                     <a href="{{ route('admin.contacts') }}" 
                        class="nav-link text-base font-medium {{ request()->routeIs('admin.contacts') ? 'active' : '' }}"
