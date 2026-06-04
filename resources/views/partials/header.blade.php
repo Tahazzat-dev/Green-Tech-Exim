@@ -36,8 +36,8 @@
                        >
                         Categories
                     </a>
-                    <a href="{{ route('signin') }}" 
-                       class="nav-link text-base font-medium {{ request()->routeIs('trophies') ? 'active' : '' }}"
+                    <a href="{{ route('trophies.all') }}" 
+                       class="nav-link text-base font-medium {{ request()->routeIs('trophies.all') ? 'active' : '' }}"
                        >
                         Trophies
                     </a>

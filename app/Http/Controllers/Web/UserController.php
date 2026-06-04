@@ -54,13 +54,11 @@ class UserController extends Controller
     //     return back()->with('success', 'Device lock released. User account set back to pending for new registration verification.');
     // }
 
-
-
     // public function show(Product $product)
     public function showExecutives()
-{
+    {
 
-// get the data of executives and send with response
-    return view('users.contacts');
-}
+        // get the data of executives and send with response
+        return view('users.contacts');
+    }
 }

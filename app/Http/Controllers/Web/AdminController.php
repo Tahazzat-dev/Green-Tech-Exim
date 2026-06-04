@@ -54,13 +54,11 @@ class AdminController extends Controller
         return back()->with('success', 'Device lock released. User account set back to pending for new registration verification.');
     }
 
-
-
-
     public function contacts()
     {
         return view('admin.contacts');
     }
+
     public function users()
     {
         return view('admin.users');

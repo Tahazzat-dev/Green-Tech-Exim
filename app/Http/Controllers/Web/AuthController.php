@@ -15,57 +15,57 @@ class AuthController extends Controller
     {
         return view('auth.signin');
     }
+
     public function signin(Request $request)
-{
-    $request->validate([
-        'phone' => ['required', 'string'],
-        'pin' => ['required', 'string'],
-    ]);
+    {
+        $request->validate([
+            'phone' => ['required', 'string'],
+            'pin' => ['required', 'string'],
+        ]);
 
-    $user = User::where('phone', $request->phone)->first();
+        $user = User::where('phone', $request->phone)->first();
 
-    if (!$user || !Hash::check($request->pin, $user->pin)) {
-        return back()
-            ->withErrors([
-                'pin' => 'Invalid phone number or PIN.'
-            ])
-            ->withInput();
+        if (! $user || ! Hash::check($request->pin, $user->pin)) {
+            return back()
+                ->withErrors([
+                    'pin' => 'Invalid phone number or PIN.',
+                ])
+                ->withInput();
+        }
+
+        if ($user->status === 'pending') {
+            return back()
+                ->withErrors([
+                    'pin' => 'Your account is pending approval.',
+                ]);
+        }
+
+        if ($user->status === 'rejected') {
+            return back()
+                ->withErrors([
+                    'pin' => 'Your account has been rejected.',
+                ]);
+        }
+
+        if ($user->status === 'blocked') {
+            return back()
+                ->withErrors([
+                    'pin' => 'Your account has been blocked.',
+                ]);
+        }
+
+        Auth::login($user);
+
+        $request->session()->regenerate();
+
+        if ($user->role === 'admin') {
+            return redirect()->route('admin.dashboard');
+        }
+
+        return redirect()->route('user.dashboard');
     }
 
-    if ($user->status === 'pending') {
-        return back()
-            ->withErrors([
-                'pin' => 'Your account is pending approval.'
-            ]);
-    }
-
-    if ($user->status === 'rejected') {
-        return back()
-            ->withErrors([
-                'pin' => 'Your account has been rejected.'
-            ]);
-    }
-
-    if ($user->status === 'blocked') {
-        return back()
-            ->withErrors([
-                'pin' => 'Your account has been blocked.'
-            ]);
-    }
-
-    Auth::login($user);
-
-    $request->session()->regenerate();
-
-    if ($user->role === 'admin') {
-        return redirect()->route('admin.dashboard');
-    }
-
-    return redirect()->route('user.dashboard');
-}
-
-
-     public function showSignup()
+    public function showSignup()
     {
         return view('auth.signup');
     }
@@ -130,7 +130,7 @@ class AuthController extends Controller
             'pin' => Hash::make($validated['pin']),
 
             // web registration
-            'device_id' => 'web-' . uniqid(),
+            'device_id' => 'web-'.uniqid(),
 
             // waiting for admin approval
             'status' => 'pending',
@@ -142,7 +142,7 @@ class AuthController extends Controller
                 'success',
                 'Registration submitted successfully. Please wait for admin approval.'
             );
-    }           
+    }
 
     public function logout(Request $request)
     {

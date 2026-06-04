@@ -9,7 +9,7 @@ x-init="$watch('theme', value => {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $title ?? 'Dashboard' }} | Green Tech Exim</title>
+    <title>@yield('title', 'Dashboard') | Green Tech Exim</title>
     @vite([
         'resources/css/app.css',
         'resources/js/app.js'

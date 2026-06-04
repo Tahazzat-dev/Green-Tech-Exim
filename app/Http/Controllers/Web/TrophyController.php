@@ -54,12 +54,16 @@ class TrophyController extends Controller
     //     return back()->with('success', 'Device lock released. User account set back to pending for new registration verification.');
     // }
 
-
-
     // public function show(Product $product)
     public function show()
-{
-    // return view('trophies.details', ['product' => $product]);
-    return view('trophies.details');
-}
+    {
+        // return view('trophies.details', ['product' => $product]);
+        return view('trophies.details');
+    }
+
+    public function all()
+    {
+        // return view('trophies.trophies', ['products' => $products]);
+        return view('trophies.trophies');
+    }
 }

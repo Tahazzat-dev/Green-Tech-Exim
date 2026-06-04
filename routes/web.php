@@ -16,6 +16,7 @@ Route::middleware('guest')->group(function () {
 
 
     // ======== trophy controller ==========
+     Route::get('/trophies',[TrophyController::class, 'all'])->name('trophies.all');
      Route::get('/trophies/{product}',[TrophyController::class, 'show'])->name('trophies.show');
      Route::get('/contact-us', [UserController::class, 'showExecutives'])->name('executives');
 }); 
