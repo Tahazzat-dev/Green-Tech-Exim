@@ -31,8 +31,8 @@
 
                 <!-- DESKTOP NAVIGATION (Visible only on >= lg) -->
                 <nav class="hidden lg:flex text-base lg:gap-10">
-                    <a href="{{ route('signin') }}" 
-                       class="nav-link text-base font-medium {{ request()->routeIs('categories') ? 'active' : '' }}"
+                    <a href="{{ route('categories.all') }}" 
+                       class="nav-link text-base font-medium {{ request()->routeIs('categories.all') ? 'active' : '' }}"
                        >
                         Categories
                     </a>

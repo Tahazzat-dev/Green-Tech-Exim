@@ -55,6 +55,11 @@ class TrophyController extends Controller
     // }
 
     // public function show(Product $product)
+
+    public function categories()
+    {
+        return view('categories.categories');
+    }
     public function show()
     {
         // return view('trophies.details', ['product' => $product]);
