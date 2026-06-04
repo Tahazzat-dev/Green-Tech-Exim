@@ -310,3 +310,8 @@ DARK THEME OVERRIDES
 .link-text:hover {
     text-decoration: underline;
 }
+
+.custom-container {
+    width: 100%;
+    max-width: 1440px;
+}
