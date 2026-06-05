@@ -1,0 +1,174 @@
+<?php
+
+namespace App\Http\Controllers\Web\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\File;
+
+class UserController extends Controller
+{
+    public function index()
+    {
+        $users = User::latest()
+            ->paginate(12);
+
+        return view(
+            'admin.users.index',
+            compact('users')
+        );
+    }
+
+    public function create()
+    {
+        return view('admin.users.create');
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => ['required'],
+            'phone' => [
+                'required',
+                'unique:users'
+            ],
+            'shop_name' => ['required'],
+            'city_area' => ['required'],
+
+            'photo' => [
+                'nullable',
+                File::image()->max(2048)
+            ],
+
+            'pin' => [
+                'required',
+                'digits:4',
+                'confirmed'
+            ],
+
+            'role' => [
+                'required',
+                'in:admin,user'
+            ],
+
+            'status' => [
+                'required',
+                'in:pending,approved,blocked,rejected'
+            ],
+        ]);
+
+        $photoPath = null;
+
+        if ($request->hasFile('photo')) {
+
+            $photoPath = $request
+                ->file('photo')
+                ->store('users', 'public');
+        }
+
+        User::create([
+            'name' => $validated['name'],
+            'phone' => $validated['phone'],
+            'shop_name' => $validated['shop_name'],
+            'city_area' => $validated['city_area'],
+            'photo' => $photoPath,
+            'pin' => Hash::make($validated['pin']),
+            'role' => $validated['role'],
+            'status' => $validated['status'],
+            'device_id' => 'admin-' . uniqid(),
+        ]);
+
+        return redirect()
+            ->route('admin.users.index')
+            ->with(
+                'success',
+                'User created successfully.'
+            );
+    }
+
+    public function show(User $user)
+    {
+        return view(
+            'admin.users.show',
+            compact('user')
+        );
+    }
+
+    public function edit(User $user)
+    {
+        return view(
+            'admin.users.edit',
+            compact('user')
+        );
+    }
+
+    public function update(
+        Request $request,
+        User $user
+    ) {
+
+        $validated = $request->validate([
+            'name' => ['required'],
+            'phone' => [
+                'required',
+                'unique:users,phone,' . $user->id
+            ],
+
+            'shop_name' => ['required'],
+            'city_area' => ['required'],
+
+            'role' => [
+                'required',
+                'in:admin,user'
+            ],
+
+            'status' => [
+                'required',
+                'in:pending,approved,blocked,rejected'
+            ],
+        ]);
+
+        $data = [
+            'name' => $validated['name'],
+            'phone' => $validated['phone'],
+            'shop_name' => $validated['shop_name'],
+            'city_area' => $validated['city_area'],
+            'role' => $validated['role'],
+            'status' => $validated['status'],
+        ];
+
+        if ($request->filled('pin')) {
+            $data['pin'] = Hash::make($request->pin);
+        }
+
+        if ($request->hasFile('photo')) {
+
+            $data['photo'] = $request
+                ->file('photo')
+                ->store('users', 'public');
+        }
+
+        $user->update($data);
+
+        return redirect()
+            ->route('admin.users.index')
+            ->with(
+                'success',
+                'User updated successfully.'
+            );
+    }
+
+    public function destroy(User $user)
+    {
+        $user->delete();
+
+        return redirect()
+            ->route('admin.users.index')
+            ->with(
+                'success',
+                'User deleted successfully.'
+            );
+    }
+}

@@ -46,8 +46,8 @@
                       >
                         Contact Us
                     </a>
-                    <a href="{{ route('admin.contacts') }}" 
-                       class="nav-link text-base font-medium {{ request()->routeIs('admin.contacts') ? 'active' : '' }}"
+                    <a href="{{ route('signin') }}" 
+                       class="nav-link text-base font-medium {{ request()->routeIs('signin') ? 'active' : '' }}"
                        >
                         
                     </a>
@@ -62,13 +62,13 @@
                        >
                         Trophies
                     </a>
-                    <a href="{{ route('admin.users') }}" 
-                      class="nav-link text-base font-medium {{ request()->routeIs('admin.users') ? 'active' : '' }}"
+                    <a href="{{ route('signin') }}" 
+                      class="nav-link text-base font-medium {{ request()->routeIs('signin') ? 'active' : '' }}"
                       >
                         Users
                     </a>
-                    <a href="{{ route('admin.contacts') }}" 
-                       class="nav-link text-base font-medium {{ request()->routeIs('admin.contacts') ? 'active' : '' }}"
+                    <a href="{{ route('signin') }}" 
+                       class="nav-link text-base font-medium {{ request()->routeIs('signin') ? 'active' : '' }}"
                        >
                         Contacts
                     </a>

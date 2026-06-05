@@ -4,6 +4,10 @@ use App\Http\Controllers\Web\AdminController;
 use App\Http\Controllers\Web\AuthController;
 use App\Http\Controllers\Web\TrophyController;
 use App\Http\Controllers\Web\UserController;
+use App\Http\Controllers\Web\Admin\UserController as AdminUserController ;
+use App\Http\Controllers\Web\Admin\CategoryController;
+use App\Http\Controllers\Web\Admin\ProductController;
+use App\Http\Controllers\Web\Admin\ContactController;
 use Illuminate\Support\Facades\Route;
 
 // Guest Routes (Admin Login View & Processing)
@@ -19,16 +23,29 @@ Route::middleware('guest')->group(function () {
      Route::get('/categories',[TrophyController::class, 'categories'])->name('categories.all');
      Route::get('/trophies',[TrophyController::class, 'all'])->name('trophies.all');
      Route::get('/trophies/{product}',[TrophyController::class, 'show'])->name('trophies.show');
-     Route::get('/contact-us', [UserController::class, 'showExecutives'])->name('executives');
+     Route::get('/contact-us', [UserController::class, 'showExecutives'])->name('executives');    
+
+    //  admin route for categories
+    // Route::get("/dashboard/categories",[AdminController::class, 'categories'])->name("categories"); 
+    // Route::get("/dashboard/categories/{category}",[AdminController::class, 'show'])->name("categories.show"); 
+
+    //  admin route for categories
+    // Route::get("/dashboard/products",[AdminController::class, 'products'])->name("products"); 
+    // Route::get("/dashboard/products/{product}",[AdminController::class, 'show'])->name("products.show"); 
+
+    //  admin route for contacts
+    // Route::get("/dashboard/contacts",[AdminController::class, 'contacts'])->name("contacts"); 
+    // Route::get("/dashboard/contacts/{contact}",[AdminController::class, 'show'])->name("contacts.show"); 
 }); 
 
 
 
 // Route::middleware("auth")->group(function(){
 Route::prefix('/admin')->name('admin.')->group(function () {
-    Route::get('/contacts', [AdminController::class, 'contacts'])->name("contacts"); // name: admin.contacts
-    Route::get('/users', [AdminController::class, 'users'])->name("users");       // name: admin.users
-    Route::get('/trophies/{product}', [UserController::class, 'show'])->name('trophies.show'); // name: admin.trophies.show
+    Route::resource('/users', AdminUserController::class);
+    Route::resource('categories', CategoryController::class);
+    Route::resource('products',ProductController::class);
+    Route::resource('contacts',ContactController::class);
 });
    
 // });

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('label');
 
             $table->decimal('amount', 10, 2);
-
+            $table->decimal('discount_price', 8, 2)->nullable();
             $table->decimal(
                 'discount_amount',
                 10,

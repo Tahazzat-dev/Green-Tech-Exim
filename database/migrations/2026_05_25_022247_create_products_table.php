@@ -19,14 +19,15 @@ return new class extends Migration
                 ->cascadeOnDelete();
 
             $table->string('name');
-
+            $table->string('slug');
+            $table->decimal('discount_price', 8, 2)->nullable();
             $table->longText('description')
                 ->nullable();
 
             $table->string('image')
                 ->nullable();
 
-            $table->enum('stock_status', [
+            $table->enum('status', [
                 'in_stock',
                 'out_stock',
             ]);
