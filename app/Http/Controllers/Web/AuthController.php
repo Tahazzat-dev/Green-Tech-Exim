@@ -13,6 +13,19 @@ class AuthController extends Controller
 {
     public function showSignin()
     {
+        // dd("die before request");
+        if (auth()->check()) {
+
+            if (auth()->user()->role === 'admin') {
+
+                return redirect()
+                    ->route('admin.users.index');
+            }
+
+            return redirect()
+                ->route('categories.index');
+        }
+
         return view('auth.signin');
     }
 
@@ -59,10 +72,11 @@ class AuthController extends Controller
         $request->session()->regenerate();
 
         if ($user->role === 'admin') {
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('admin.users.index');
         }
 
-        return redirect()->route('user.dashboard');
+        return redirect()->route('categories.all');
+
     }
 
     public function showSignup()
@@ -150,6 +164,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('login');
+        return redirect()->route('signin');
     }
 }

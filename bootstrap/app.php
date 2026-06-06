@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -19,8 +19,10 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
-            'admin' => AdminMiddleware::class,
+            'role' => RoleMiddleware::class,
         ]);
+
+        $middleware->redirectGuestsTo(fn () => route('signin'));
     })
     ->withExceptions(function (Exceptions $exceptions) {
 

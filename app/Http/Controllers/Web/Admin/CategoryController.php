@@ -91,7 +91,7 @@ class CategoryController extends Controller
                 'required',
                 'string',
                 'max:255',
-                'unique:categories,name,' . $category->id,
+                'unique:categories,name,'.$category->id,
             ],
 
             'image' => [

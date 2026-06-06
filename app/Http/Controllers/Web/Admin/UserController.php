@@ -12,7 +12,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::latest()
+        $users = User::where('role', 'user')->latest()
             ->paginate(12);
 
         return view(
@@ -32,30 +32,30 @@ class UserController extends Controller
             'name' => ['required'],
             'phone' => [
                 'required',
-                'unique:users'
+                'unique:users',
             ],
             'shop_name' => ['required'],
             'city_area' => ['required'],
 
             'photo' => [
                 'nullable',
-                File::image()->max(2048)
+                File::image()->max(2048),
             ],
 
             'pin' => [
                 'required',
                 'digits:4',
-                'confirmed'
+                'confirmed',
             ],
 
             'role' => [
                 'required',
-                'in:admin,user'
+                'in:admin,user',
             ],
 
             'status' => [
                 'required',
-                'in:pending,approved,blocked,rejected'
+                'in:pending,approved,blocked,rejected',
             ],
         ]);
 
@@ -77,7 +77,7 @@ class UserController extends Controller
             'pin' => Hash::make($validated['pin']),
             'role' => $validated['role'],
             'status' => $validated['status'],
-            'device_id' => 'admin-' . uniqid(),
+            'device_id' => 'admin-'.uniqid(),
         ]);
 
         return redirect()
@@ -113,7 +113,7 @@ class UserController extends Controller
             'name' => ['required'],
             'phone' => [
                 'required',
-                'unique:users,phone,' . $user->id
+                'unique:users,phone,'.$user->id,
             ],
 
             'shop_name' => ['required'],
@@ -121,12 +121,12 @@ class UserController extends Controller
 
             'role' => [
                 'required',
-                'in:admin,user'
+                'in:admin,user',
             ],
 
             'status' => [
                 'required',
-                'in:pending,approved,blocked,rejected'
+                'in:pending,approved,blocked,rejected',
             ],
         ]);
 

@@ -26,12 +26,12 @@
                        </label>
                         <input
                         id="phone"
-                        type="text"
+                        type="number"
                         name="phone"
                         autocomplete="off"
                         value="{{ old('phone') }}"
                         placeholder="Enter your phone"
-                        class="text-text-body outline-0 py-2 px-4  border-0 grow"
+                        class=" text-text-body outline-0 py-2 px-4  border-0 grow"
                     >
                     </div>
                     @error('phone')

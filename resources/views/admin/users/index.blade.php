@@ -25,9 +25,9 @@
     </div>
 
     <!-- table -->
-    <div class="mt-6 overflow-hidden rounded-xl border border-border bg-background">
+    <div class="mt-6 overflow-y-hidden rounded-xl border border-border bg-background">
 
-        <table class="w-full">
+        <table class="w-full min-w-[900px]">
 
             <thead class="bg-bg-body">
 

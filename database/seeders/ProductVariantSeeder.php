@@ -23,13 +23,13 @@ class ProductVariantSeeder extends Seeder
                 ProductVariant::create([
                     'product_id' => $product->id,
 
-                    'label' => 'Price ' . chr(64 + $i),
+                    'label' => 'Price '.chr(64 + $i),
 
                     'amount' => $price,
 
                     'discount_price' => $price - rand(50, 300),
 
-                    'size' => rand(5, 25) . ' Inch',
+                    'size' => rand(5, 25).' Inch',
                 ]);
             }
         }

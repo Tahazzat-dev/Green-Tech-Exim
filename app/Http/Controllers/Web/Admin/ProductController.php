@@ -141,7 +141,7 @@ class ProductController extends Controller
 
             return back()
                 ->withErrors([
-                    'error' => $e->getMessage()
+                    'error' => $e->getMessage(),
                 ])
                 ->withInput();
         }
@@ -257,7 +257,7 @@ class ProductController extends Controller
 
             return back()
                 ->withErrors([
-                    'error' => $e->getMessage()
+                    'error' => $e->getMessage(),
                 ]);
         }
     }

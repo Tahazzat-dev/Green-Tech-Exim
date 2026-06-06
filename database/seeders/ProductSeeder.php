@@ -20,10 +20,10 @@ class ProductSeeder extends Seeder
                 Product::create([
                     'category_id' => $category->id,
 
-                    'name' => $category->name . ' ' . $i,
+                    'name' => $category->name.' '.$i,
 
                     'slug' => Str::slug(
-                        $category->name . ' ' . $i
+                        $category->name.' '.$i
                     ),
 
                     'description' => fake()->paragraph(5),

@@ -47,7 +47,7 @@ class UserSeeder extends Seeder
                     'blocked',
                 ]),
 
-                'device_id' => 'device-' . $i,
+                'device_id' => 'device-'.$i,
 
                 'role' => 'user',
             ]);
