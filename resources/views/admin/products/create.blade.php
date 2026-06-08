@@ -194,7 +194,6 @@
                                 placeholder="Size"
                                 class="rounded-lg border border-border bg-bg-body px-4 py-3"
                             >
-
                         </div>
 
                         <button

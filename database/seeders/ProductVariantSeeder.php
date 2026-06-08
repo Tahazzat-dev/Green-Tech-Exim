@@ -23,7 +23,7 @@ class ProductVariantSeeder extends Seeder
                 ProductVariant::create([
                     'product_id' => $product->id,
 
-                    'label' => 'Price '.chr(64 + $i),
+                    'label' => chr(64 + $i),
 
                     'amount' => $price,
 
