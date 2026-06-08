@@ -14,7 +14,7 @@ class ProductVariantSeeder extends Seeder
 
         foreach ($products as $product) {
 
-            $variants = rand(2, 4);
+            $variants = 2;
 
             for ($i = 1; $i <= $variants; $i++) {
 

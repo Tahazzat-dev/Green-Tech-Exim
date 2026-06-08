@@ -23,6 +23,7 @@ class User extends Authenticatable
         'phone',
         'shop_name',
         'city_area',
+        'discount',
         'photo',
         'pin',
         'status',

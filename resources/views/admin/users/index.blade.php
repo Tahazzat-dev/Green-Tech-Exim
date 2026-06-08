@@ -50,6 +50,10 @@
                     </th>
 
                     <th class="p-4 text-left">
+                        Discount
+                    </th>
+
+                    <th class="p-4 text-left">
                         Status
                     </th>
 
@@ -90,6 +94,10 @@
 
                         <td class="p-4">
                             {{ $user->shop_name }}
+                        </td>
+
+                        <td class="p-4 pl-9">
+                            {{ $user->discount ?? 0 }}%
                         </td>
 
                         <td class="p-4">

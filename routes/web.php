@@ -32,8 +32,8 @@ Route::middleware('auth')->group(function () {
     /* ======== admin routes ========= */
     Route::prefix('/admin')->name('admin.')->middleware('role:admin')->group(function () {
         Route::resource('/users', AdminUserController::class);
-        Route::resource('categories', CategoryController::class);
-        Route::resource('products', ProductController::class);
-        Route::resource('contacts', ContactController::class);
+        Route::resource('/categories', CategoryController::class);
+        Route::resource('/trophies', ProductController::class);
+        Route::resource('/contacts', ContactController::class);
     });
 });

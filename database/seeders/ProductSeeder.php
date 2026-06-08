@@ -15,7 +15,7 @@ class ProductSeeder extends Seeder
 
         foreach ($categories as $category) {
 
-            for ($i = 1; $i <= 10; $i++) {
+            for ($i = 1; $i <= rand(5,10); $i++) {
 
                 Product::create([
                     'category_id' => $category->id,

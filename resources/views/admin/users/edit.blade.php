@@ -48,6 +48,18 @@
                 >
             </div>
 
+             <div>
+                <label class="block mb-2">
+                    Photo
+                </label>
+
+                <input
+                    type="file"
+                    name="photo"
+                    class="w-full rounded-lg border border-border bg-bg-body px-4 py-3"
+                >
+            </div>
+
             <div>
                 <label class="block mb-2">
                     Phone
@@ -112,6 +124,19 @@
                 </select>
             </div>
 
+             <div>
+                <label class="block mb-2">
+                    Discount %
+                </label>
+
+                <input
+                    type="text"
+                    name="discount"
+                    value="{{ old('discount', $user->discount) }}"
+                    class="w-full rounded-lg border border-border bg-bg-body px-4 py-3"
+                >
+            </div>
+
             <div>
                 <label class="block mb-2">
                     Status
@@ -150,19 +175,6 @@
                     class="w-full rounded-lg border border-border bg-bg-body px-4 py-3"
                 >
             </div>
-
-            <div>
-                <label class="block mb-2">
-                    Photo
-                </label>
-
-                <input
-                    type="file"
-                    name="photo"
-                    class="w-full rounded-lg border border-border bg-bg-body px-4 py-3"
-                >
-            </div>
-
         </div>
 
         <button

@@ -17,7 +17,7 @@ class ContactSeeder extends Seeder
             'Marketing Head',
         ];
 
-        for ($i = 1; $i <= 12; $i++) {
+        for ($i = 1; $i <= 7; $i++) {
 
             Contact::create([
                 'name' => fake()->name(),

@@ -15,7 +15,7 @@
         </h1>
 
         <a
-            href="{{ route('admin.products.create') }}"
+            href="{{ route('admin.trophies.create') }}"
             class="btn-primary px-4 py-2 rounded-lg"
         >
             Add Product
@@ -74,21 +74,21 @@
                     <div class="flex gap-2 mt-4">
 
                         <a
-                            href="{{ route('admin.products.show', $product) }}"
+                            href="{{ route('admin.trophies.show', $product) }}"
                             class="px-3 py-2 rounded bg-slate-700 text-white text-sm"
                         >
                             View
                         </a>
 
                         <a
-                            href="{{ route('admin.products.edit', $product) }}"
+                            href="{{ route('admin.trophies.edit', $product) }}"
                             class="px-3 py-2 rounded bg-blue-500 text-white text-sm"
                         >
                             Edit
                         </a>
 
                         <form
-                            action="{{ route('admin.products.destroy', $product) }}"
+                            action="{{ route('admin.trophies.destroy', $product) }}"
                             method="POST"
                         >
 
