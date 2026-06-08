@@ -12,17 +12,39 @@ use Illuminate\Validation\Rules\File;
 
 class ProductController extends Controller
 {
-    public function index()
-    {
-        $products = Product::with('category')
-            ->latest()
-            ->paginate(12);
+   public function index(Request $request)
+{
+    $search = $request->search;
 
-        return view(
-            'admin.products.index',
-            compact('products')
-        );
-    }
+    $products = Product::with('category')
+        ->when($search, function ($query) use ($search) {
+
+            $query->where(function ($q) use ($search) {
+
+                $q->where('name', 'LIKE', "%{$search}%")
+                    ->orWhere('slug', 'LIKE', "%{$search}%")
+                    ->orWhereHas('category', function ($categoryQuery) use ($search) {
+
+                        $categoryQuery->where(
+                            'name',
+                            'LIKE',
+                            "%{$search}%"
+                        );
+
+                    });
+
+            });
+
+        })
+        ->latest()
+        ->paginate(12)
+        ->withQueryString();
+
+    return view(
+        'admin.products.index',
+        compact('products')
+    );
+}
 
     public function create()
     {

@@ -9,7 +9,7 @@
 <div class="custom-container max-w-5xl mx-auto p-4 py-7">
 
     <form
-        action="{{ route('admin.trophies.store') }}"
+        action="{{ route('admin.products.store') }}"
         method="POST"
         enctype="multipart/form-data"
         x-data="productVariants()"
