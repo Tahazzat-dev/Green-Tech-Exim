@@ -10,16 +10,38 @@ use Illuminate\Validation\Rules\File;
 
 class UserController extends Controller
 {
-    public function index()
-    {
-        $users = User::where('role', 'user')->latest()
-            ->paginate(12);
+  public function index(Request $request)
+{
+    $search = $request->search;
 
-        return view(
-            'admin.users.index',
-            compact('users')
-        );
-    }
+    $users = User::query()
+
+        // exclude admins if needed
+        // ->where('role', 'user')
+
+        ->when($search, function ($query) use ($search) {
+
+            $query->where(function ($q) use ($search) {
+
+                $q->where('name', 'LIKE', "%{$search}%")
+                    ->orWhere('phone', 'LIKE', "%{$search}%")
+                    ->orWhere('shop_name', 'LIKE', "%{$search}%")
+                    ->orWhere('status', 'LIKE', "%{$search}%")
+                    ->orWhere('role', 'LIKE', "%{$search}%");
+
+            });
+
+        })
+
+        ->latest()
+        ->paginate(12)
+        ->withQueryString();
+
+    return view(
+        'admin.users.index',
+        compact('users')
+    );
+}
 
     public function create()
     {
