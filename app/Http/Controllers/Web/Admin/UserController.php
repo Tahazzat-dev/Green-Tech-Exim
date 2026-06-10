@@ -66,14 +66,21 @@ public function index(Request $request)
                 'confirmed',
             ],
 
-            'role' => [
-                'required',
-                'in:admin,user',
-            ],
+            // 'role' => [
+            //     'required',
+            //     'in:admin,user',
+            // ],
 
             'status' => [
                 'required',
                 'in:pending,approved,blocked,rejected',
+            ],
+
+            'discount' => [
+                'nullable',
+                'numeric',
+                'min:0',
+                'max:100',
             ],
         ]);
 
@@ -93,7 +100,9 @@ public function index(Request $request)
             'city_area' => $validated['city_area'],
             'photo' => $photoPath,
             'pin' => Hash::make($validated['pin']),
-            'role' => $validated['role'],
+            // 'role' => $validated['role'],
+            'role' => "user",
+            'discount' => $validated['discount'] ?? 0,
             'status' => $validated['status'],
             'device_id' => 'admin-'.uniqid(),
         ]);
@@ -136,15 +145,16 @@ public function index(Request $request)
 
             'shop_name' => ['required'],
             'city_area' => ['required'],
-
-            'role' => [
-                'required',
-                'in:admin,user',
-            ],
-
             'status' => [
                 'required',
                 'in:pending,approved,blocked,rejected',
+            ],
+
+             'discount' => [
+                'nullable',
+                'numeric',
+                'min:0',
+                'max:100',
             ],
         ]);
 
@@ -153,7 +163,7 @@ public function index(Request $request)
             'phone' => $validated['phone'],
             'shop_name' => $validated['shop_name'],
             'city_area' => $validated['city_area'],
-            'role' => $validated['role'],
+            'discount' => $validated['discount'],
             'status' => $validated['status'],
         ];
 
