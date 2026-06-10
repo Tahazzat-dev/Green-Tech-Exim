@@ -56,7 +56,7 @@
                         type="text"
                         name="phone"
                         value="{{ old('phone') }}"
-                        placeholder="Enter your phone"
+                        placeholder="Enter your phone number"
                         class="text-text-body outline-0 py-1.5 lg:py-2 px-4  border-0 grow"
                     >
                     </div>

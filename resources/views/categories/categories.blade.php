@@ -4,8 +4,8 @@
 @include("partials.header")
 <div class="custom-container flex-1 flex flex-col  mx-auto p-4 py-7 md:px-6 lg:p-8 xl:p-10">
     <!-- page title -->
-   <div class="w-full flex justify-center">
-    <h1 class="text-center font-semibold" >Categories</h1>
+   <div class="w-full flex lg:justify-center">
+    <h1 class="font-semibold" >Categories</h1>
    </div>
 
    <!-- page content -->

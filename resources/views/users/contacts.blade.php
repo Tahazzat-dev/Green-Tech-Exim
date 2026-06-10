@@ -2,36 +2,72 @@
 @section('title', 'Contact Us')
 @section('content')
 @include("partials.header")
+
 <div class="custom-container flex-1 flex flex-col  mx-auto p-4 py-7 md:px-6 lg:p-8 xl:p-10">
+
     <!-- page title -->
-   <div class="w-full flex justify-center">
-    <h1 class="text-center font-semibold" >Our Executives</h1>
+   <div class="w-full flex lg:justify-center">
+    <h1 class="text-center font-semibold">Our Executives</h1>
    </div>
 
    <!-- page content -->
-    <div class="w-full pt-5 md:pt-7 gap-4 md:gap-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
-         <!-- contact card -->
-        <?php foreach (range(1, 8) as $index): ?>
-                <div class="flex items-center gap-2 lg:gap-3 p-4 rounded-lg shadow border border-border">
-            <div class="w-12 h-12">
-                            <img 
-                                class="h-full w-full rounded-full" 
-                                src="{{ Vite::asset('resources/images/user-placeholder.png') }}"
-                                alt="User profile"
-                            >
-            </div>
-            <div class="grow flex items-center gap-2 justify-between">
-                    <div class="grow flex flex-col gap-1">
-                        <h5 class="font-semibold" >John Smith</h5>
-                        <p >Position / Designation</p>
-                    </div>  
-                    <button class="p-2 rounded-full bg-[#60B1D3] text-white" >
-                        <svg class="size-5 md:size-6" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path d="M376 32C504.1 32 608 135.9 608 264C608 277.3 597.3 288 584 288C570.7 288 560 277.3 560 264C560 162.4 477.6 80 376 80C362.7 80 352 69.3 352 56C352 42.7 362.7 32 376 32zM384 224C401.7 224 416 238.3 416 256C416 273.7 401.7 288 384 288C366.3 288 352 273.7 352 256C352 238.3 366.3 224 384 224zM352 152C352 138.7 362.7 128 376 128C451.1 128 512 188.9 512 264C512 277.3 501.3 288 488 288C474.7 288 464 277.3 464 264C464 215.4 424.6 176 376 176C362.7 176 352 165.3 352 152zM176.1 65.4C195.8 60 216.4 70.1 224.2 88.9L264.7 186.2C271.6 202.7 266.8 221.8 252.9 233.2L208.8 269.3C241.3 340.9 297.8 399.3 368.1 434.2L406.7 387C418 373.1 437.1 368.4 453.7 375.2L551 415.8C569.8 423.6 579.9 444.2 574.5 463.9L573 469.4C555.4 534.1 492.9 589.3 416.6 573.2C241.6 536.1 103.9 398.4 66.8 223.4C50.7 147.1 105.9 84.6 170.5 66.9L176 65.4z"/></svg>
-                    </button>
-            </div>
-        </div>
-        <?php endforeach; ?>
+    <div class="w-full pt-5 md:pt-7 gap-4 md:gap-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+
+        @forelse ($contacts as $contact)
+
         <!-- contact card -->
+        <div class="flex items-center gap-2 lg:gap-3 p-4 rounded-lg shadow border border-border">
+
+            <div class="w-12 h-12">
+
+                <img
+                    class="h-full w-full rounded-full"
+                    src="{{
+                        $contact->profile
+                            ? asset('storage/' . $contact->profile)
+                            : Vite::asset('resources/images/user-placeholder.png')
+                    }}"
+                    alt="{{ $contact->name }}"
+                >
+
+            </div>
+
+            <div class="grow flex items-center gap-2 justify-between">
+
+                <div class="grow flex flex-col gap-1">
+
+                    <h5 class="font-semibold">
+                        {{ $contact->name }}
+                    </h5>
+
+                    <p>
+                        {{ $contact->designation }}
+                    </p>
+
+                </div>
+
+                <a
+                    href="tel:{{ $contact->phone }}"
+                    class="p-2 rounded-full bg-[#60B1D3] text-white"
+                >
+                    <svg class="size-5 md:size-6" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M376 32C504.1 32 608 135.9 608 264C608 277.3 597.3 288 584 288C570.7 288 560 277.3 560 264C560 162.4 477.6 80 376 80C362.7 80 352 69.3 352 56C352 42.7 362.7 32 376 32zM384 224C401.7 224 416 238.3 416 256C416 273.7 401.7 288 384 288C366.3 288 352 273.7 352 256C352 238.3 366.3 224 384 224zM352 152C352 138.7 362.7 128 376 128C451.1 128 512 188.9 512 264C512 277.3 501.3 288 488 288C474.7 288 464 277.3 464 264C464 215.4 424.6 176 376 176C362.7 176 352 165.3 352 152zM176.1 65.4C195.8 60 216.4 70.1 224.2 88.9L264.7 186.2C271.6 202.7 266.8 221.8 252.9 233.2L208.8 269.3C241.3 340.9 297.8 399.3 368.1 434.2L406.7 387C418 373.1 437.1 368.4 453.7 375.2L551 415.8C569.8 423.6 579.9 444.2 574.5 463.9L573 469.4C555.4 534.1 492.9 589.3 416.6 573.2C241.6 536.1 103.9 398.4 66.8 223.4C50.7 147.1 105.9 84.6 170.5 66.9L176 65.4z"/></svg>
+                </a>
+
+            </div>
+
+        </div>
+        <!-- contact card -->
+
+        @empty
+
+            <div class="col-span-full text-center py-10">
+                No executives found.
+            </div>
+
+        @endforelse
+
     </div>
+
 </div>
+
 @endsection
