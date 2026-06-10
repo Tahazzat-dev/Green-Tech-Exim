@@ -130,7 +130,7 @@
                 </label>
 
                 <input
-                    type="text"
+                    type="number"
                     name="discount"
                     value="{{ old('discount', $user->discount) }}"
                     class="w-full rounded-lg border border-border bg-bg-body px-4 py-3"
