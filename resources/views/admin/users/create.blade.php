@@ -88,6 +88,19 @@
                 >
             </div>
 
+             <!-- Photo -->
+            <div class="">
+                <label class="block mb-2">
+                    Photo
+                </label>
+
+                <input
+                    type="file"
+                    name="photo"
+                    class="w-full rounded-lg border border-border bg-bg-body px-4 py-3"
+                >
+            </div>
+
             <!-- City -->
             <div>
                 <label class="block mb-2">
@@ -102,8 +115,20 @@
                 >
             </div>
 
-            <!-- Role -->
             <div>
+                <label class="block mb-2">
+                    Discount %
+                </label>
+
+                <input
+                    type="text"
+                    name="discount"
+                    class="w-full rounded-lg border border-border bg-bg-body px-4 py-3"
+                >
+            </div>
+
+            <!-- Role -->
+            <!-- <div>
                 <label class="block mb-2">
                     Role
                 </label>
@@ -120,7 +145,7 @@
                         Admin
                     </option>
                 </select>
-            </div>
+            </div> -->
 
             <!-- Status -->
             <div>
@@ -175,20 +200,6 @@
                     class="w-full rounded-lg border border-border bg-bg-body px-4 py-3 outline-none"
                 >
             </div>
-
-            <!-- Photo -->
-            <div class="md:col-span-2">
-                <label class="block mb-2">
-                    Photo
-                </label>
-
-                <input
-                    type="file"
-                    name="photo"
-                    class="w-full rounded-lg border border-border bg-bg-body px-4 py-3"
-                >
-            </div>
-
         </div>
 
         <button

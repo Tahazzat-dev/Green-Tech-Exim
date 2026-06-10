@@ -48,18 +48,6 @@
                 >
             </div>
 
-             <div>
-                <label class="block mb-2">
-                    Photo
-                </label>
-
-                <input
-                    type="file"
-                    name="photo"
-                    class="w-full rounded-lg border border-border bg-bg-body px-4 py-3"
-                >
-            </div>
-
             <div>
                 <label class="block mb-2">
                     Phone
@@ -86,6 +74,18 @@
                 >
             </div>
 
+               <div>
+                <label class="block mb-2">
+                    Photo
+                </label>
+
+                <input
+                    type="file"
+                    name="photo"
+                    class="w-full rounded-lg border border-border bg-bg-body px-4 py-3"
+                >
+            </div>
+
             <div>
                 <label class="block mb-2">
                     City / Area
@@ -99,7 +99,7 @@
                 >
             </div>
 
-            <div>
+            <!-- <div>
                 <label class="block mb-2">
                     Role
                 </label>
@@ -122,7 +122,7 @@
                         Admin
                     </option>
                 </select>
-            </div>
+            </div> -->
 
              <div>
                 <label class="block mb-2">

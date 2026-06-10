@@ -173,6 +173,17 @@
                                 class="rounded-lg border border-border bg-bg-body px-4 py-3"
                                 >
                             </div>
+
+                             <div class="flex flex-col gap-2">
+                                <label>Variant Size (inch)</label>
+                                <input
+                                type="text"
+                                :name="'variants[' + index + '][size_inch]'"
+                                x-model="variant.size"
+                                placeholder="ex: 28"
+                                class="rounded-lg border border-border bg-bg-body px-4 py-3"
+                            >
+                            </div>
                             
                             <div class="flex flex-col gap-2">
                                 <label>Price</label>
@@ -184,19 +195,7 @@
                                 class="rounded-lg border border-border bg-bg-body px-4 py-3"
                                 >
                             </div>
-
-                             
-                            <div class="flex flex-col gap-2">
-                                <label>Variant Size (inch)</label>
-                                <input
-                                type="text"
-                                :name="'variants[' + index + '][size_inch]'"
-                                x-model="variant.size"
-                                placeholder="ex: 28"
-                                class="rounded-lg border border-border bg-bg-body px-4 py-3"
-                            >
-                            </div>
-
+                            
                             <!-- <input
                                 type="number"
                                 :name="'variants[' + index + '][discount_price]'"
