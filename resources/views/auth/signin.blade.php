@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<div class="flex items-center justify-center w-full h-full p-4 mx-auto" >
+<div class="flex items-center justify-center w-full min-h-screen h-full p-4 mx-auto" >
     <div class="w-full max-w-[500px] shadow-lg bg-background rounded-2xl p-4 md:p-5 lg:py-8 xl:py-10" >
         <div class="mb-8">
             <h4 class="text-base">Welcome Back</h4>

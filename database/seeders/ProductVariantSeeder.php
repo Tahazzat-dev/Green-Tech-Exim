@@ -29,7 +29,7 @@ class ProductVariantSeeder extends Seeder
 
                     'discount_price' => $price - rand(50, 300),
 
-                    'size' => rand(5, 25).' Inch',
+                    'size' => rand(5, 25),
                 ]);
             }
         }

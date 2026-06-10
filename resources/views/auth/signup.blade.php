@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<div class="flex-1 overflow-y-auto flex flex-col items-center justify-center w-full max-h-screen h-full mx-auto" >
+<div class="flex-1 overflow-y-auto flex min-h-screen flex-col items-center justify-center w-full max-h-screen h-full mx-auto" >
     <div class="w-full h-full flex items-center justify-center flex-1 p-4 my-4">
 <div class="shrink-0 w-full max-w-[500px] shadow-lg bg-background rounded-2xl my-4 p-4 md:p-5 lg:py-8 xl:py-10" >
         <div class="mb-8">
