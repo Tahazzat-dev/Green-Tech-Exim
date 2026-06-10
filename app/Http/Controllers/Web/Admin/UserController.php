@@ -10,14 +10,11 @@ use Illuminate\Validation\Rules\File;
 
 class UserController extends Controller
 {
-  public function index(Request $request)
+public function index(Request $request)
 {
     $search = $request->search;
 
-    $users = User::query()
-
-        // exclude admins if needed
-        // ->where('role', 'user')
+    $users = User::where('role', 'user')
 
         ->when($search, function ($query) use ($search) {
 
@@ -26,8 +23,7 @@ class UserController extends Controller
                 $q->where('name', 'LIKE', "%{$search}%")
                     ->orWhere('phone', 'LIKE', "%{$search}%")
                     ->orWhere('shop_name', 'LIKE', "%{$search}%")
-                    ->orWhere('status', 'LIKE', "%{$search}%")
-                    ->orWhere('role', 'LIKE', "%{$search}%");
+                    ->orWhere('status', 'LIKE', "%{$search}%");
 
             });
 

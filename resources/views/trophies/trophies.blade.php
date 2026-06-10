@@ -2,7 +2,7 @@
 @section('title', 'Trophies')
 @section('content')
 @include("partials.header")
-<div class="custom-container flex-1 flex flex-col  mx-auto p-4 py-7 md:px-6 lg:p-8 xl:p-10">
+<div class="custom-container flex-1 flex flex-col  mx-auto p-4 py-7 md:px-6 lg:p-8 xl:p-10 h-full">
     <!-- page title -->
    <div class="w-full flex justify-center">
     <h1 class="text-center font-semibold" >All Trophies</h1>
