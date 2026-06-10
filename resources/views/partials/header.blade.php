@@ -112,16 +112,17 @@
                                 aria-orientation="vertical">
                                 <!-- User Card Info Inside Dropdown -->
                                 <div class="border-b  border-border px-3 py-3">
-                                    <h5 class="mb-2 font-semibold" >Test User</h5>
-                                    <p class="text-base">01777342354</p>
+                                    <h5 class="mb-2 font-semibold" >{{auth()->user()->name}} </h5>
+                                    <p class="text-base">{{auth()->user()->phone}}</p>
                                 </div>
                                 <!-- Authentication Form Submission (The secure Laravel Way) -->
                                 <div class="border-t border-border pt-1">
                                     <a href="{{ route('logout') }}" 
                                     onclick="event.preventDefault(); document.getElementById('desktop-logout-form').submit();"
-                                    class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-rose-600 hover:bg-rose-50 transition-colors" 
+                                    class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50 transition-colors" 
                                     role="menuitem">
-                                        <i data-lucide="log-out" class="h-4 w-4"></i> Sign out
+                                    <svg class="size-5" fill="currentColor" viewBox="0 0 640 640"><path d="M569 337C578.4 327.6 578.4 312.4 569 303.1L425 159C418.1 152.1 407.8 150.1 398.8 153.8C389.8 157.5 384 166.3 384 176L384 256L272 256C245.5 256 224 277.5 224 304L224 336C224 362.5 245.5 384 272 384L384 384L384 464C384 473.7 389.8 482.5 398.8 486.2C407.8 489.9 418.1 487.9 425 481L569 337zM224 160C241.7 160 256 145.7 256 128C256 110.3 241.7 96 224 96L160 96C107 96 64 139 64 192L64 448C64 501 107 544 160 544L224 544C241.7 544 256 529.7 256 512C256 494.3 241.7 480 224 480L160 480C142.3 480 128 465.7 128 448L128 192C128 174.3 142.3 160 160 160L224 160z"/></svg>
+                                        Sign out
                                     </a>
                                 </div>
                             </div>

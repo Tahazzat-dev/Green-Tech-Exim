@@ -10,6 +10,11 @@
 
    <!-- page content -->
     <div class="w-full pt-5 md:pt-7 gap-4 md:gap-5 grid grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(230px,1fr))]">
+
+        @php
+            $userDiscount = auth()->user()?->discount ?? 0;
+        @endphp
+
        @forelse ($products as $product)
             <!-- Trophy card -->
             <a  href="{{ route('trophies.show', [
@@ -65,9 +70,8 @@
                                 <p class="text-xs sm:text-[14px]">
 
                                     {{ $variant->label }}
-
-                                    @if ($variant->size_inch)
-                                        {{ $variant->size_inch }}"
+                                    @if ($variant->size)
+                                        {{ $variant->size }}"
                                     @endif
 
                                 </p>
@@ -98,9 +102,15 @@
 
                     @forelse ($product->variants as $variant)
 
+                        @php
+                            $discountAmount = ($variant->amount * $userDiscount) / 100;
+
+                            $finalPrice = $variant->amount - $discountAmount;
+                        @endphp
+
                         <h5 class="text-xs sm:text-base text-center">
 
-                            {{ $variant->label }} {{ number_format($variant->amount) }} Tk
+                            {{ $variant->label }} {{ number_format($finalPrice) }} Tk
 
                         </h5>
 
