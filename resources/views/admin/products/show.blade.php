@@ -13,7 +13,7 @@
         <div class="bg-background border border-border rounded-xl p-5">
 
             <img
-                src="{{ $product->image ? asset('storage/' . $product->image) : Vite::asset('resources/images/trophy-big.png') }}"
+                src="{{ $product->image ? asset('storage/' . $product->image) : asset('images/trophy-big.png') }}"
                 class="w-full object-contain rounded-xl"
             >
 

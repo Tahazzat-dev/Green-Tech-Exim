@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
+$faker = \Faker\Factory::create();
 
 class ProductSeeder extends Seeder
 {

@@ -20,7 +20,7 @@
         <div class="lg:col-span-5 flex flex-col items-center">
           <div class="relative aspect-square w-full rounded-2xl md:bg-gradient-to-br from-slate-50 to-slate-100/40 md:p-6 flex items-center justify-center border border-slate-50 dark:from-slate-900/70 dark:to-slate-900 dark:border-slate-800">
             <img
-               src="{{ Vite::asset('resources/images/trophy-big.png') }}"
+               src="{{ asset('images/trophy-big.png') }}"
               alt={trophy.name}
               class="h-full w-full object-contain drop-shadow-lg"
               referrerPolicy="no-referrer"

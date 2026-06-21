@@ -35,7 +35,7 @@
             >
                 <div class="hidden lg:flex h-14 w-16 items-center justify-center">
                     <img
-                        src="{{ Vite::asset('resources/images/site-logo.png') }}"
+                        src="{{ asset('images/site-logo.png') }}"
                         alt="Site logo"
                     >
                 </div>
@@ -87,7 +87,7 @@
                             <img 
                              src="{{ auth()->user()->photo
                                 ? asset('storage/' . auth()->user()->photo)
-                                : Vite::asset('resources/images/user-placeholder.png') }}"
+                                : asset('images/user-placeholder.png') }}"
                                  alt="{{ auth()->user()->name }}"
                                 class="h-9 w-9 rounded-full" 
                             >
@@ -172,7 +172,7 @@
                     <div class="flex items-center justify-between gap-3 border-b border-slate-100 bg-secondary px-6 py-4">
                         <img 
                             class="h-14 w-14 rounded-full border-2 border-white object-cover" 
-                            src="{{ auth()->user()->photo ? asset('storage/' . auth()->user()->photo) : Vite::asset('resources/images/user-placeholder.png') }}"
+                            src="{{ auth()->user()->photo ? asset('storage/' . auth()->user()->photo) : asset('images/user-placeholder.png') }}"
                             alt="{{ auth()->user()->name }}"
                             width="56" 
                             height="56"
@@ -234,7 +234,7 @@
 
                 <div class="w-full px-6 mt-auto pt-4">
                     <img 
-                        src="{{ Vite::asset('resources/images/site-large-logo.png') }}"
+                        src="{{ asset('images/site-large-logo.png') }}"
                         class="w-full max-w-60"
                         alt="Site Large Logo"
                         loading="lazy"

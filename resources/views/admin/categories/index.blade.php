@@ -34,7 +34,7 @@
                 <div class="aspect-square bg-bg-body p-4">
 
                     <img
-                        src="{{ $category->image ? asset('storage/' . $category->image) : Vite::asset('resources/images/trophy-big.png') }}"
+                        src="{{ $category->image ? asset('storage/' . $category->image) : asset('images/trophy-big.png') }}"
                         class="w-full h-full object-contain"
                     >
 

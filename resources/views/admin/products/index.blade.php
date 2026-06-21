@@ -100,7 +100,7 @@
             <div class="aspect-square relative bg-bg-body w-full p-4 max-h-56">
 
                 <img
-                    src="{{ $product->image ? asset('storage/' . $product->image) : Vite::asset('resources/images/trophy-big.png') }}"
+                    src="{{ $product->image ? asset('storage/' . $product->image) : asset('images/trophy-big.png') }}"
                     class="w-full h-full object-contain"
                     alt="{{ $product->name }}"
                 >

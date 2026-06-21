@@ -25,7 +25,7 @@
                     src="{{
                         $contact->profile
                             ? asset('storage/' . $contact->profile)
-                            : Vite::asset('resources/images/user-placeholder.png')
+                            : asset('images/user-placeholder.png')
                     }}"
                     alt="{{ $contact->name }}"
                 >

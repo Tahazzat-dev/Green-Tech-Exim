@@ -11,7 +11,7 @@
     <div class="bg-background border border-border rounded-xl p-6">
 
         <img
-            src="{{ $category->image ? asset('storage/' . $category->image) : Vite::asset('resources/images/trophy-big.png') }}"
+            src="{{ $category->image ? asset('storage/' . $category->image) : asset('images/trophy-big.png') }}"
             class="w-full max-h-96 object-contain rounded-xl bg-bg-body p-5"
         >
 

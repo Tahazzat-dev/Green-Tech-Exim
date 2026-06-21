@@ -28,7 +28,7 @@
                     src="{{
                         $product->image
                             ? asset('storage/' . $product->image)
-                            : Vite::asset('resources/images/trophy-big.png')
+                            : asset('images/trophy-big.png')
                     }}"
                     alt="{{ $product->name }}"
                     class="h-full w-full object-contain drop-shadow-lg"

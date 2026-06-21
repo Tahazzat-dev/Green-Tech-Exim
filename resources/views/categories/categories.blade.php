@@ -18,7 +18,7 @@
                 src="{{
                     $category->image
                         ? asset('storage/' . $category->image)
-                        : Vite::asset('resources/images/trophy-big.png')
+                        : asset('images/trophy-big.png')
                 }}"
                 alt="{{ $category->name }}"
                 class="h-full w-full object-contain drop-shadow-lg"
