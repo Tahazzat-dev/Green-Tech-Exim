@@ -91,6 +91,16 @@
 
             <div>
                 <h4 class="font-medium mb-1">
+                    New Device Login
+                </h4>
+
+                <p>
+                    {{ $user->device_change_allowed ? 'Allowed for next login' : 'Locked to current device' }}
+                </p>
+            </div>
+
+            <div>
+                <h4 class="font-medium mb-1">
                     Registered At
                 </h4>
 

@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    private const ADMIN_DENIED_MESSAGE = 'This account is not allowed on the mobile app.';
+
     public function register(RegisterRequest $request)
     {
         $photo = null;
@@ -28,9 +30,12 @@ class AuthController extends Controller
             'shop_name' => $request->shop_name,
             'city_area' => $request->city_area,
             'photo' => $photo,
+            'discount' => 0,
             'pin' => Hash::make($request->pin),
             'plain_pin' => $request->pin,
             'device_id' => $request->device_id,
+            'device_change_allowed' => false,
+            'role' => 'user',
             'status' => 'pending',
         ]);
 
@@ -51,6 +56,13 @@ class AuthController extends Controller
             return response()->json([
                 'message' => 'Invalid credentials',
             ], 401);
+        }
+
+        if ($user->role !== 'user') {
+
+            return response()->json([
+                'message' => self::ADMIN_DENIED_MESSAGE,
+            ], 403);
         }
 
         if ($user->status === 'pending') {
@@ -86,14 +98,28 @@ class AuthController extends Controller
             ], 401);
         }
 
-        if (
-            $user->device_id !==
-            $request->device_id
-        ) {
+        if (! $user->device_id) {
 
-            return response()->json([
-                'message' => 'Device not authorized',
-            ], 403);
+            $user->forceFill([
+                'device_id' => $request->device_id,
+                'device_change_allowed' => false,
+            ])->save();
+
+        } elseif ($user->device_id !== $request->device_id) {
+
+            if (! $user->device_change_allowed) {
+
+                return response()->json([
+                    'message' => 'Device not authorized',
+                ], 403);
+            }
+
+            $user->tokens()->delete();
+
+            $user->forceFill([
+                'device_id' => $request->device_id,
+                'device_change_allowed' => false,
+            ])->save();
         }
 
         $token = $user
@@ -109,8 +135,36 @@ class AuthController extends Controller
                 'shop_name' => $user->shop_name,
                 'city_area' => $user->city_area,
                 'photo' => $user->photo,
+                'photo_url' => $this->photoUrl($user->photo),
                 'status' => $user->status,
+                'discount' => $user->discount ?? 0,
+                'device_id' => $user->device_id,
             ],
+        ]);
+    }
+
+    public function me(Request $request)
+    {
+        $user = $request->user();
+
+        if ($user->role !== 'user') {
+
+            return response()->json([
+                'message' => self::ADMIN_DENIED_MESSAGE,
+            ], 403);
+        }
+
+        return response()->json([
+            'id' => $user->id,
+            'name' => $user->name,
+            'phone' => $user->phone,
+            'shop_name' => $user->shop_name,
+            'city_area' => $user->city_area,
+            'photo' => $user->photo,
+            'photo_url' => $this->photoUrl($user->photo),
+            'status' => $user->status,
+            'discount' => $user->discount ?? 0,
+            'device_id' => $user->device_id,
         ]);
     }
 
@@ -124,5 +178,14 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Logged out',
         ]);
+    }
+
+    private function photoUrl(?string $path): ?string
+    {
+        if (! $path) {
+            return null;
+        }
+
+        return asset('storage/'.$path);
     }
 }

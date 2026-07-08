@@ -30,6 +30,7 @@ class UserSeeder extends Seeder
             'plain_pin' => '1234',
             'status' => 'approved',
             'device_id' => 'web-admin',
+            'device_change_allowed' => false,
             'role' => 'admin',
         ]);
 
@@ -50,6 +51,7 @@ class UserSeeder extends Seeder
                     'blocked',
                 ]),
                 'device_id' => 'device-'.$i,
+                'device_change_allowed' => false,
                 'role' => 'user',
             ]);
         }

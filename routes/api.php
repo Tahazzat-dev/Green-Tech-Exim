@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CatalogController;
 
 // public routes
 
@@ -17,6 +18,26 @@ Route::get('/health', function () {
     return response()->json(['success' => true]);
 });
 
+Route::get(
+    '/categories',
+    [CatalogController::class, 'categories']
+);
+
+Route::get(
+    '/categories/{category}/products',
+    [CatalogController::class, 'products']
+);
+
+Route::get(
+    '/categories/{category}/products/{product}',
+    [CatalogController::class, 'product']
+);
+
+Route::get(
+    '/contacts',
+    [CatalogController::class, 'contacts']
+);
+
 // authentication
 Route::post(
     '/register',
@@ -30,6 +51,11 @@ Route::post(
 
 Route::middleware('auth:sanctum')
     ->group(function () {
+
+        Route::get(
+            '/me',
+            [AuthController::class, 'me']
+        );
 
         Route::post(
             '/logout',

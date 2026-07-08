@@ -178,6 +178,26 @@
                     class="w-full rounded-lg border border-border bg-bg-body px-4 py-3"
                 >
             </div>
+
+            <div class="md:col-span-2 rounded-lg border border-border bg-bg-body p-4">
+                <label class="flex items-start gap-3">
+                    <input
+                        type="checkbox"
+                        name="device_change_allowed"
+                        value="1"
+                        @checked(old('device_change_allowed', $user->device_change_allowed))
+                        class="mt-1"
+                    >
+                    <span>
+                        <span class="block font-semibold">
+                            Allow new device login
+                        </span>
+                        <span class="block text-sm text-text-body">
+                            The next correct mobile login will replace the current device and disable this permission.
+                        </span>
+                    </span>
+                </label>
+            </div>
         </div>
 
         <button

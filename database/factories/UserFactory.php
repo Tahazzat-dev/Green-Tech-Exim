@@ -36,6 +36,7 @@ class UserFactory extends Factory
             'plain_pin' => $pin,
             'status' => 'approved',
             'device_id' => 'factory-'.fake()->unique()->uuid(),
+            'device_change_allowed' => false,
             'role' => 'user',
             'remember_token' => fake()->regexify('[A-Za-z0-9]{10}'),
         ];

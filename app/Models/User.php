@@ -25,6 +25,12 @@ class User extends Authenticatable
         'plain_pin',
         'status',
         'device_id',
+        'device_change_allowed',
+        'role',
+    ];
+
+    protected $casts = [
+        'device_change_allowed' => 'boolean',
     ];
 
     protected $hidden = [

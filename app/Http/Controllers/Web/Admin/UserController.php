@@ -105,7 +105,8 @@ public function index(Request $request)
             'role' => "user",
             'discount' => $validated['discount'] ?? 0,
             'status' => $validated['status'],
-            'device_id' => 'admin-'.uniqid(),
+            'device_id' => null,
+            'device_change_allowed' => true,
         ]);
 
         return redirect()
@@ -162,6 +163,11 @@ public function index(Request $request)
                 'nullable',
                 'digits:4',
             ],
+
+            'device_change_allowed' => [
+                'nullable',
+                'boolean',
+            ],
         ]);
 
         $data = [
@@ -171,6 +177,7 @@ public function index(Request $request)
             'city_area' => $validated['city_area'],
             'discount' => $validated['discount'],
             'status' => $validated['status'],
+            'device_change_allowed' => $request->boolean('device_change_allowed'),
         ];
 
         if ($request->filled('pin')) {

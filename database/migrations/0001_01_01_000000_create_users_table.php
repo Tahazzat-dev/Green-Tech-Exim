@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
 
             $table->string('name');
-            $table->integer('discount');
+            $table->integer('discount')
+                ->default(0);
 
             $table->string('phone')
                 ->unique();
@@ -41,6 +42,9 @@ return new class extends Migration
 
             $table->string('device_id')
                 ->nullable();
+
+            $table->boolean('device_change_allowed')
+                ->default(false);
 
             $table->rememberToken();
 
