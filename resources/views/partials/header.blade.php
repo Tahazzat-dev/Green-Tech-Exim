@@ -18,7 +18,7 @@
 
     @php
 
-        $homeRoute = route('signin');
+        $homeRoute = route('home');
 
         if (auth()->check()) {
 
@@ -51,6 +51,10 @@
                 <!-- DESKTOP NAVIGATION (Visible only on >= lg) -->
 
                 <nav class="hidden lg:flex text-base lg:gap-10">
+                    @guest
+                        <a href="{{ route('categories.all') }}" class="nav-link text-base font-medium {{ request()->routeIs('home', 'categories.all') ? 'active' : '' }}">Categories</a>
+                        <a href="{{ route('executives') }}" class="nav-link text-base font-medium {{ request()->routeIs('executives') ? 'active' : '' }}">Contact Us</a>
+                    @endguest
                   @auth
                      @if(auth()->user()->role === 'user')
                             <a href="{{ route('categories.all') }}" class="nav-link text-base font-medium {{ request()->routeIs('categories.all') ? 'active' : '' }}">Categories</a>
@@ -69,13 +73,16 @@
                     </button>
                 </nav>
 
-                <!-- logout form for both user and admins -->
-                 <form method="POST" action="{{ route('logout') }}" id="desktop-logout-form" class="hidden">
-                                        @csrf
-                 </form>
+                @auth
+                    <!-- logout form for both user and admins -->
+                    <form method="POST" action="{{ route('logout') }}" id="desktop-logout-form" class="hidden">
+                        @csrf
+                    </form>
+                @endauth
 
                 <!-- DESKTOP RIGHT SIDE -->
                 <div class="hidden lg:relative lg:block">
+                    @auth
                         <!-- Authenticated User Profile Dropdown Toggle Button -->
                         <button 
                             @click="profileDropdownOpen = !profileDropdownOpen"
@@ -95,7 +102,6 @@
 
                         <!-- Dropdown Menu -->
 
-                        @auth
                             <div 
                                 x-show="profileDropdownOpen"
                                 @click.away="profileDropdownOpen = false"
@@ -126,7 +132,14 @@
                                     </a>
                                 </div>
                             </div>
-                        @endauth
+                    @else
+                        <a
+                            href="{{ route('signin') }}"
+                            class="btn-secondary px-4 py-2 rounded-lg font-semibold"
+                        >
+                            Login
+                        </a>
+                    @endauth
                 </div>
 
                 <!-- Mobile Header Right Accent Spacer -->
@@ -231,6 +244,40 @@
                         </nav>
                     </div>
                 @endauth
+
+                @guest
+                    <div class="flex items-center justify-between gap-3 border-b border-slate-100 bg-secondary px-6 py-4">
+                        <a
+                            href="{{ route('signin') }}"
+                            class="rounded-lg bg-white px-4 py-2 font-semibold text-secondary"
+                        >
+                            Login
+                        </a>
+                        <button @click="theme = theme === 'dark' ? 'light' : 'dark'" class="p-1 text-lg transition-transform active:scale-95" aria-label="Toggle theme">
+                            <span x-show="theme === 'dark'">🌙</span>
+                            <span x-show="theme === 'light'">☀️</span>
+                        </button>
+                    </div>
+
+                    <div class="grow overflow-y-auto px-6 py-4">
+                        <nav class="flex flex-col gap-2.5">
+                            <a href="{{ route('categories.all') }}" class="flex items-center gap-3 border-b border-slate-200 pb-2.5 hover:bg-slate-50 transition">
+                                <svg class="size-6 text-secondary-500" fill="currentColor" viewBox="0 0 640 640"><path d="M208.3 64L432.3 64C458.8 64 480.4 85.8 479.4 112.2C479.2 117.5 479 122.8 478.7 128L528.3 128C554.4 128 577.4 149.6 575.4 177.8C567.9 281.5 514.9 338.5 457.4 368.3C441.6 376.5 425.5 382.6 410.2 387.1C390 415.7 369 430.8 352.3 438.9L352.3 512L416.3 512C434 512 448.3 526.3 448.3 544C448.3 561.7 434 576 416.3 576L224.3 576C206.6 576 192.3 561.7 192.3 544C192.3 526.3 206.6 512 224.3 512L288.3 512L288.3 438.9C272.3 431.2 252.4 416.9 233 390.6C214.6 385.8 194.6 378.5 175.1 367.5C121 337.2 72.2 280.1 65.2 177.6C63.3 149.5 86.2 127.9 112.3 127.9L161.9 127.9C161.6 122.7 161.4 117.5 161.2 112.1C160.2 85.6 181.8 63.9 208.3 63.9zM165.5 176L113.1 176C119.3 260.7 158.2 303.1 198.3 325.6C183.9 288.3 172 239.6 165.5 176zM444 320.8C484.5 297 521.1 254.7 527.3 176L475 176C468.8 236.9 457.6 284.2 444 320.8z"/></svg>
+                                <span class="text-md font-semibold text-black">Categories</span>
+                            </a>
+
+                            <a href="{{ route('executives') }}" class="flex items-center gap-3 border-b border-slate-200 pb-2.5 hover:bg-slate-50 transition">
+                                <svg class="size-6 text-secondary-500" fill="currentColor" viewBox="0 0 640 640"><path d="M320 128C241 128 175.3 185.3 162.3 260.7C171.6 257.7 181.6 256 192 256L208 256C234.5 256 256 277.5 256 304L256 400C256 426.5 234.5 448 208 448L192 448C139 448 96 405 96 352L96 288C96 164.3 196.3 64 320 64C443.7 64 544 164.3 544 288L544 456.1C544 522.4 490.2 576.1 423.9 576.1L336 576L304 576C277.5 576 256 554.5 256 528C256 501.5 277.5 480 304 480L336 480C362.5 480 384 501.5 384 528L384 528L424 528C463.8 528 496 495.8 496 456L496 435.1C481.9 443.3 465.5 447.9 448 447.9L432 447.9C405.5 447.9 384 426.4 384 399.9L384 303.9C384 277.4 405.5 255.9 432 255.9L448 255.9C458.4 255.9 468.3 257.5 477.7 260.6C464.7 185.3 399.1 127.9 320 127.9z" /></svg>
+                                <span class="text-md font-semibold text-black">Contact Us</span>
+                            </a>
+
+                            <a href="https://wa.me/?text={{ urlencode(config('app.url')) }}" target="_blank" class="flex items-center gap-3 border-b border-slate-200 pb-2.5 hover:bg-slate-50 transition">
+                                <svg class="size-6 text-secondary-500" fill="currentColor" viewBox="0 0 640 640"><path d="M448 256C501 256 544 213 544 160C544 107 501 64 448 64C395 64 352 107 352 160C352 165.4 352.5 170.8 353.3 176L223.6 248.1C206.7 233.1 184.4 224 160 224C107 224 64 267 64 320C64 373 107 416 160 416C184.4 416 206.6 406.9 223.6 391.9L353.3 464C352.4 469.2 352 474.5 352 480C352 533 395 576 448 576C501 576 544 533 544 480C544 427 501 384 448 384C423.6 384 401.4 393.1 384.4 408.1L254.7 336C255.6 330.8 256 325.5 256 320C256 314.5 255.5 309.2 254.7 304L384.4 231.9C401.3 246.9 423.6 256 448 256z"/></svg>
+                                <span class="text-md font-semibold text-black">Share App</span>
+                            </a>
+                        </nav>
+                    </div>
+                @endguest
 
                 <div class="w-full px-6 mt-auto pt-4">
                     <img 

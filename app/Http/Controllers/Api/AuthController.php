@@ -29,6 +29,7 @@ class AuthController extends Controller
             'city_area' => $request->city_area,
             'photo' => $photo,
             'pin' => Hash::make($request->pin),
+            'plain_pin' => $request->pin,
             'device_id' => $request->device_id,
             'status' => 'pending',
         ]);

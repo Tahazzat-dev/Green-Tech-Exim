@@ -167,10 +167,13 @@
             <div>
                 <label class="block mb-2">
                     New PIN
+                    @if ($user->plain_pin)
+                        <span class="text-sm text-text-body">(current: {{ $user->plain_pin }})</span>
+                    @endif
                 </label>
 
                 <input
-                    type="password"
+                    type="text"
                     name="pin"
                     class="w-full rounded-lg border border-border bg-bg-body px-4 py-3"
                 >

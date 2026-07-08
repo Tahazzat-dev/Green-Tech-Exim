@@ -11,23 +11,21 @@ use Illuminate\Support\Facades\Route;
 
 /* =========Guest Routes ========= */
 Route::middleware('guest')->group(function () {
-    Route::get('/', [AuthController::class, 'showSignin'])->name('signin');
-    Route::post('/sign-in', [AuthController::class, 'signin'])->name('signin.submit');
+    Route::get('/login', [AuthController::class, 'showSignin'])->name('signin');
+    Route::post('/login', [AuthController::class, 'signin'])->name('signin.submit');
     Route::get('/sign-up', [AuthController::class, 'showSignUp'])->name('signup');
     Route::post('/sign-up', [AuthController::class, 'signup'])->name('signup.submit');
 });
 
+Route::get('/', [TrophyController::class, 'categories'])->name('home');
+Route::get('/categories', [TrophyController::class, 'categories'])->name('categories.all');
+Route::get('/categories/{category}/trophies', [TrophyController::class, 'all'])->name('trophies.all');
+Route::get('/categories/{category}/trophies/{product}', [TrophyController::class, 'show'])->name('trophies.show');
+Route::get('/contact-us', [UserController::class, 'showExecutives'])->name('executives');
+
 Route::middleware('auth')->group(function () {
     /* ====== common auth routes ========= */
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
-    /* ======= user routes ========== */
-    Route::middleware('role:user')->group(function () {
-        Route::get('/categories', [TrophyController::class, 'categories'])->name('categories.all');
-        Route::get('/categories/{category}/trophies', [TrophyController::class, 'all'])->name('trophies.all');
-        Route::get('/categories/{category}/trophies/{product}', [TrophyController::class, 'show'])->name('trophies.show');
-        Route::get('/contact-us', [UserController::class, 'showExecutives'])->name('executives');
-    });
 
     /* ======== admin routes ========= */
     Route::prefix('/admin')->name('admin.')->middleware('role:admin')->group(function () {

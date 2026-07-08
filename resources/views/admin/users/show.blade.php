@@ -61,6 +61,16 @@
 
             <div>
                 <h4 class="font-medium mb-1">
+                    PIN
+                </h4>
+
+                <p>
+                    {{ $user->plain_pin ?? 'Reset needed' }}
+                </p>
+            </div>
+
+            <div>
+                <h4 class="font-medium mb-1">
                     Status
                 </h4>
 

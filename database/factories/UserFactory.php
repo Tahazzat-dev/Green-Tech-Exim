@@ -5,7 +5,6 @@ namespace Database\Factories;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 /**
  * @extends Factory<User>
@@ -13,9 +12,9 @@ use Illuminate\Support\Str;
 class UserFactory extends Factory
 {
     /**
-     * The current password being used by the factory.
+     * The current PIN being used by the factory.
      */
-    protected static ?string $password;
+    protected static ?string $pin;
 
     /**
      * Define the model's default state.
@@ -24,22 +23,39 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $pin = '1234';
+
         return [
             'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
-            'remember_token' => Str::random(10),
+            'phone' => fake()->unique()->numerify('01#########'),
+            'shop_name' => fake()->company(),
+            'city_area' => fake()->city(),
+            'discount' => fake()->numberBetween(0, 10),
+            'photo' => null,
+            'pin' => static::$pin ??= Hash::make($pin),
+            'plain_pin' => $pin,
+            'status' => 'approved',
+            'device_id' => 'factory-'.fake()->unique()->uuid(),
+            'role' => 'user',
+            'remember_token' => fake()->regexify('[A-Za-z0-9]{10}'),
         ];
     }
 
     /**
-     * Indicate that the model's email address should be unverified.
+     * Indicate that the user is waiting for admin approval.
      */
-    public function unverified(): static
+    public function pending(): static
     {
         return $this->state(fn (array $attributes) => [
-            'email_verified_at' => null,
+            'status' => 'pending',
+        ]);
+    }
+
+    public function admin(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => 'admin',
+            'status' => 'approved',
         ]);
     }
 }

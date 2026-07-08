@@ -100,6 +100,7 @@ public function index(Request $request)
             'city_area' => $validated['city_area'],
             'photo' => $photoPath,
             'pin' => Hash::make($validated['pin']),
+            'plain_pin' => $validated['pin'],
             // 'role' => $validated['role'],
             'role' => "user",
             'discount' => $validated['discount'] ?? 0,
@@ -156,6 +157,11 @@ public function index(Request $request)
                 'min:0',
                 'max:100',
             ],
+
+            'pin' => [
+                'nullable',
+                'digits:4',
+            ],
         ]);
 
         $data = [
@@ -169,6 +175,7 @@ public function index(Request $request)
 
         if ($request->filled('pin')) {
             $data['pin'] = Hash::make($request->pin);
+            $data['plain_pin'] = $request->pin;
         }
 
         if ($request->hasFile('photo')) {

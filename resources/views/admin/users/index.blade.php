@@ -112,6 +112,10 @@
                 </th>
 
                 <th class="p-4 text-left">
+                    PIN
+                </th>
+
+                <th class="p-4 text-left">
                     Shop
                 </th>
 
@@ -160,6 +164,11 @@
                     <!-- Phone -->
                     <td class="p-4">
                         {{ $user->phone }}
+                    </td>
+
+                    <!-- PIN -->
+                    <td class="p-4 font-semibold">
+                        {{ $user->plain_pin ?? 'Reset needed' }}
                     </td>
 
                     <!-- Shop -->
@@ -252,7 +261,7 @@
 
                 <tr>
 
-                    <td colspan="8" class="p-8 text-center">
+                    <td colspan="9" class="p-8 text-center">
 
                         <div class="flex flex-col items-center gap-2">
 

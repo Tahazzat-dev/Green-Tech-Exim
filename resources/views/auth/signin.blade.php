@@ -77,7 +77,12 @@
                     Sign In
                 </button>
 
-                <p>Don't have an account? <a class="ml-1 underline link-text" href="/sign-up" >Sign Up</a></p>
+                <div class="space-y-2 text-center">
+                    <p>Don't have an account? <a class="ml-1 underline link-text" href="{{ route('signup') }}" >Sign Up</a></p>
+                    <a class="inline-block underline link-text" href="{{ route('home') }}">
+                        Continue as guest
+                    </a>
+                </div>
             </form>
     </div>
     

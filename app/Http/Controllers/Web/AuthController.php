@@ -23,7 +23,7 @@ class AuthController extends Controller
             }
 
             return redirect()
-                ->route('categories.index');
+                ->route('categories.all');
         }
 
         return view('auth.signin');
@@ -142,6 +142,7 @@ class AuthController extends Controller
             'city_area' => $validated['city_area'],
             'photo' => $photoPath,
             'pin' => Hash::make($validated['pin']),
+            'plain_pin' => $validated['pin'],
 
             // web registration
             'device_id' => 'web-'.uniqid(),

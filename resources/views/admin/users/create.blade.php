@@ -183,7 +183,7 @@
                 </label>
 
                 <input
-                    type="password"
+                    type="text"
                     name="pin"
                     class="w-full rounded-lg border border-border bg-bg-body px-4 py-3 outline-none"
                 >
@@ -196,7 +196,7 @@
                 </label>
 
                 <input
-                    type="password"
+                    type="text"
                     name="pin_confirmation"
                     class="w-full rounded-lg border border-border bg-bg-body px-4 py-3 outline-none"
                 >

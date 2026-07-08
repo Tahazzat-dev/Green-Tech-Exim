@@ -27,6 +27,7 @@ class UserSeeder extends Seeder
             'discount' => 5,
             'city_area' => 'Dhaka',
             'pin' => Hash::make('1234'),
+            'plain_pin' => '1234',
             'status' => 'approved',
             'device_id' => 'web-admin',
             'role' => 'admin',
@@ -42,6 +43,7 @@ class UserSeeder extends Seeder
                 'shop_name' => fake()->company(),
                 'city_area' => fake()->city(),
                 'pin' => Hash::make('1234'),
+                'plain_pin' => '1234',
                 'status' => fake()->randomElement([
                     'approved',
                     'pending',

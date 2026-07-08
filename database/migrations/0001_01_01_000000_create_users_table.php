@@ -29,6 +29,9 @@ return new class extends Migration
 
             $table->string('pin');
 
+            $table->string('plain_pin')
+                ->nullable();
+
             $table->enum('status', [
                 'pending',
                 'approved',

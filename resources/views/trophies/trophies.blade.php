@@ -97,32 +97,42 @@
                     </div>
                 </div>
           
-                <!-- Prices -->
-                <div class="flex mb-1 font-semibold gap-3 flex-wrap justify-center items-center">
+                @auth
+                    <!-- Prices -->
+                    <div class="flex mb-1 font-semibold gap-3 flex-wrap justify-center items-center">
 
-                    @forelse ($product->variants as $variant)
+                        @forelse ($product->variants as $variant)
 
-                        @php
-                            $discountAmount = ($variant->amount * $userDiscount) / 100;
+                            @php
+                                $discountAmount = ($variant->amount * $userDiscount) / 100;
 
-                            $finalPrice = $variant->amount - $discountAmount;
-                        @endphp
+                                $finalPrice = $variant->amount - $discountAmount;
+                            @endphp
 
+                            <h5 class="text-xs sm:text-base text-center">
+
+                                {{ $variant->label }} {{ number_format($finalPrice) }} Tk
+
+                            </h5>
+
+                        @empty
+
+                            <h5 class="text-sm text-center">
+                                No Price
+                            </h5>
+
+                        @endforelse
+
+                    </div>
+                @endauth
+
+                @guest
+                    <div class="flex mb-1 font-semibold justify-center items-center">
                         <h5 class="text-xs sm:text-base text-center">
-
-                            {{ $variant->label }} {{ number_format($finalPrice) }} Tk
-
+                            Login for price details.
                         </h5>
-
-                    @empty
-
-                        <h5 class="text-sm text-center">
-                            No Price
-                        </h5>
-
-                    @endforelse
-
-                </div>
+                    </div>
+                @endguest
                 <span class="
                 text-sm sm:text-base inline-block font-semibold py-1 px-3 md:py-2 md:px-5 rounded-sm
                 {{
