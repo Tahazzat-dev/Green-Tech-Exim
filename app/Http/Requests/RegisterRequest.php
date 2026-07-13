@@ -43,7 +43,7 @@ class RegisterRequest extends FormRequest
 
             'pin' => [
                 'required',
-                'digits:4',
+                'digits_between:4,20',
                 'confirmed',
             ],
 

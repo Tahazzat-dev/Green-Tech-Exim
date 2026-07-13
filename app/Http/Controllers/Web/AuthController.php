@@ -122,7 +122,7 @@ class AuthController extends Controller
 
             'pin' => [
                 'required',
-                'digits:4',
+                'digits_between:4,20',
                 'confirmed',
             ],
         ]);

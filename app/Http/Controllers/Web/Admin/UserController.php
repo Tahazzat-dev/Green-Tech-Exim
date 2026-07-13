@@ -62,7 +62,7 @@ public function index(Request $request)
 
             'pin' => [
                 'required',
-                'digits:4',
+                'digits_between:4,20',
                 'confirmed',
             ],
 
@@ -161,7 +161,7 @@ public function index(Request $request)
 
             'pin' => [
                 'nullable',
-                'digits:4',
+                'digits_between:4,20',
             ],
 
             'device_change_allowed' => [
