@@ -60,7 +60,7 @@
                                 <label>Variant Size (inch)</label>
                                 <input
                                 type="text"
-                                :name="'variants[' + index + '][size_inch]'"
+                                :name="'variants[' + index + '][size]'"
                                 x-model="variant.size"
                                 placeholder="ex: 28"
                                 class="rounded-lg border border-border bg-bg-body px-4 py-3"

@@ -11,7 +11,7 @@ class ProductVariant extends Model
         'label',
         'amount',
         'discount_price',
-        'size_inch',
+        'size',
     ];
 
     public function product()

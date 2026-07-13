@@ -112,7 +112,7 @@
                                     </p>
 
                                     <h4 class="font-semibold">
-                                        {{ $variant->size_inch ?? '-' }}
+                                        {{ $variant->size ?? '-' }}
                                     </h4>
                                 </div>
 

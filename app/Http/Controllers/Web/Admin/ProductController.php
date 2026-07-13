@@ -110,7 +110,7 @@ class ProductController extends Controller
                 'numeric',
             ],
 
-            'variants.*.size_inch' => [
+            'variants.*.size' => [
                 'nullable',
             ],
         ]);
@@ -144,7 +144,7 @@ class ProductController extends Controller
                     'label' => $variant['label'],
                     'amount' => $variant['amount'],
                     'discount_price' => $variant['discount_price'] ?? null,
-                    'size_inch' => $variant['size_inch'] ?? null,
+                    'size' => $variant['size'] ?? null,
                 ]);
             }
 
@@ -260,7 +260,7 @@ class ProductController extends Controller
                     'label' => $variant['label'],
                     'amount' => $variant['amount'],
                     'discount_price' => $variant['discount_price'] ?? null,
-                    'size_inch' => $variant['size_inch'] ?? null,
+                    'size' => $variant['size'] ?? null,
                 ]);
             }
 

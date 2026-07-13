@@ -168,7 +168,7 @@
                 <label class="block mb-2">
                     New PIN
                     @if ($user->plain_pin)
-                        <span class="text-sm text-text-body">(current: {{ $user->plain_pin }})</span>
+                        <span class="text-sm text-text-body">(Current pin: {{ $user->plain_pin }})</span>
                     @endif
                 </label>
 
