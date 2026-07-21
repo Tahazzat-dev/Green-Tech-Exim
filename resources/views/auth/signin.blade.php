@@ -1,7 +1,56 @@
 @extends('layouts.app')
 @section('content')
+@if (session('pending_account_popup'))
+    <div
+        x-data="{ open: true }"
+        x-show="open"
+        x-transition.opacity
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="pending-account-title"
+    >
+        <div
+            x-show="open"
+            x-transition.scale.origin.center
+            @click.outside="open = false"
+            class="w-full max-w-[420px] rounded-lg bg-background p-5 shadow-lg"
+        >
+            <div class="mb-4 flex items-start gap-3">
+                <div class="flex size-10 shrink-0 items-center justify-center rounded-full bg-secondary text-white">
+                    <svg class="size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" aria-hidden="true">
+                        <path d="M320 64C178.6 64 64 178.6 64 320s114.6 256 256 256 256-114.6 256-256S461.4 64 320 64zm24 376c0 13.3-10.7 24-24 24s-24-10.7-24-24V304c0-13.3 10.7-24 24-24s24 10.7 24 24v136zm-24-208c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32z" fill="currentColor" />
+                    </svg>
+                </div>
+                <div>
+                    <h2 id="pending-account-title" class="text-lg font-bold">Account Pending Approval</h2>
+                    <p class="mt-2 text-sm">
+                        Your registration has been submitted successfully. Please wait for admin approval before signing in.
+                    </p>
+                </div>
+            </div>
+
+            <button
+                type="button"
+                @click="open = false"
+                class="btn-primary w-full py-3 text-base font-semibold"
+            >
+                OK
+            </button>
+        </div>
+    </div>
+@endif
+
 <div class="flex items-center justify-center w-full min-h-screen h-full p-4 mx-auto" >
     <div class="w-full max-w-[500px] shadow-lg bg-background rounded-2xl p-4 md:p-5 lg:py-8 xl:py-10" >
+        @if($errors->has('phone') && str_contains($errors->first('phone'), 'admin login'))
+            <div class="mb-5 rounded-lg border border-secondary/20 bg-bg-body px-4 py-3 text-sm">
+                <a href="{{ route('admin.signin') }}" class="underline link-text font-semibold">
+                    Go to admin login
+                </a>
+            </div>
+        @endif
+
         <div class="mb-8">
             <h4 class="text-base">Welcome Back</h4>
             <h1 class="font-bold mt-2">Please Sign In</h1>
@@ -82,6 +131,11 @@
                     <a class="inline-block underline link-text" href="{{ route('home') }}">
                         Continue as guest
                     </a>
+                    <p>
+                        <a class="underline link-text" href="{{ route('admin.signin') }}">
+                            Admin login
+                        </a>
+                    </p>
                 </div>
             </form>
     </div>

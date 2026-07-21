@@ -26,17 +26,26 @@ class User extends Authenticatable
         'status',
         'device_id',
         'device_change_allowed',
+        'two_factor_secret',
+        'two_factor_enabled',
         'role',
     ];
 
     protected $casts = [
         'device_change_allowed' => 'boolean',
+        'two_factor_enabled' => 'boolean',
     ];
 
     protected $hidden = [
         'pin',
+        'two_factor_secret',
         'remember_token',
     ];
+
+    public function hasTwoFactorEnabled(): bool
+    {
+        return $this->two_factor_enabled && filled($this->two_factor_secret);
+    }
 
     /**
      * Get all device change requests for the user.

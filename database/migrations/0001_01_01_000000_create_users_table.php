@@ -65,6 +65,20 @@ return new class extends Migration
             $table->longText('payload');
             $table->integer('last_activity')->index();
         });
+
+        Schema::create('privacy_policies', function (Blueprint $table) {
+            $table->id();
+            $table->string('title')->default('Privacy Policy');
+            $table->longText('content');
+            $table->timestamps();
+        });
+
+        Schema::create('app_settings', function (Blueprint $table) {
+            $table->id();
+            $table->string('whatsapp_phone')->nullable();
+            $table->string('facebook_page_url')->nullable();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -72,6 +86,8 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('app_settings');
+        Schema::dropIfExists('privacy_policies');
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');

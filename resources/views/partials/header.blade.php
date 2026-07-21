@@ -58,12 +58,17 @@
                      @if(auth()->user()->role === 'user')
                             <a href="{{ route('categories.all') }}" class="nav-link text-base font-medium {{ request()->routeIs('categories.all') ? 'active' : '' }}">Categories</a>
                             <a href="{{ route('executives') }}" class="nav-link text-base font-medium {{ request()->routeIs('executives') ? 'active' : '' }}">Contact Us</a>
+                            @if($appSettings->facebook_page_url)
+                                <a href="{{ $appSettings->facebook_page_url }}" target="_blank" rel="noopener noreferrer" class="nav-link text-base font-medium">Our Facebook Page</a>
+                            @endif
+                            <a href="{{ route('privacy-policy.show') }}" class="nav-link text-base font-medium {{ request()->routeIs('privacy-policy.show') ? 'active' : '' }}">Privacy Policy</a>
                      @endif
                      @if(auth()->user()->role === 'admin')
                             <a href="{{ route('admin.categories.index') }}" class="nav-link text-base font-medium {{ request()->routeIs('admin.categories.index') ? 'active' : '' }}">Categories</a>
                             <a href="{{ route('admin.products.index') }}" class="nav-link text-base font-medium {{ request()->routeIs('admin.products.index') ? 'active' : '' }}">Trophies</a>
                             <a href="{{ route('admin.users.index') }}" class="nav-link text-base font-medium {{ request()->routeIs('admin.users.index') ? 'active' : '' }}">Users</a>
                             <a href="{{ route('admin.contacts.index') }}" class="nav-link text-base font-medium {{ request()->routeIs('admin.contacts.index') ? 'active' : '' }}">Contacts</a>
+                            <a href="{{ route('admin.settings.edit') }}" class="nav-link text-base font-medium {{ request()->routeIs('admin.settings.edit') ? 'active' : '' }}">Settings</a>
                     @endif
                   @endauth
                     <button @click="theme = theme === 'dark' ? 'light' : 'dark'" class="text-base w-auto transition" >
@@ -77,6 +82,12 @@
                     <form method="POST" action="{{ route('logout') }}" id="desktop-logout-form" class="hidden">
                         @csrf
                     </form>
+                    @if(auth()->user()->role === 'user')
+                        <form method="POST" action="{{ route('account.destroy') }}" id="delete-account-form" class="hidden">
+                            @csrf
+                            @method('DELETE')
+                        </form>
+                    @endif
                 @endauth
 
                 <!-- DESKTOP RIGHT SIDE -->
@@ -122,6 +133,17 @@
                                 </div>
                                 <!-- Authentication Form Submission (The secure Laravel Way) -->
                                 <div class="border-t border-border pt-1">
+                                    @if(auth()->user()->role === 'user')
+                                        <button
+                                            type="button"
+                                            @click="profileDropdownOpen = false; deleteAccountModalOpen = true"
+                                            class="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm font-medium text-red-600 hover:bg-red-50 transition-colors"
+                                            role="menuitem"
+                                        >
+                                            <svg class="size-5" fill="currentColor" viewBox="0 0 640 640"><path d="M232.7 69.9L224 96L128 96C110.3 96 96 110.3 96 128C96 145.7 110.3 160 128 160L512 160C529.7 160 544 145.7 544 128C544 110.3 529.7 96 512 96L416 96L407.3 69.9C402.9 56.8 390.7 48 376.9 48L263.1 48C249.3 48 237.1 56.8 232.7 69.9zM512 208L128 208L149.1 531.1C150.8 556.4 171.8 576 197.2 576L442.8 576C468.2 576 489.2 556.4 490.9 531.1L512 208z"/></svg>
+                                            Delete Account
+                                        </button>
+                                    @endif
                                     <a href="{{ route('logout') }}" 
                                     onclick="event.preventDefault(); document.getElementById('desktop-logout-form').submit();"
                                     class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50 transition-colors" 
@@ -215,6 +237,24 @@
                                     <svg class="size-6 text-secondary-500" fill="currentColor" viewBox="0 0 640 640"><path d="M448 256C501 256 544 213 544 160C544 107 501 64 448 64C395 64 352 107 352 160C352 165.4 352.5 170.8 353.3 176L223.6 248.1C206.7 233.1 184.4 224 160 224C107 224 64 267 64 320C64 373 107 416 160 416C184.4 416 206.6 406.9 223.6 391.9L353.3 464C352.4 469.2 352 474.5 352 480C352 533 395 576 448 576C501 576 544 533 544 480C544 427 501 384 448 384C423.6 384 401.4 393.1 384.4 408.1L254.7 336C255.6 330.8 256 325.5 256 320C256 314.5 255.5 309.2 254.7 304L384.4 231.9C401.3 246.9 423.6 256 448 256z"/></svg>
                                     <span class="text-md font-semibold text-black">Share App</span>
                                 </a>
+                                @if($appSettings->facebook_page_url)
+                                    <a href="{{ $appSettings->facebook_page_url }}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 border-b border-slate-200 pb-2.5 hover:bg-slate-50 transition">
+                                        <svg class="size-6 text-secondary-500" fill="currentColor" viewBox="0 0 640 640"><path d="M576 320C576 178.6 461.4 64 320 64S64 178.6 64 320c0 127.7 93.6 233.5 216 252.7V394H215V320h65v-56.4c0-64.2 38.3-99.6 96.8-99.6 28 0 57.2 5 57.2 5v63h-32.3c-31.8 0-41.7 19.7-41.7 39.9V320h71l-11.4 74H360v178.7C482.4 553.5 576 447.7 576 320z"/></svg>
+                                        <span class="text-md font-semibold text-black">Our Facebook Page</span>
+                                    </a>
+                                @endif
+                                <a href="{{ route('privacy-policy.show') }}" class="flex items-center gap-3 border-b border-slate-200 pb-2.5 hover:bg-slate-50 transition">
+                                    <svg class="size-6 text-secondary-500" fill="currentColor" viewBox="0 0 640 640"><path d="M192 64C156.7 64 128 92.7 128 128L128 512C128 547.3 156.7 576 192 576L448 576C483.3 576 512 547.3 512 512L512 234.5C512 217.5 505.3 201.2 493.3 189.2L386.7 82.7C374.7 70.7 358.5 64 341.5 64L192 64zM336 112L336 192C336 209.7 350.3 224 368 224L448 224L448 512L192 512L192 128L320 128C328.8 128 336 120.8 336 112zM248 320C234.7 320 224 330.7 224 344C224 357.3 234.7 368 248 368L392 368C405.3 368 416 357.3 416 344C416 330.7 405.3 320 392 320L248 320zM248 416C234.7 416 224 426.7 224 440C224 453.3 234.7 464 248 464L392 464C405.3 464 416 453.3 416 440C416 426.7 405.3 416 392 416L248 416z"/></svg>
+                                    <span class="text-md font-semibold text-black">Privacy Policy</span>
+                                </a>
+                                <button
+                                    type="button"
+                                    @click="mobileMenuOpen = false; deleteAccountModalOpen = true"
+                                    class="flex items-center gap-3 border-b border-slate-200 pb-2.5 text-left hover:bg-red-50 transition"
+                                >
+                                    <svg class="size-6 text-red-600" fill="currentColor" viewBox="0 0 640 640"><path d="M232.7 69.9L224 96L128 96C110.3 96 96 110.3 96 128C96 145.7 110.3 160 128 160L512 160C529.7 160 544 145.7 544 128C544 110.3 529.7 96 512 96L416 96L407.3 69.9C402.9 56.8 390.7 48 376.9 48L263.1 48C249.3 48 237.1 56.8 232.7 69.9zM512 208L128 208L149.1 531.1C150.8 556.4 171.8 576 197.2 576L442.8 576C468.2 576 489.2 556.4 490.9 531.1L512 208z"/></svg>
+                                    <span class="text-md font-semibold text-red-600">Delete Account</span>
+                                </button>
                             @endif
 
                             @if(auth()->user()->role === 'admin')
@@ -233,6 +273,10 @@
                                 <a href="{{ route('admin.contacts.index') }}" class="flex items-center gap-3 border-b border-slate-200 pb-2.5 hover:bg-slate-50 transition">
                                     <svg class="size-6 text-secondary-500" fill="currentColor" viewBox="0 0 640 640"><path d="M160 64C124.7 64 96 92.7 96 128L96 512C96 547.3 124.7 576 160 576L448 576C483.3 576 512 547.3 512 512L512 128C512 92.7 483.3 64 448 64L160 64zM272 352L336 352C380.2 352 416 387.8 416 432C416 440.8 408.8 448 400 448L208 448C199.2 448 192 440.8 192 432C192 387.8 227.8 352 272 352zM248 256C248 225.1 273.1 200 304 200C334.9 200 360 225.1 360 256C360 286.9 334.9 312 304 312C273.1 312 248 286.9 248 256zM576 144C576 135.2 568.8 128 560 128C551.2 128 544 135.2 544 144L544 208C544 216.8 551.2 224 560 224C568.8 224 576 216.8 576 208L576 144zM576 272C576 263.2 568.8 256 560 256C551.2 256 544 263.2 544 272L544 336C544 344.8 551.2 352 560 352C568.8 352 576 344.8 576 336L576 272zM560 384C551.2 384 544 391.2 544 400L544 464C544 472.8 551.2 480 560 480C568.8 480 576 472.8 576 464L576 400C576 391.2 568.8 384 560 384z"/></svg>
                                     <span class="text-md font-semibold text-black">Contacts</span>
+                                </a>
+                                <a href="{{ route('admin.settings.edit') }}" class="flex items-center gap-3 border-b border-slate-200 pb-2.5 hover:bg-slate-50 transition">
+                                    <svg class="size-6 text-secondary-500" fill="currentColor" viewBox="0 0 640 640"><path d="M415.9 344L225 344C227.9 408.5 242.2 467.9 262.5 511.4C273.9 535.9 286.2 553.2 297.6 563.8C308.8 574.3 316.5 576 320.5 576C324.5 576 332.2 574.3 343.4 563.8C354.8 553.2 367.1 535.8 378.5 511.4C398.8 467.9 413.1 408.5 416 344zM224.9 296L415.8 296C413 231.5 398.7 172.1 378.4 128.6C367 104.2 354.7 86.8 343.3 76.2C332.1 65.7 324.4 64 320.4 64C316.4 64 308.7 65.7 297.5 76.2C286.1 86.8 273.8 104.2 262.4 128.6C242.1 172.1 227.8 231.5 224.9 296zM176.9 296C180.4 210.4 202.5 130.9 234.8 82.7C137.1 116.2 66.4 198.1 53.8 296L176.9 296zM53.8 344C66.4 441.9 137.1 523.8 234.8 557.3C202.5 509.1 180.4 429.6 176.9 344L53.8 344zM463.9 344C460.4 429.6 438.3 509.1 406 557.3C503.7 523.8 574.4 441.9 587 344L463.9 344zM587 296C574.4 198.1 503.7 116.2 406 82.7C438.3 130.9 460.4 210.4 463.9 296L587 296z"/></svg>
+                                    <span class="text-md font-semibold text-black">Settings</span>
                                 </a>
                             @endif
 
@@ -285,3 +329,53 @@
         </div>
     </div>
     <!-- Mobile header ends -->
+
+    @auth
+        @if(auth()->user()->role === 'user')
+            <div
+                x-show="deleteAccountModalOpen"
+                x-transition.opacity
+                class="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 px-4"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="delete-account-title"
+                style="display: none;"
+            >
+                <div
+                    x-show="deleteAccountModalOpen"
+                    x-transition.scale.origin.center
+                    @click.outside="deleteAccountModalOpen = false"
+                    class="w-full max-w-[420px] rounded-lg bg-background p-5 shadow-lg"
+                >
+                    <div class="mb-5 flex items-start gap-3">
+                        <div class="flex size-10 shrink-0 items-center justify-center rounded-full bg-red-100 text-red-600">
+                            <svg class="size-5" fill="currentColor" viewBox="0 0 640 640" aria-hidden="true"><path d="M320 64C178.6 64 64 178.6 64 320s114.6 256 256 256 256-114.6 256-256S461.4 64 320 64zM296 184c0-13.3 10.7-24 24-24s24 10.7 24 24v152c0 13.3-10.7 24-24 24s-24-10.7-24-24V184zm24 296c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32z"/></svg>
+                        </div>
+                        <div>
+                            <h2 id="delete-account-title" class="text-lg font-bold">Delete Account?</h2>
+                            <p class="mt-2 text-sm">
+                                This will permanently delete your account. You will be signed out immediately.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <button
+                            type="button"
+                            @click="deleteAccountModalOpen = false"
+                            class="w-full rounded-lg border border-border px-4 py-3 text-base font-semibold"
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            type="button"
+                            onclick="document.getElementById('delete-account-form').submit();"
+                            class="w-full rounded-lg bg-red-600 px-4 py-3 text-base font-semibold text-white"
+                        >
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+        @endif
+    @endauth

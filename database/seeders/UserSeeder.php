@@ -24,7 +24,7 @@ class UserSeeder extends Seeder
             'name' => 'Admin',
             'phone' => '01700000000',
             'shop_name' => 'Admin Shop',
-            'discount' => 5,
+            'discount' => 0,
             'city_area' => 'Dhaka',
             'pin' => Hash::make('1234'),
             'plain_pin' => '1234',

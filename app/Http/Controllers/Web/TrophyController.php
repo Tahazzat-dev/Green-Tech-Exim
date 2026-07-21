@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\AppSetting;
 use App\Models\Category;
-use App\Models\Contact;
 use App\Models\Product;
 
 class TrophyController extends Controller
@@ -29,29 +29,15 @@ class TrophyController extends Controller
             abort(404);
         }
 
-        $contact = Contact::where('status', true)
-            ->where('designation', 'Owner')
-            ->oldest()
-            ->first();
-
-        $whatsAppPhone = null;
-
-        if ($contact) {
-            $phone = preg_replace('/\D+/', '', $contact->phone);
-
-            if (str_starts_with($phone, '0')) {
-                $phone = '880'.substr($phone, 1);
-            }
-
-            $whatsAppPhone = $phone;
-        }
+        $whatsAppUrl = AppSetting::current()
+            ->whatsAppUrl('Hello, I am interested in '.$product->name.'.');
 
         return view(
             'trophies.show',
             compact(
                 'category',
                 'product',
-                'whatsAppPhone'
+                'whatsAppUrl'
             )
         );
     }

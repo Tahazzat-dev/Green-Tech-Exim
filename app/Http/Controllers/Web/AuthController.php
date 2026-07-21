@@ -7,23 +7,19 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\File;
 
 class AuthController extends Controller
 {
     public function showSignin()
     {
-        // dd("die before request");
         if (auth()->check()) {
-
             if (auth()->user()->role === 'admin') {
-
-                return redirect()
-                    ->route('admin.users.index');
+                return redirect()->route('admin.users.index');
             }
 
-            return redirect()
-                ->route('categories.all');
+            return redirect()->route('categories.all');
         }
 
         return view('auth.signin');
@@ -46,11 +42,18 @@ class AuthController extends Controller
                 ->withInput();
         }
 
-        if ($user->status === 'pending') {
+        if ($user->role === 'admin') {
             return back()
                 ->withErrors([
-                    'pin' => 'Your account is pending approval.',
-                ]);
+                    'phone' => 'Admin accounts must sign in from the admin login page.',
+                ])
+                ->withInput($request->only('phone'));
+        }
+
+        if ($user->status === 'pending') {
+            return back()
+                ->withInput($request->only('phone'))
+                ->with('pending_account_popup', true);
         }
 
         if ($user->status === 'rejected') {
@@ -68,15 +71,9 @@ class AuthController extends Controller
         }
 
         Auth::login($user);
-
         $request->session()->regenerate();
 
-        if ($user->role === 'admin') {
-            return redirect()->route('admin.users.index');
-        }
-
         return redirect()->route('categories.all');
-
     }
 
     public function showSignup()
@@ -86,40 +83,33 @@ class AuthController extends Controller
 
     public function signup(Request $request)
     {
-        // dd($request->all());
-
         $validated = $request->validate([
             'name' => [
                 'required',
                 'string',
                 'max:255',
             ],
-
             'phone' => [
                 'required',
                 'string',
                 'max:20',
                 'unique:users,phone',
             ],
-
             'shop_name' => [
                 'required',
                 'string',
                 'max:255',
             ],
-
             'city_area' => [
                 'required',
                 'string',
                 'max:255',
             ],
-
             'photo' => [
                 'nullable',
                 File::image()
-                    ->max(2 * 1024), // 2MB
+                    ->max(2 * 1024),
             ],
-
             'pin' => [
                 'required',
                 'digits_between:4,20',
@@ -143,11 +133,7 @@ class AuthController extends Controller
             'photo' => $photoPath,
             'pin' => Hash::make($validated['pin']),
             'plain_pin' => $validated['pin'],
-
-            // web registration
             'device_id' => 'web-'.uniqid(),
-
-            // waiting for admin approval
             'status' => 'pending',
         ]);
 
@@ -161,10 +147,41 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
+        $wasAdmin = auth()->check() && auth()->user()->role === 'admin';
+        $hadAdminTwoFactorChallenge = $request->session()->has('admin_2fa_user_id');
+
         Auth::logout();
+        AdminAuthController::clearAdminTwoFactorChallenge($request);
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
+        if ($wasAdmin || $hadAdminTwoFactorChallenge) {
+            return redirect()->route('admin.signin');
+        }
+
         return redirect()->route('signin');
+    }
+
+    public function destroyAccount(Request $request)
+    {
+        $user = $request->user();
+
+        abort_if($user->role !== 'user', 403);
+
+        Auth::logout();
+
+        if ($user->photo) {
+            Storage::disk('public')->delete($user->photo);
+        }
+
+        $user->tokens()->delete();
+        $user->delete();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()
+            ->route('signin')
+            ->with('success', 'Your account has been deleted.');
     }
 }

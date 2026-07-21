@@ -16,7 +16,7 @@ class RoleMiddleware
         if (! auth()->check()) {
 
             return redirect()
-                ->route('signin');
+                ->route($role === 'admin' ? 'admin.signin' : 'signin');
         }
 
         if (
