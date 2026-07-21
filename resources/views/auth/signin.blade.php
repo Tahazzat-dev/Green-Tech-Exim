@@ -131,11 +131,11 @@
                     <a class="inline-block underline link-text" href="{{ route('home') }}">
                         Continue as guest
                     </a>
-                    <p>
+                    <!-- <p>
                         <a class="underline link-text" href="{{ route('admin.signin') }}">
                             Admin login
                         </a>
-                    </p>
+                    </p> -->
                 </div>
             </form>
     </div>
