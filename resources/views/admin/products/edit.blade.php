@@ -13,7 +13,18 @@
         method="POST"
         enctype="multipart/form-data"
         x-data='{
-            variants: @json($product->variants)
+            variants: @json($product->variants),
+            addVariant() {
+                this.variants.push({
+                    label: "",
+                    size: "",
+                    amount: "",
+                    discount_price: ""
+                });
+            },
+            removeVariant(index) {
+                this.variants.splice(index, 1);
+            }
         }'
         class="bg-background border border-border rounded-xl p-5 space-y-6"
     >
@@ -37,6 +48,21 @@
             rows="5"
             class="w-full rounded-lg border border-border bg-bg-body px-4 py-3"
         >{{ old('description', $product->description) }}</textarea>
+
+        <div>
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="font-semibold">
+                    Product Variants
+                </h3>
+
+                <button
+                    type="button"
+                    @click="addVariant()"
+                    class="px-4 py-2 rounded-lg bg-primary text-white"
+                >
+                    Add Variant
+                </button>
+            </div>
 
         <div class="space-y-4">
 
@@ -103,6 +129,8 @@
                     </div>
 
                 </template>
+
+        </div>
 
         </div>
 

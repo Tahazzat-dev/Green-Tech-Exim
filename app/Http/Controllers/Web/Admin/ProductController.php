@@ -204,7 +204,7 @@ class ProductController extends Controller
 
         $validated = $request->validate([
             'category_id' => [
-                'required',
+                'nullable',
                 'exists:categories,id',
             ],
 
@@ -220,13 +220,31 @@ class ProductController extends Controller
             ],
 
             'status' => [
-                'required',
+                'nullable',
                 'in:in_stock,out_stock',
             ],
 
             'variants' => [
-                'required',
+                'nullable',
                 'array',
+            ],
+
+            'variants.*.label' => [
+                'required',
+            ],
+
+            'variants.*.amount' => [
+                'required',
+                'numeric',
+            ],
+
+            'variants.*.discount_price' => [
+                'nullable',
+                'numeric',
+            ],
+
+            'variants.*.size' => [
+                'nullable',
             ],
         ]);
 
@@ -235,11 +253,11 @@ class ProductController extends Controller
         try {
 
             $data = [
-                'category_id' => $validated['category_id'],
+                'category_id' => $validated['category_id'] ?? $product->category_id,
                 'name' => $validated['name'],
                 'slug' => Str::slug($validated['name']),
                 'description' => $validated['description'],
-                'status' => $validated['status'],
+                'status' => $validated['status'] ?? $product->status,
                 'is_top_product' => $request->boolean('is_top_product'),
             ];
 
@@ -254,7 +272,7 @@ class ProductController extends Controller
 
             $product->variants()->delete();
 
-            foreach ($request->variants as $variant) {
+            foreach ($validated['variants'] ?? [] as $variant) {
 
                 $product->variants()->create([
                     'label' => $variant['label'],

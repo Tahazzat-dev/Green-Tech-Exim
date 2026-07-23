@@ -36,10 +36,12 @@
 
         <div class="text-center lg:text-left lg:col-span-7 space-y-3 md:space-y-6">
           <div class="w-full pb-2 flex items-center justify-center lg:justify-start gap-8 lg:gap-10">
-             <div class="flex gap-5">
+             <div class="flex items-center gap-5">
                  <div class="w-7 relative">
-                      <h5 class="absolute bg-red-700 px-1 py-0.5 -rotate-90 -left-5.5 top-7 font-bold text-white" >MODEL</h5>
-                 </div>
+                                <div class="leading-[100%] absolute bg-green-600 px-1 pt-0.5 md:py-0.5 -rotate-90 -left-5.5 top-1/2 -translate-y-1/2 font-semibold text-white" >
+                                    <h5 class="text-white">MODEL</h5>
+                                </div>
+                            </div>
                  <div class="flex py-2 flex-col text-2xl text-red-700 font-bold">
                     @foreach (explode(' ', strtoupper($product->name)) as $part)
                         <span class="leading-[110%]" >{{ $part }}</span>
@@ -48,23 +50,49 @@
              </div>
 
              <div class="w-fit max-w-32 border-l-2 border-red-700">
-                @forelse ($product->variants as $variant)
-                    <div class="w-full border-b-2 py-1 px-6 lg:px-7 font-semibold border-red-700">
-                        <p class="text-base" >
-                            {{ $variant->label }}
-                            @if ($variant->size)
-                                {{ $variant->size }}"
+                @php
+                    $variantCount = $product->variants->count();
+                @endphp
+
+                @if ($variantCount > 1)
+                    @foreach ($product->variants as $variant)
+                        <div class="w-full border-b-2 px-6 lg:px-7 py-1 font-semibold border-red-700">
+                            <p class="text-base">
+                                {{ $variant->label }}
+                                @if ($variant->size)
+                                    {{ $variant->size }}"
+                                @endif
+                            </p>
+                        </div>
+                    @endforeach
+                @elseif ($variantCount === 1)
+                    <div class="w-full border-b-2 px-6 lg:px-7 font-semibold border-red-700">
+                        <p class="opacity-0 py-0.5">#</p>
+                    </div>
+                    <div class="w-full border-b-2 border-red-700 px-6 lg:px-7 py-1 font-semibold">
+                        <p class="text-base pt-0.5">
+                            Size
+                            @if ($product->variants[0]->size)
+                                {{ $product->variants[0]->size }}"
                             @endif
                         </p>
                     </div>
-                @empty
-                    <div class="w-full border-b-2 py-1 px-6 lg:px-7 font-semibold border-red-700">
-                        <p class="text-base" >No Size</p>
+                    <div class="w-full px-6 lg:px-7 font-semibold">
+                        <p class="opacity-0 py-0.5">#</p>
                     </div>
-                @endforelse
-                <div class="w-full py-1 px-5 font-semibold">
-                  <p  class="opacity-0" >#</p>
-                </div>
+                @else
+                    <div class="w-full px-6 lg:px-7 py-1">
+                        <p class="text-base text-center">
+                            No Size
+                        </p>
+                    </div>
+                @endif
+
+                @if ($variantCount > 1)
+                    <div class="w-full font-semibold">
+                        <p class="opacity-0 text-xxs">#</p>
+                    </div>
+                @endif
              </div>
           </div>
 
