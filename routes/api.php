@@ -34,8 +34,28 @@ Route::get(
 );
 
 Route::get(
+    '/top-products',
+    [CatalogController::class, 'topProducts']
+);
+
+Route::get(
     '/contacts',
     [CatalogController::class, 'contacts']
+);
+
+Route::get(
+    '/contacts/owner',
+    [CatalogController::class, 'ownerContact']
+);
+
+Route::get(
+    '/settings',
+    [CatalogController::class, 'settings']
+);
+
+Route::get(
+    '/privacy-policy',
+    [CatalogController::class, 'privacyPolicy']
 );
 
 // authentication

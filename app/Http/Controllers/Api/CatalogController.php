@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\AppSetting;
 use App\Models\Category;
 use App\Models\Contact;
+use App\Models\PrivacyPolicy;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -38,6 +40,15 @@ class CatalogController extends Controller
 
         $products = Product::with('variants')
             ->where('category_id', $category->id)
+            ->when($request->filled('search'), function ($query) use ($request) {
+                $search = $request->string('search');
+
+                $query->where(function ($productQuery) use ($search) {
+                    $productQuery
+                        ->where('name', 'LIKE', "%{$search}%")
+                        ->orWhere('slug', 'LIKE', "%{$search}%");
+                });
+            })
             ->latest()
             ->paginate(20);
 
@@ -82,24 +93,87 @@ class CatalogController extends Controller
         ]);
     }
 
+    public function topProducts(Request $request)
+    {
+        $mobileUser = $this->mobileUser($request);
+
+        $products = Product::with('variants')
+            ->where('is_top_product', true)
+            ->latest()
+            ->paginate(20);
+
+        return response()->json([
+            'price_visible' => $mobileUser !== null,
+            'data' => $products
+                ->getCollection()
+                ->map(fn (Product $product) => $this->productPayload(
+                    $product,
+                    $mobileUser
+                ))
+                ->values(),
+            'meta' => [
+                'current_page' => $products->currentPage(),
+                'last_page' => $products->lastPage(),
+                'per_page' => $products->perPage(),
+                'total' => $products->total(),
+            ],
+        ]);
+    }
+
     public function contacts()
     {
         $contacts = Contact::where('status', true)
             ->latest()
             ->get()
-            ->map(fn (Contact $contact) => [
-                'id' => $contact->id,
-                'name' => $contact->name,
-                'designation' => $contact->designation,
-                'phone' => $contact->phone,
-                'image_url' => $this->imageUrl(
-                    $contact->profile,
-                    'images/user-placeholder.png'
-                ),
-            ]);
+            ->map(fn (Contact $contact) => $this->contactPayload($contact));
 
         return response()->json([
             'data' => $contacts,
+        ]);
+    }
+
+    public function ownerContact()
+    {
+        $contact = Contact::where('status', true)
+            ->where('designation', 'Owner')
+            ->oldest()
+            ->first();
+
+        if (! $contact) {
+            return response()->json([
+                'data' => null,
+                'message' => 'No owner contact found.',
+            ], 404);
+        }
+
+        return response()->json([
+            'data' => $this->contactPayload($contact),
+        ]);
+    }
+
+    public function settings()
+    {
+        $settings = AppSetting::current();
+
+        return response()->json([
+            'data' => [
+                'whatsapp_phone' => $settings->whatsapp_phone,
+                'whatsapp_url' => $settings->whatsAppUrl(),
+                'facebook_page_url' => $settings->facebook_page_url,
+            ],
+        ]);
+    }
+
+    public function privacyPolicy()
+    {
+        $privacyPolicy = PrivacyPolicy::current();
+
+        return response()->json([
+            'data' => [
+                'title' => $privacyPolicy->title,
+                'content' => $privacyPolicy->content,
+                'updated_at' => $privacyPolicy->updated_at,
+            ],
         ]);
     }
 
@@ -157,6 +231,21 @@ class CatalogController extends Controller
         ]);
     }
 
+    private function contactPayload(Contact $contact): array
+    {
+        return [
+            'id' => $contact->id,
+            'name' => $contact->name,
+            'designation' => $contact->designation,
+            'phone' => $contact->phone,
+            'whatsapp_phone' => $this->normalizedPhone($contact->phone),
+            'image_url' => $this->imageUrl(
+                $contact->profile,
+                'images/user-placeholder.png'
+            ),
+        ];
+    }
+
     private function mobileUser(Request $request): ?User
     {
         $token = $request->bearerToken();
@@ -191,5 +280,24 @@ class CatalogController extends Controller
         }
 
         return asset('storage/'.$path);
+    }
+
+    private function normalizedPhone(?string $phone): ?string
+    {
+        if (! $phone) {
+            return null;
+        }
+
+        $phone = preg_replace('/\D+/', '', $phone);
+
+        if (! $phone) {
+            return null;
+        }
+
+        if (str_starts_with($phone, '0')) {
+            return '880'.substr($phone, 1);
+        }
+
+        return $phone;
     }
 }

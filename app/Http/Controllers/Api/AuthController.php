@@ -7,6 +7,7 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
@@ -98,48 +99,45 @@ class AuthController extends Controller
             ], 401);
         }
 
-        if (! $user->device_id) {
+        if (
+            $user->device_id &&
+            $user->device_id !== $request->device_id &&
+            ! $user->device_change_allowed
+        ) {
 
-            $user->forceFill([
-                'device_id' => $request->device_id,
-                'device_change_allowed' => false,
-            ])->save();
-
-        } elseif ($user->device_id !== $request->device_id) {
-
-            if (! $user->device_change_allowed) {
-
-                return response()->json([
-                    'message' => 'Device not authorized',
-                ], 403);
-            }
-
-            $user->tokens()->delete();
-
-            $user->forceFill([
-                'device_id' => $request->device_id,
-                'device_change_allowed' => false,
-            ])->save();
+            return response()->json([
+                'message' => 'Device not authorized',
+            ], 403);
         }
 
-        $token = $user
-            ->createToken('mobile')
-            ->plainTextToken;
+        $token = DB::transaction(function () use ($request, $user) {
+            if (! $user->device_id) {
+
+                $user->forceFill([
+                    'device_id' => $request->device_id,
+                    'device_change_allowed' => false,
+                ])->save();
+
+            } elseif ($user->device_id !== $request->device_id) {
+
+                $user->tokens()->delete();
+
+                $user->forceFill([
+                    'device_id' => $request->device_id,
+                    'device_change_allowed' => false,
+                ])->save();
+            }
+
+            return $user
+                ->createToken('mobile')
+                ->plainTextToken;
+        });
+
+        $user->refresh();
 
         return response()->json([
             'token' => $token,
-            'user' => [
-                'id' => $user->id,
-                'name' => $user->name,
-                'phone' => $user->phone,
-                'shop_name' => $user->shop_name,
-                'city_area' => $user->city_area,
-                'photo' => $user->photo,
-                'photo_url' => $this->photoUrl($user->photo),
-                'status' => $user->status,
-                'discount' => $user->discount ?? 0,
-                'device_id' => $user->device_id,
-            ],
+            'user' => $this->userPayload($user),
         ]);
     }
 
@@ -154,7 +152,12 @@ class AuthController extends Controller
             ], 403);
         }
 
-        return response()->json([
+        return response()->json($this->userPayload($user));
+    }
+
+    private function userPayload(User $user): array
+    {
+        return [
             'id' => $user->id,
             'name' => $user->name,
             'phone' => $user->phone,
@@ -165,7 +168,8 @@ class AuthController extends Controller
             'status' => $user->status,
             'discount' => $user->discount ?? 0,
             'device_id' => $user->device_id,
-        ]);
+            'device_change_allowed' => (bool) $user->device_change_allowed,
+        ];
     }
 
     public function logout(Request $request)
