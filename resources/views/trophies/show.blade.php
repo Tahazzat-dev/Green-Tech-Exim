@@ -41,7 +41,7 @@
                                 <div class="leading-[100%] absolute bg-green-600 px-1 pt-0.5 md:py-0.5 -rotate-90 -left-5.5 top-1/2 -translate-y-1/2 font-semibold text-white" >
                                     <h5 class="text-white">MODEL</h5>
                                 </div>
-                            </div>
+                  </div> 
                  <div class="flex py-2 flex-col text-2xl text-red-700 font-bold">
                     @foreach (explode(' ', strtoupper($product->name)) as $part)
                         <span class="leading-[110%]" >{{ $part }}</span>

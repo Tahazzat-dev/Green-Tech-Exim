@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class AuthController extends Controller
 {
@@ -181,6 +182,28 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => 'Logged out',
+        ]);
+    }
+
+    public function destroyAccount(Request $request)
+    {
+        $user = $request->user();
+
+        if ($user->role !== 'user') {
+            return response()->json([
+                'message' => self::ADMIN_DENIED_MESSAGE,
+            ], 403);
+        }
+
+        if ($user->photo) {
+            Storage::disk('public')->delete($user->photo);
+        }
+
+        $user->tokens()->delete();
+        $user->delete();
+
+        return response()->json([
+            'message' => 'Your account has been deleted.',
         ]);
     }
 

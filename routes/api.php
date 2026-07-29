@@ -81,4 +81,9 @@ Route::middleware('auth:sanctum')
             '/logout',
             [AuthController::class, 'logout']
         );
+
+        Route::delete(
+            '/account',
+            [AuthController::class, 'destroyAccount']
+        );
     });

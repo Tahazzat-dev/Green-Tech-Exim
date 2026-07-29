@@ -73,11 +73,11 @@
                 Sign In
             </button>
 
-            <div class="space-y-2 text-center">
+            <!-- <div class="space-y-2 text-center">
                 <a class="inline-block underline link-text" href="{{ route('signin') }}">
                     User login
                 </a>
-            </div>
+            </div> -->
         </form>
     </div>
 </div>
