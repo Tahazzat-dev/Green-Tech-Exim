@@ -36,6 +36,37 @@
             Edit Product
         </h1>
 
+        <!-- Category -->
+        <div>
+
+            <label class="block mb-2">
+                Category
+            </label>
+
+            <select
+                name="category_id"
+                class="w-full rounded-lg border border-border bg-bg-body px-4 py-3"
+            >
+
+                <option value="">
+                    Select Category
+                </option>
+
+                @foreach($categories as $category)
+
+                    <option
+                        value="{{ $category->id }}"
+                        @selected(old('category_id', $product->category_id) == $category->id)
+                    >
+                        {{ $category->name }}
+                    </option>
+
+                @endforeach
+
+            </select>
+
+        </div>
+
         <input
             type="text"
             name="name"
@@ -48,6 +79,71 @@
             rows="5"
             class="w-full rounded-lg border border-border bg-bg-body px-4 py-3"
         >{{ old('description', $product->description) }}</textarea>
+
+        <!-- Image -->
+        <div class="space-y-3">
+
+            <label class="block mb-2">
+                Product Image
+            </label>
+
+            @if ($product->image)
+                <div class="w-32 h-32 rounded-lg border border-border overflow-hidden bg-bg-body">
+                    <img
+                        src="{{ asset('storage/' . $product->image) }}"
+                        alt="{{ $product->name }}"
+                        class="w-full h-full object-contain"
+                    >
+                </div>
+            @endif
+
+            <input
+                type="file"
+                name="image"
+                class="w-full rounded-lg border border-border bg-bg-body px-4 py-3"
+            >
+
+        </div>
+
+        <!-- Status -->
+        <div>
+
+            <label class="block mb-2">
+                Status
+            </label>
+
+            <select
+                name="status"
+                class="w-full rounded-lg border border-border bg-bg-body px-4 py-3"
+            >
+
+                <option value="in_stock" @selected(old('status', $product->status) === 'in_stock')>
+                    In Stock
+                </option>
+
+                <option value="out_stock" @selected(old('status', $product->status) === 'out_stock')>
+                    Out Stock
+                </option>
+
+            </select>
+
+        </div>
+
+        <!-- Top Product -->
+        <div class="flex items-center gap-3">
+
+            <input
+                type="checkbox"
+                name="is_top_product"
+                value="1"
+                @checked(old('is_top_product', $product->is_top_product))
+            >
+
+            <label>
+                Is Top Product
+            </label>
+
+        </div>
 
         <div>
             <div class="flex items-center justify-between mb-4">

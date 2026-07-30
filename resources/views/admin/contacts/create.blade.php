@@ -86,6 +86,7 @@
                 type="checkbox"
                 name="status"
                 value="1"
+                class="size-5"
                 checked
             >
 

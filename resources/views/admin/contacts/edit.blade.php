@@ -63,6 +63,7 @@
             <input
                 type="checkbox"
                 name="status"
+                class="size-5"
                 value="1"
                 @checked($contact->status)
             >

@@ -77,7 +77,7 @@
                             @foreach ($product->variants as $variant)
                                 <div class="w-full border-b-2 px-1 sm:px-3 py-0.5 font-semibold border-red-700">
                                     <p class="text-xs sm:text-[14px]">
-                                        {{ $variant->label }}
+                                        Size
                                         @if ($variant->size)
                                             {{ $variant->size }}"
                                         @endif
