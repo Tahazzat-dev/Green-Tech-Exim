@@ -9,7 +9,7 @@ x-init="$watch('theme', value => {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Dashboard') | Green Tech Exim</title>
+    <title>@yield('title', 'Dashboard') | Green Tech</title>
     @vite([
         'resources/css/app.css',
         'resources/js/app.js'
@@ -19,7 +19,7 @@ x-init="$watch('theme', value => {
     <!-- font awesome starter kit -->
      <script src="https://kit.fontawesome.com/7a263e28c3.js" crossorigin="anonymous"></script>
 </head>
-<body x-data="{ mobileMenuOpen: false, profileDropdownOpen: false, deleteAccountModalOpen: false }" class="relative bg-bg-body text-text-body w-full h-auto  min-h-screen flex flex-col" >
+<body x-data="{ mobileMenuOpen: false, profileDropdownOpen: false, deleteAccountModalOpen: false, guestProductModalOpen: false }" class="relative bg-bg-body text-text-body w-full h-auto  min-h-screen flex flex-col" >
   @yield('content')
 </body>
 </html>

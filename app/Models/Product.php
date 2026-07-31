@@ -11,13 +11,14 @@ class Product extends Model
         'name',
         'slug',
         'image',
-        'description',
         'status',
         'is_top_product',
+        'is_new_arrival',
     ];
 
     protected $casts = [
         'is_top_product' => 'boolean',
+        'is_new_arrival' => 'boolean',
     ];
 
     public function category()
@@ -25,8 +26,4 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function variants()
-    {
-        return $this->hasMany(ProductVariant::class);
-    }
 }

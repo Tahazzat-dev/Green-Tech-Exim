@@ -27,16 +27,17 @@ class ProductSeeder extends Seeder
                         $category->name.' '.$i
                     ),
 
-                    'description' => fake()->paragraph(5),
-
                     'image' => null,
 
                     'status' => fake()->randomElement([
                         'in_stock',
                         'out_stock',
+                        'limited',
                     ]),
 
                     'is_top_product' => fake()->boolean(),
+
+                    'is_new_arrival' => fake()->boolean(),
                 ]);
             }
         }

@@ -41,7 +41,7 @@
                 </div>
 
                 <span class="text-xl font-bold tracking-tight text-white lg:text-secondary">
-                    Green Tech Exim
+                    Green Tech
                 </span>
             </a>
 
@@ -65,7 +65,7 @@
                      @endif
                      @if(auth()->user()->role === 'admin')
                             <a href="{{ route('admin.categories.index') }}" class="nav-link text-base font-medium {{ request()->routeIs('admin.categories.index') ? 'active' : '' }}">Categories</a>
-                            <a href="{{ route('admin.products.index') }}" class="nav-link text-base font-medium {{ request()->routeIs('admin.products.index') ? 'active' : '' }}">Trophies</a>
+                            <a href="{{ route('admin.products.index') }}" class="nav-link text-base font-medium {{ request()->routeIs('admin.products.index') ? 'active' : '' }}">Products</a>
                             <a href="{{ route('admin.users.index') }}" class="nav-link text-base font-medium {{ request()->routeIs('admin.users.index') ? 'active' : '' }}">Users</a>
                             <a href="{{ route('admin.contacts.index') }}" class="nav-link text-base font-medium {{ request()->routeIs('admin.contacts.index') ? 'active' : '' }}">Contacts</a>
                             <a href="{{ route('admin.settings.edit') }}" class="nav-link text-base font-medium {{ request()->routeIs('admin.settings.edit') ? 'active' : '' }}">Settings</a>
@@ -264,7 +264,7 @@
                                 </a>
                                 <a href="{{ route('admin.products.index') }}" class="flex items-center gap-3 border-b border-slate-200 pb-2.5 hover:bg-slate-50 transition">
                                     <svg class="size-6 text-secondary-500" fill="currentColor" viewBox="0 0 640 640"><path d="M208.3 64L432.3 64C458.8 64 480.4 85.8 479.4 112.2C479.2 117.5 479 122.8 478.7 128L528.3 128C554.4 128 577.4 149.6 575.4 177.8C567.9 281.5 514.9 338.5 457.4 368.3C441.6 376.5 425.5 382.6 410.2 387.1C390 415.7 369 430.8 352.3 438.9L352.3 512L416.3 512C434 512 448.3 526.3 448.3 544C448.3 561.7 434 576 416.3 576L224.3 576C206.6 576 192.3 561.7 192.3 544C192.3 526.3 206.6 512 224.3 512L288.3 512L288.3 438.9C272.3 431.2 252.4 416.9 233 390.6C214.6 385.8 194.6 378.5 175.1 367.5C121 337.2 72.2 280.1 65.2 177.6C63.3 149.5 86.2 127.9 112.3 127.9L161.9 127.9C161.6 122.7 161.4 117.5 161.2 112.1C160.2 85.6 181.8 63.9 208.3 63.9zM165.5 176L113.1 176C119.3 260.7 158.2 303.1 198.3 325.6C183.9 288.3 172 239.6 165.5 176zM444 320.8C484.5 297 521.1 254.7 527.3 176L475 176C468.8 236.9 457.6 284.2 444 320.8z"/></svg>
-                                    <span class="text-md font-semibold text-black">Trophies</span>
+                                    <span class="text-md font-semibold text-black">Products</span>
                                 </a>
                                 <a href="{{ route('admin.users.index') }}" class="flex items-center gap-3 border-b border-slate-200 pb-2.5 hover:bg-slate-50 transition">
                                     <svg class="size-6 text-secondary-500" fill="currentColor" viewBox="0 0 640 640"><path d="M320 80C377.4 80 424 126.6 424 184C424 241.4 377.4 288 320 288C262.6 288 216 241.4 216 184C216 126.6 262.6 80 320 80zM96 152C135.8 152 168 184.2 168 224C168 263.8 135.8 296 96 296C56.2 296 24 263.8 24 224C24 184.2 56.2 152 96 152zM0 480C0 409.3 57.3 352 128 352C140.8 352 153.2 353.9 164.9 357.4C132 394.2 112 442.8 112 496L112 512C112 523.4 114.4 534.2 118.7 544L32 544C14.3 544 0 529.7 0 512L0 480zM521.3 544C525.6 534.2 528 523.4 528 512L528 496C528 442.8 508 394.2 475.1 357.4C486.8 353.9 499.2 352 512 352C582.7 352 640 409.3 640 480L640 512C640 529.7 625.7 544 608 544L521.3 544zM472 224C472 184.2 504.2 152 544 152C583.8 152 616 184.2 616 224C616 263.8 583.8 296 544 296C504.2 296 472 263.8 472 224zM160 496C160 407.6 231.6 336 320 336C408.4 336 480 407.6 480 496L480 512C480 529.7 465.7 544 448 544L192 544C174.3 544 160 529.7 160 512L160 496z"/></svg>
@@ -329,6 +329,51 @@
         </div>
     </div>
     <!-- Mobile header ends -->
+
+    <div
+        x-show="guestProductModalOpen"
+        x-transition.opacity
+        class="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 px-4"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="guest-product-title"
+        style="display: none;"
+    >
+        <div
+            x-show="guestProductModalOpen"
+            x-transition.scale.origin.center
+            @click.outside="guestProductModalOpen = false"
+            class="w-full max-w-[420px] rounded-lg bg-background p-5 shadow-lg"
+        >
+            <div class="mb-5 flex items-start gap-3">
+                <div class="flex size-10 shrink-0 items-center justify-center rounded-full bg-yellow-100 text-yellow-600">
+                    <svg class="size-5" fill="currentColor" viewBox="0 0 640 640" aria-hidden="true"><path d="M320 64C178.6 64 64 178.6 64 320s114.6 256 256 256 256-114.6 256-256S461.4 64 320 64zM296 184c0-13.3 10.7-24 24-24s24 10.7 24 24v152c0 13.3-10.7 24-24 24s-24-10.7-24-24V184zm24 296c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32z"/></svg>
+                </div>
+                <div>
+                    <h2 id="guest-product-title" class="text-lg font-bold">Login to view details</h2>
+                    <p class="mt-2 text-sm">
+                        Please login to open product details and view pricing.
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex gap-3">
+                <button
+                    type="button"
+                    @click="guestProductModalOpen = false"
+                    class="w-full rounded-lg border border-border px-4 py-3 text-base font-semibold"
+                >
+                    Cancel
+                </button>
+                <a
+                    href="{{ route('signin') }}"
+                    class="btn-secondary w-full px-4 py-3 text-center text-base font-semibold rounded-lg"
+                >
+                    Login
+                </a>
+            </div>
+        </div>
+    </div>
 
     @auth
         @if(auth()->user()->role === 'user')

@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\File;
 
@@ -70,17 +69,17 @@ class ProductController extends Controller
                 'max:255',
             ],
 
-            'description' => [
-                'nullable',
-                'string',
-            ],
-
             'status' => [
                 'required',
-                'in:in_stock,out_stock',
+                'in:in_stock,out_stock,limited',
             ],
 
             'is_top_product' => [
+                'nullable',
+                'boolean',
+            ],
+
+            'is_new_arrival' => [
                 'nullable',
                 'boolean',
             ],
@@ -89,33 +88,7 @@ class ProductController extends Controller
                 'nullable',
                 File::image()->max(2048),
             ],
-
-            'variants' => [
-                'required',
-                'array',
-                'min:1',
-            ],
-
-            'variants.*.label' => [
-                'required',
-            ],
-
-            'variants.*.amount' => [
-                'required',
-                'numeric',
-            ],
-
-            'variants.*.discount_price' => [
-                'nullable',
-                'numeric',
-            ],
-
-            'variants.*.size' => [
-                'nullable',
-            ],
         ]);
-
-        DB::beginTransaction();
 
         try {
 
@@ -132,23 +105,11 @@ class ProductController extends Controller
                 'category_id' => $validated['category_id'],
                 'name' => $validated['name'],
                 'slug' => Str::slug($validated['name']),
-                'description' => $validated['description'],
                 'status' => $validated['status'],
                 'is_top_product' => $request->boolean('is_top_product'),
+                'is_new_arrival' => $request->boolean('is_new_arrival'),
                 'image' => $imagePath,
             ]);
-
-            foreach ($validated['variants'] as $variant) {
-
-                $product->variants()->create([
-                    'label' => $variant['label'],
-                    'amount' => $variant['amount'],
-                    'discount_price' => $variant['discount_price'] ?? null,
-                    'size' => $variant['size'] ?? null,
-                ]);
-            }
-
-            DB::commit();
 
             return redirect()
                 ->route('admin.products.index')
@@ -158,8 +119,6 @@ class ProductController extends Controller
                 );
 
         } catch (\Exception $e) {
-
-            DB::rollBack();
 
             return back()
                 ->withErrors([
@@ -171,10 +130,7 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
-        $product->load([
-            'category',
-            'variants',
-        ]);
+        $product->load('category');
 
         return view(
             'admin.products.show',
@@ -185,8 +141,6 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $categories = Category::latest()->get();
-
-        $product->load('variants');
 
         return view(
             'admin.products.edit',
@@ -214,41 +168,16 @@ class ProductController extends Controller
                 'max:255',
             ],
 
-            'description' => [
-                'nullable',
-                'string',
-            ],
-
             'status' => [
                 'nullable',
-                'in:in_stock,out_stock',
+                'in:in_stock,out_stock,limited',
             ],
 
-            'variants' => [
+            'image' => [
                 'nullable',
-                'array',
-            ],
-
-            'variants.*.label' => [
-                'required',
-            ],
-
-            'variants.*.amount' => [
-                'required',
-                'numeric',
-            ],
-
-            'variants.*.discount_price' => [
-                'nullable',
-                'numeric',
-            ],
-
-            'variants.*.size' => [
-                'nullable',
+                File::image()->max(2048),
             ],
         ]);
-
-        DB::beginTransaction();
 
         try {
 
@@ -256,9 +185,9 @@ class ProductController extends Controller
                 'category_id' => $validated['category_id'] ?? $product->category_id,
                 'name' => $validated['name'],
                 'slug' => Str::slug($validated['name']),
-                'description' => $validated['description'],
                 'status' => $validated['status'] ?? $product->status,
                 'is_top_product' => $request->boolean('is_top_product'),
+                'is_new_arrival' => $request->boolean('is_new_arrival'),
             ];
 
             if ($request->hasFile('image')) {
@@ -270,20 +199,6 @@ class ProductController extends Controller
 
             $product->update($data);
 
-            $product->variants()->delete();
-
-            foreach ($validated['variants'] ?? [] as $variant) {
-
-                $product->variants()->create([
-                    'label' => $variant['label'],
-                    'amount' => $variant['amount'],
-                    'discount_price' => $variant['discount_price'] ?? null,
-                    'size' => $variant['size'] ?? null,
-                ]);
-            }
-
-            DB::commit();
-
             return redirect()
                 ->route('admin.products.index')
                 ->with(
@@ -292,8 +207,6 @@ class ProductController extends Controller
                 );
 
         } catch (\Exception $e) {
-
-            DB::rollBack();
 
             return back()
                 ->withErrors([

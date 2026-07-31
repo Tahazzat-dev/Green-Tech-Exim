@@ -214,8 +214,13 @@
 
                 <div class="w-full">
                     <div class="w-full mb-5 flex items-center gap-2">
-                        <input class="size-4 rounded-md" type="checkbox" name="agreed" >
-                        <label for="agreed" >I agree to the privacy policy</label>
+                        <input id="agreed" class="size-4 rounded-md" type="checkbox" name="agreed" >
+                        <label for="agreed" >
+                            I
+                            <a class="underline link-text" href="{{ route('privacy-policy.show') }}">
+                                agree to the privacy policy
+                            </a>
+                        </label>
                 </div>
                 
                 <button

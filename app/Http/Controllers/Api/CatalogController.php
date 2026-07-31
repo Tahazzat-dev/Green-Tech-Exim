@@ -28,6 +28,13 @@ class CatalogController extends Controller
                 ),
             ]);
 
+        $categories->prepend([
+            'id' => 0,
+            'name' => 'New Arrival',
+            'slug' => 'new-arrival',
+            'image_url' => asset('images/trophy-big.png'),
+        ]);
+
         return response()->json([
             'data' => $categories,
         ]);
@@ -38,8 +45,7 @@ class CatalogController extends Controller
         $mobileUser = $this->mobileUser($request);
         $priceVisible = $mobileUser !== null;
 
-        $products = Product::with('variants')
-            ->where('category_id', $category->id)
+        $products = Product::where('category_id', $category->id)
             ->when($request->filled('search'), function ($query) use ($request) {
                 $search = $request->string('search');
 
@@ -49,6 +55,7 @@ class CatalogController extends Controller
                         ->orWhere('slug', 'LIKE', "%{$search}%");
                 });
             })
+            ->orderByDesc('is_top_product')
             ->latest()
             ->paginate(20);
 
@@ -79,16 +86,13 @@ class CatalogController extends Controller
             abort(404);
         }
 
-        $product->load('variants');
-
         $mobileUser = $this->mobileUser($request);
 
         return response()->json([
             'price_visible' => $mobileUser !== null,
             'data' => $this->productPayload(
                 $product,
-                $mobileUser,
-                true
+                $mobileUser
             ),
         ]);
     }
@@ -97,8 +101,43 @@ class CatalogController extends Controller
     {
         $mobileUser = $this->mobileUser($request);
 
-        $products = Product::with('variants')
-            ->where('is_top_product', true)
+        $products = Product::where('is_top_product', true)
+            ->latest()
+            ->paginate(20);
+
+        return response()->json([
+            'price_visible' => $mobileUser !== null,
+            'data' => $products
+                ->getCollection()
+                ->map(fn (Product $product) => $this->productPayload(
+                    $product,
+                    $mobileUser
+                ))
+                ->values(),
+            'meta' => [
+                'current_page' => $products->currentPage(),
+                'last_page' => $products->lastPage(),
+                'per_page' => $products->perPage(),
+                'total' => $products->total(),
+            ],
+        ]);
+    }
+
+    public function newArrivals(Request $request)
+    {
+        $mobileUser = $this->mobileUser($request);
+
+        $products = Product::where('is_new_arrival', true)
+            ->when($request->filled('search'), function ($query) use ($request) {
+                $search = $request->string('search');
+
+                $query->where(function ($productQuery) use ($search) {
+                    $productQuery
+                        ->where('name', 'LIKE', "%{$search}%")
+                        ->orWhere('slug', 'LIKE', "%{$search}%");
+                });
+            })
+            ->orderByDesc('is_top_product')
             ->latest()
             ->paginate(20);
 
@@ -179,8 +218,7 @@ class CatalogController extends Controller
 
     private function productPayload(
         Product $product,
-        ?User $user,
-        bool $includeDescription = false
+        ?User $user
     ): array {
         $payload = [
             'id' => $product->id,
@@ -189,46 +227,14 @@ class CatalogController extends Controller
             'slug' => $product->slug,
             'image_url' => $this->imageUrl(
                 $product->image,
-                'images/trophy-big.png'
+                'images/trophy-small.jpeg'
             ),
             'status' => $product->status,
             'is_top_product' => (bool) $product->is_top_product,
-            'variants' => $product->variants
-                ->map(fn ($variant) => $this->variantPayload(
-                    $variant,
-                    $user
-                ))
-                ->values(),
+            'is_new_arrival' => (bool) $product->is_new_arrival,
         ];
-
-        if ($includeDescription) {
-            $payload['description'] = $product->description;
-        }
 
         return $payload;
-    }
-
-    private function variantPayload($variant, ?User $user): array
-    {
-        $payload = [
-            'id' => $variant->id,
-            'label' => $variant->label,
-            'size' => $variant->size,
-        ];
-
-        if (! $user) {
-            return $payload;
-        }
-
-        $discountPercent = $user->discount ?? 0;
-        $amount = (float) $variant->amount;
-        $finalPrice = $amount - (($amount * $discountPercent) / 100);
-
-        return array_merge($payload, [
-            'amount' => $amount,
-            'final_price' => round($finalPrice, 2),
-            'discount_percent' => $discountPercent,
-        ]);
     }
 
     private function contactPayload(Contact $contact): array

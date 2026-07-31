@@ -39,6 +39,11 @@ Route::get(
 );
 
 Route::get(
+    '/new-arrivals',
+    [CatalogController::class, 'newArrivals']
+);
+
+Route::get(
     '/contacts',
     [CatalogController::class, 'contacts']
 );

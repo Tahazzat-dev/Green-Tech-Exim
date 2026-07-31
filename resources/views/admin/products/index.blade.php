@@ -93,6 +93,19 @@
 <div class="grid grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(230px,1fr))] gap-5">
 
     @forelse($products as $product)
+        @php
+            $statusClasses = match ($product->status) {
+                'in_stock' => 'bg-green-500 text-white',
+                'limited' => 'text-white bg-yellow-500',
+                default => 'bg-red-500 text-white',
+            };
+
+            $statusLabel = match ($product->status) {
+                'in_stock' => 'In Stock',
+                'limited' => 'Limited',
+                default => 'Stock Out',
+            };
+        @endphp
 
         <div class="rounded-xl border border-border bg-background overflow-hidden shadow-sm">
 
@@ -100,7 +113,7 @@
             <div class="aspect-square relative bg-bg-body w-full p-4 max-h-56">
 
                 <img
-                    src="{{ $product->image ? asset('storage/' . $product->image) : asset('images/trophy-big.png') }}"
+                    src="{{ $product->image ? asset('storage/' . $product->image) : asset('images/trophy-small.jpeg') }}"
                     class="w-full h-full object-contain"
                     alt="{{ $product->name }}"
                 >
@@ -113,6 +126,12 @@
                         </span>
 
                     @endif
+
+                @if($product->is_new_arrival)
+                    <span class="absolute top-2.5 left-2.5 text-xs px-2 py-1 rounded bg-blue-500 text-white shrink-0">
+                        New
+                    </span>
+                @endif
             </div>
 
             <!-- Product Info -->
@@ -136,14 +155,9 @@
                 <div class="mt-3">
 
                     <span
-                        class="text-sm px-2 py-1 rounded
-                        {{ $product->status === 'in_stock'
-                            ? 'bg-green-500 text-white'
-                            : 'bg-red-500 text-white'
-                        }}"
+                        class="text-sm px-2 py-1 rounded {{ $statusClasses }}"
                     >
-
-                        {{ str_replace('_', ' ', ucfirst($product->status)) }}
+                        {{ $statusLabel }}
 
                     </span>
 

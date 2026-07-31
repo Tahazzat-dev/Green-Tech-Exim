@@ -26,6 +26,7 @@ Route::middleware('guest')->group(function () {
 
 Route::get('/', [TrophyController::class, 'categories'])->name('home');
 Route::get('/categories', [TrophyController::class, 'categories'])->name('categories.all');
+Route::get('/new-arrivals', [TrophyController::class, 'newArrivals'])->name('new-arrivals');
 Route::get('/categories/{category}/trophies', [TrophyController::class, 'all'])->name('trophies.all');
 Route::get('/categories/{category}/trophies/{product}', [TrophyController::class, 'show'])->name('trophies.show');
 Route::get('/contact-us', [UserController::class, 'showExecutives'])->name('executives');

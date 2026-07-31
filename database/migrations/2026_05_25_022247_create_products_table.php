@@ -20,9 +20,6 @@ return new class extends Migration
 
             $table->string('name');
             $table->string('slug');
-            $table->decimal('discount_price', 8, 2)->nullable();
-            $table->longText('description')
-                ->nullable();
 
             $table->string('image')
                 ->nullable();
@@ -30,9 +27,13 @@ return new class extends Migration
             $table->enum('status', [
                 'in_stock',
                 'out_stock',
+                'limited',
             ]);
 
             $table->boolean('is_top_product')
+                ->default(false);
+
+            $table->boolean('is_new_arrival')
                 ->default(false);
 
             $table->timestamps();

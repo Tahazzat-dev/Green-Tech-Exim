@@ -44,8 +44,8 @@ class TrophyController extends Controller
 
     public function all(Category $category)
     {
-        $products = Product::with('variants')
-            ->where('category_id', $category->id)
+        $products = Product::where('category_id', $category->id)
+            ->orderByDesc('is_top_product')
             ->latest()
             ->paginate(20);
 
@@ -54,6 +54,26 @@ class TrophyController extends Controller
             compact(
                 'category',
                 'products'
+            )
+        );
+    }
+
+    public function newArrivals()
+    {
+        $category = null;
+        $title = 'New Arrival';
+
+        $products = Product::where('is_new_arrival', true)
+            ->orderByDesc('is_top_product')
+            ->latest()
+            ->paginate(20);
+
+        return view(
+            'trophies.trophies',
+            compact(
+                'category',
+                'products',
+                'title'
             )
         );
     }
