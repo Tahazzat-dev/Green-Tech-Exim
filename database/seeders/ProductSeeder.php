@@ -18,14 +18,19 @@ class ProductSeeder extends Seeder
 
             for ($i = 1; $i <= rand(5,10); $i++) {
 
+                $name = sprintf(
+                    'Price: A %d tk, B %d tk, C %d tk.',
+                    rand(800, 5000),
+                    rand(800, 5000),
+                    rand(800, 5000)
+                );
+
                 Product::create([
                     'category_id' => $category->id,
 
-                    'name' => $category->name.' '.$i,
+                    'name' => $name,
 
-                    'slug' => Str::slug(
-                        $category->name.' '.$i
-                    ),
+                    'slug' => Str::slug($name),
 
                     'image' => null,
 

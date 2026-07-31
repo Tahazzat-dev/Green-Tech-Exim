@@ -361,13 +361,13 @@
                 <button
                     type="button"
                     @click="guestProductModalOpen = false"
-                    class="w-full rounded-lg border border-border px-4 py-3 text-base font-semibold"
+                    class="w-full rounded-lg border border-border px-4 py-2 text-base font-semibold"
                 >
                     Cancel
                 </button>
                 <a
                     href="{{ route('signin') }}"
-                    class="btn-secondary w-full px-4 py-3 text-center text-base font-semibold rounded-lg"
+                    class="btn-secondary w-full px-4 py-2 text-center text-base font-semibold rounded-lg"
                 >
                     Login
                 </a>

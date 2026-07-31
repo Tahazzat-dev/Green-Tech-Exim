@@ -20,8 +20,8 @@
        @forelse ($products as $product)
             @php
                 $statusClasses = match ($product->status) {
-                    'in_stock' => 'text-primary bg-primary/20',
-                    'limited' => 'text-yellow-600 bg-yellow-100 dark:text-yellow-400 dark:bg-yellow-900/30',
+                    'in_stock' => 'text-green-700 bg-primary/20',
+                    'limited' => 'text-yellow-700 bg-yellow-100 dark:text-yellow-400 dark:bg-yellow-900/30',
                     default => 'text-red-600 bg-red-100 dark:bg-red-900/30',
                 };
 
