@@ -34,27 +34,21 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start md:bg-white rounded-3xl p-5 md:p-8 md:shadow-md md:dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800">
         <div class="lg:col-span-5 flex flex-col items-center">
-            <div class="relative aspect-square w-full rounded-2xl md:bg-gradient-to-br from-slate-50 to-slate-100/40 md:p-6 flex items-center justify-center border border-slate-50 dark:from-slate-900/70 dark:to-slate-900 dark:border-slate-800">
+            <div class="relative aspect-square w-full rounded-2xl md:bg-gradient-to-br from-slate-50 to-slate-100/40 flex items-center justify-center border border-slate-50 dark:from-slate-900/70 dark:to-slate-900 dark:border-slate-800">
                 <img
                     src="{{ $product->image ? asset('storage/' . $product->image) : asset('images/trophy-small.jpeg') }}"
                     alt="{{ $product->name }}"
-                    class="h-full w-full object-contain drop-shadow-lg"
+                    class="h-full w-full rounded-lg drop-shadow-lg"
                     referrerPolicy="no-referrer"
                 />
             </div>
         </div>
 
-        <div class="text-center lg:text-left lg:col-span-7 space-y-4 md:space-y-6">
+        <div class="text-center lg:text-left mt-3 lg:col-span-7 space-y-4 md:space-y-6">
             <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3">
-                <h1 class="font-bold text-3xl text-text-body">
+                <h1 class="font-bold text-2xl text-text-body">
                     {{ $product->name }}
                 </h1>
-
-                @if($product->is_top_product)
-                    <span class="text-xs px-2 py-1 rounded bg-yellow-500 text-white shrink-0">
-                        Top
-                    </span>
-                @endif
             </div>
 
             <span class="inline-block {{ $statusClasses }} font-semibold py-2 px-5 rounded-sm">
