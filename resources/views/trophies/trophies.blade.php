@@ -38,7 +38,7 @@
                         'category' => $product->category_id,
                         'product' => $product->id
                     ]) }}"
-                    class="flex flex-col items-center rounded-lg shadow border bg-linear-to-br from-slate-50 to-slate-100/40 dark:from-slate-900/70 dark:to-slate-900 border-border"
+                    class="relative flex flex-col items-center rounded-lg shadow border bg-linear-to-br from-slate-50 to-slate-100/40 dark:from-slate-900/70 dark:to-slate-900 border-border"
                 >
             @else
                 <button
@@ -53,14 +53,11 @@
                         class="rounded-lg"
                         referrerPolicy="no-referrer"
                     />
-                <!-- <div class="overflow-hidden relative aspect-square w-full">
                     @if($product->is_top_product)
-                        <span class="absolute top-2.5 right-2.5 z-10 text-xs px-2 py-1 rounded bg-yellow-500 text-white shrink-0">
+                        <span class="absolute top-1.5 left-1.5 z-10 text-xs px-2 py-0.5 rounded bg-yellow-500 text-white shrink-0">
                             Top
                         </span>
                     @endif
-                    
-                </div> -->
                 <div class="w-full p-3 sm:p-4 flex flex-col gap-2">
                     @auth
                         <h3 class="w-full text-center text-sm sm:text-base font-bold text-text-body line-clamp-2">

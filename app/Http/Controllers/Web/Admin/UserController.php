@@ -10,34 +10,34 @@ use Illuminate\Validation\Rules\File;
 
 class UserController extends Controller
 {
-public function index(Request $request)
-{
-    $search = $request->search;
+    public function index(Request $request)
+    {
+        $search = $request->search;
 
-    $users = User::where('role', 'user')
+        $users = User::where('role', 'user')
 
-        ->when($search, function ($query) use ($search) {
+            ->when($search, function ($query) use ($search) {
 
-            $query->where(function ($q) use ($search) {
+                $query->where(function ($q) use ($search) {
 
-                $q->where('name', 'LIKE', "%{$search}%")
-                    ->orWhere('phone', 'LIKE', "%{$search}%")
-                    ->orWhere('shop_name', 'LIKE', "%{$search}%")
-                    ->orWhere('status', 'LIKE', "%{$search}%");
+                    $q->where('name', 'LIKE', "%{$search}%")
+                        ->orWhere('phone', 'LIKE', "%{$search}%")
+                        ->orWhere('shop_name', 'LIKE', "%{$search}%")
+                        ->orWhere('status', 'LIKE', "%{$search}%");
 
-            });
+                });
 
-        })
+            })
 
-        ->latest()
-        ->paginate(12)
-        ->withQueryString();
+            ->latest()
+            ->paginate(12)
+            ->withQueryString();
 
-    return view(
-        'admin.users.index',
-        compact('users')
-    );
-}
+        return view(
+            'admin.users.index',
+            compact('users')
+        );
+    }
 
     public function create()
     {
@@ -102,7 +102,7 @@ public function index(Request $request)
             'pin' => Hash::make($validated['pin']),
             'plain_pin' => $validated['pin'],
             // 'role' => $validated['role'],
-            'role' => "user",
+            'role' => 'user',
             'discount' => $validated['discount'] ?? 0,
             'status' => $validated['status'],
             'device_id' => null,
@@ -152,7 +152,7 @@ public function index(Request $request)
                 'in:pending,approved,blocked,rejected',
             ],
 
-             'discount' => [
+            'discount' => [
                 'nullable',
                 'numeric',
                 'min:0',

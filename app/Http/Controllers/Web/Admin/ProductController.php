@@ -11,39 +11,39 @@ use Illuminate\Validation\Rules\File;
 
 class ProductController extends Controller
 {
-   public function index(Request $request)
-{
-    $search = $request->search;
+    public function index(Request $request)
+    {
+        $search = $request->search;
 
-    $products = Product::with('category')
-        ->when($search, function ($query) use ($search) {
+        $products = Product::with('category')
+            ->when($search, function ($query) use ($search) {
 
-            $query->where(function ($q) use ($search) {
+                $query->where(function ($q) use ($search) {
 
-                $q->where('name', 'LIKE', "%{$search}%")
-                    ->orWhere('slug', 'LIKE', "%{$search}%")
-                    ->orWhereHas('category', function ($categoryQuery) use ($search) {
+                    $q->where('name', 'LIKE', "%{$search}%")
+                        ->orWhere('slug', 'LIKE', "%{$search}%")
+                        ->orWhereHas('category', function ($categoryQuery) use ($search) {
 
-                        $categoryQuery->where(
-                            'name',
-                            'LIKE',
-                            "%{$search}%"
-                        );
+                            $categoryQuery->where(
+                                'name',
+                                'LIKE',
+                                "%{$search}%"
+                            );
 
-                    });
+                        });
 
-            });
+                });
 
-        })
-        ->latest()
-        ->paginate(12)
-        ->withQueryString();
+            })
+            ->latest()
+            ->paginate(12)
+            ->withQueryString();
 
-    return view(
-        'admin.products.index',
-        compact('products')
-    );
-}
+        return view(
+            'admin.products.index',
+            compact('products')
+        );
+    }
 
     public function create()
     {

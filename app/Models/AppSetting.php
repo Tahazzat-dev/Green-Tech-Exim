@@ -2,17 +2,19 @@
 
 namespace App\Models;
 
+use Database\Factories\AppSettingFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class AppSetting extends Model
 {
-    /** @use HasFactory<\Database\Factories\AppSettingFactory> */
+    /** @use HasFactory<AppSettingFactory> */
     use HasFactory;
 
     protected $fillable = [
         'whatsapp_phone',
         'facebook_page_url',
+        'app_download_url',
     ];
 
     public static function current(): self

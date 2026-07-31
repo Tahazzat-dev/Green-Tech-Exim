@@ -53,6 +53,11 @@ class SettingController extends Controller
                 'url',
                 'max:255',
             ],
+            'app_download_url' => [
+                'nullable',
+                'url',
+                'max:255',
+            ],
         ]);
 
         AppSetting::current()->update($validated);

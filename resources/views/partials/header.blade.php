@@ -62,6 +62,36 @@
                                 <a href="{{ $appSettings->facebook_page_url }}" target="_blank" rel="noopener noreferrer" class="nav-link text-base font-medium">Our Facebook Page</a>
                             @endif
                             <a href="{{ route('privacy-policy.show') }}" class="nav-link text-base font-medium {{ request()->routeIs('privacy-policy.show') ? 'active' : '' }}">Privacy Policy</a>
+                            @if($appSettings->app_download_url)
+                                <a href="{{ $appSettings->app_download_url }}" target="_blank" rel="noopener noreferrer"  class="flex flex-row  nav-link text-base font-medium">
+                                    <div class="flex items-center gap-2">
+                                        <span>Download App</span>
+<svg fill="currentColor" height="22px" width="22px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+	 viewBox="0 0 511.997 511.997" xml:space="preserve">
+<g>
+	<g>
+		<g>
+			<path d="M59.732,153.597c-23.526,0-42.667,19.14-42.667,42.667V315.73c0,23.526,19.14,42.667,42.667,42.667
+				c23.526,0,42.667-19.14,42.667-42.667V196.264C102.399,172.737,83.258,153.597,59.732,153.597z"/>
+			<path d="M452.265,153.597c-23.526,0-42.667,19.14-42.667,42.667V315.73c0,23.526,19.14,42.667,42.667,42.667
+				s42.667-19.14,42.667-42.667V196.264C494.932,172.737,475.792,153.597,452.265,153.597z"/>
+			<path d="M119.465,401.064h34.133v76.8c0,18.825,15.309,34.133,34.133,34.133s34.133-15.309,34.133-34.133v-76.8h68.267v76.8
+				c0,18.825,15.309,34.133,34.133,34.133s34.133-15.309,34.133-34.133v-76.8h34.133V153.597H119.465V401.064z"/>
+			<path d="M357.375,57.136c-5.726-5.82-12.894-11.998-21.623-17.715l13.244-27.153c2.074-4.233,0.316-9.344-3.925-11.409
+				c-4.258-2.057-9.335-0.29-11.401,3.934l-12.8,26.232c-16.845-8.132-37.973-13.961-64.06-13.961
+				c-25.967,0-47.71,5.393-65.843,13.926L178.345,4.818c-2.031-4.241-7.125-6.008-11.392-3.977
+				c-4.241,2.048-6.025,7.151-3.968,11.401l12.996,26.957c-36.54,23.467-54.084,60.826-56.482,88.047l-0.819,9.284h274.637
+				l-0.819-9.284C390.894,108.976,380.816,80.961,357.375,57.136z M213.332,102.397c-9.421,0-17.067-7.637-17.067-17.067
+				c0-9.429,7.646-17.067,17.067-17.067c9.421,0,17.067,7.637,17.067,17.067C230.399,94.76,222.753,102.397,213.332,102.397z
+				 M298.665,102.397c-9.421,0-17.067-7.637-17.067-17.067c0-9.429,7.646-17.067,17.067-17.067c9.421,0,17.067,7.637,17.067,17.067
+				C315.732,94.76,308.086,102.397,298.665,102.397z"/>
+		</g>
+	</g>
+</g>
+</svg>
+                                    </div>
+                                </a>
+                            @endif
                      @endif
                      @if(auth()->user()->role === 'admin')
                             <a href="{{ route('admin.categories.index') }}" class="nav-link text-base font-medium {{ request()->routeIs('admin.categories.index') ? 'active' : '' }}">Categories</a>
@@ -233,10 +263,6 @@
                                     <svg class="size-6 text-secondary-500" fill="currentColor" viewBox="0 0 640 640"><path d="M320 128C241 128 175.3 185.3 162.3 260.7C171.6 257.7 181.6 256 192 256L208 256C234.5 256 256 277.5 256 304L256 400C256 426.5 234.5 448 208 448L192 448C139 448 96 405 96 352L96 288C96 164.3 196.3 64 320 64C443.7 64 544 164.3 544 288L544 456.1C544 522.4 490.2 576.1 423.9 576.1L336 576L304 576C277.5 576 256 554.5 256 528C256 501.5 277.5 480 304 480L336 480C362.5 480 384 501.5 384 528L384 528L424 528C463.8 528 496 495.8 496 456L496 435.1C481.9 443.3 465.5 447.9 448 447.9L432 447.9C405.5 447.9 384 426.4 384 399.9L384 303.9C384 277.4 405.5 255.9 432 255.9L448 255.9C458.4 255.9 468.3 257.5 477.7 260.6C464.7 185.3 399.1 127.9 320 127.9z" /></svg>
                                     <span class="text-md font-semibold text-black">Contact Us</span>
                                 </a>
-                                <a href="https://wa.me/?text={{ urlencode(config('app.url')) }}" target="_blank" class="flex items-center gap-3 border-b border-slate-200 pb-2.5 hover:bg-slate-50 transition">
-                                    <svg class="size-6 text-secondary-500" fill="currentColor" viewBox="0 0 640 640"><path d="M448 256C501 256 544 213 544 160C544 107 501 64 448 64C395 64 352 107 352 160C352 165.4 352.5 170.8 353.3 176L223.6 248.1C206.7 233.1 184.4 224 160 224C107 224 64 267 64 320C64 373 107 416 160 416C184.4 416 206.6 406.9 223.6 391.9L353.3 464C352.4 469.2 352 474.5 352 480C352 533 395 576 448 576C501 576 544 533 544 480C544 427 501 384 448 384C423.6 384 401.4 393.1 384.4 408.1L254.7 336C255.6 330.8 256 325.5 256 320C256 314.5 255.5 309.2 254.7 304L384.4 231.9C401.3 246.9 423.6 256 448 256z"/></svg>
-                                    <span class="text-md font-semibold text-black">Share App</span>
-                                </a>
                                 @if($appSettings->facebook_page_url)
                                     <a href="{{ $appSettings->facebook_page_url }}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 border-b border-slate-200 pb-2.5 hover:bg-slate-50 transition">
                                         <svg class="size-6 text-secondary-500" fill="currentColor" viewBox="0 0 640 640"><path d="M576 320C576 178.6 461.4 64 320 64S64 178.6 64 320c0 127.7 93.6 233.5 216 252.7V394H215V320h65v-56.4c0-64.2 38.3-99.6 96.8-99.6 28 0 57.2 5 57.2 5v63h-32.3c-31.8 0-41.7 19.7-41.7 39.9V320h71l-11.4 74H360v178.7C482.4 553.5 576 447.7 576 320z"/></svg>
@@ -247,6 +273,12 @@
                                     <svg class="size-6 text-secondary-500" fill="currentColor" viewBox="0 0 640 640"><path d="M192 64C156.7 64 128 92.7 128 128L128 512C128 547.3 156.7 576 192 576L448 576C483.3 576 512 547.3 512 512L512 234.5C512 217.5 505.3 201.2 493.3 189.2L386.7 82.7C374.7 70.7 358.5 64 341.5 64L192 64zM336 112L336 192C336 209.7 350.3 224 368 224L448 224L448 512L192 512L192 128L320 128C328.8 128 336 120.8 336 112zM248 320C234.7 320 224 330.7 224 344C224 357.3 234.7 368 248 368L392 368C405.3 368 416 357.3 416 344C416 330.7 405.3 320 392 320L248 320zM248 416C234.7 416 224 426.7 224 440C224 453.3 234.7 464 248 464L392 464C405.3 464 416 453.3 416 440C416 426.7 405.3 416 392 416L248 416z"/></svg>
                                     <span class="text-md font-semibold text-black">Privacy Policy</span>
                                 </a>
+                                @if($appSettings->app_download_url)
+                                    <a href="{{ $appSettings->app_download_url }}" target="_blank" rel="noopener noreferrer" class="text-text-body flex items-center gap-3 border-b border-slate-200 pb-2.5 hover:bg-slate-50 transition">
+                                        <svg class="size-6 text-secondary-500" fill="currentColor" viewBox="0 0 640 640"><path d="M448 256C501 256 544 213 544 160C544 107 501 64 448 64C395 64 352 107 352 160C352 165.4 352.5 170.8 353.3 176L223.6 248.1C206.7 233.1 184.4 224 160 224C107 224 64 267 64 320C64 373 107 416 160 416C184.4 416 206.6 406.9 223.6 391.9L353.3 464C352.4 469.2 352 474.5 352 480C352 533 395 576 448 576C501 576 544 533 544 480C544 427 501 384 448 384C423.6 384 401.4 393.1 384.4 408.1L254.7 336C255.6 330.8 256 325.5 256 320C256 314.5 255.5 309.2 254.7 304L384.4 231.9C401.3 246.9 423.6 256 448 256z"/></svg>
+                                        <span class="text-md font-semibold text-black">Share App</span>
+                                    </a>
+                                @endif
                                 <button
                                     type="button"
                                     @click="mobileMenuOpen = false; deleteAccountModalOpen = true"

@@ -224,6 +224,22 @@
             @enderror
         </div>
 
+        <div>
+            <label class="block mb-2">
+                App Download Link
+            </label>
+            <input
+                type="url"
+                name="app_download_url"
+                value="{{ old('app_download_url', $settings->app_download_url) }}"
+                placeholder="https://play.google.com/store/apps/details?id=..."
+                class="w-full rounded-lg border border-border bg-bg-body px-4 py-3"
+            >
+            @error('app_download_url')
+                <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+            @enderror
+        </div>
+
         <button
             type="submit"
             class="btn-primary px-6 py-3 rounded-lg"

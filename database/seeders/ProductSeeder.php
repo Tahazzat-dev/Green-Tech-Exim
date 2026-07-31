@@ -4,9 +4,11 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use App\Models\Product;
+use Faker\Factory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
-$faker = \Faker\Factory::create();
+
+$faker = Factory::create();
 
 class ProductSeeder extends Seeder
 {
@@ -16,7 +18,7 @@ class ProductSeeder extends Seeder
 
         foreach ($categories as $category) {
 
-            for ($i = 1; $i <= rand(5,10); $i++) {
+            for ($i = 1; $i <= rand(5, 10); $i++) {
 
                 $name = sprintf(
                     'Price: A %d tk, B %d tk, C %d tk.',

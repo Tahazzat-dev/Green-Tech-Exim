@@ -13,7 +13,7 @@ class UserSeeder extends Seeder
         $phoneNumbers = [
             '01711234567', '01712345678', '01301234567', '01302345678', '01713456789',
             '01911234567', '01912345678', '01401234567', '01402345678', '01913456789',
-            '01671234567', '01672345678', '01611234567', '01612345678', '01673456789'
+            '01671234567', '01672345678', '01611234567', '01612345678', '01673456789',
         ];
 
         // 1. Randomize the order of the phone numbers array up front
@@ -39,7 +39,7 @@ class UserSeeder extends Seeder
 
             User::create([
                 'name' => fake()->name(),
-                'phone' => $uniquePhone, 
+                'phone' => $uniquePhone,
                 'discount' => fake()->numberBetween(1, 10),
                 'shop_name' => fake()->company(),
                 'city_area' => fake()->city(),

@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use Database\Factories\PrivacyPolicyFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class PrivacyPolicy extends Model
 {
-    /** @use HasFactory<\Database\Factories\PrivacyPolicyFactory> */
+    /** @use HasFactory<PrivacyPolicyFactory> */
     use HasFactory;
 
     protected $fillable = [

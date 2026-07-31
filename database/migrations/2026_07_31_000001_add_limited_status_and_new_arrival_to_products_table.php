@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Product;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -34,7 +35,7 @@ return new class extends Migration
 
     public function down(): void
     {
-        \App\Models\Product::where('status', 'limited')->update(['status' => 'in_stock']);
+        Product::where('status', 'limited')->update(['status' => 'in_stock']);
 
         if (DB::getDriverName() === 'mysql') {
             DB::statement("ALTER TABLE products MODIFY status ENUM('in_stock', 'out_stock') NOT NULL");

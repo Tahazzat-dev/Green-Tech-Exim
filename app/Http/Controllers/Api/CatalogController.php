@@ -199,6 +199,7 @@ class CatalogController extends Controller
                 'whatsapp_phone' => $settings->whatsapp_phone,
                 'whatsapp_url' => $settings->whatsAppUrl(),
                 'facebook_page_url' => $settings->facebook_page_url,
+                'app_download_url' => $settings->app_download_url,
             ],
         ]);
     }
