@@ -1,4 +1,14 @@
 @extends('layouts.app')
+@section('head')
+    <meta property="og:image" content="{{ $product->image ? asset('storage/' . $product->image) : asset('images/trophy-small.jpeg') }}">
+    <meta property="og:image:secure_url" content="{{ $product->image ? asset('storage/' . $product->image) : asset('images/trophy-small.jpeg') }}">
+    <meta property="og:title" content="{{ $product->name }}">
+    <meta property="og:description" content="View {{ $product->name }} on Green Tech.">
+    <meta property="og:url" content="{{ route('trophies.show', ['category' => $category->id, 'product' => $product->id]) }}">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="{{ $product->image ? asset('storage/' . $product->image) : asset('images/trophy-small.jpeg') }}">
+@endsection
 @section('content')
 @include("partials.header")
 
@@ -38,7 +48,7 @@
                 <img
                     src="{{ $product->image ? asset('storage/' . $product->image) : asset('images/trophy-small.jpeg') }}"
                     alt="{{ $product->name }}"
-                    class="h-full w-full rounded-lg drop-shadow-lg"
+                    class="h-full w-full rounded-lg drop-shadow md:drop-shadow-lg"
                     referrerPolicy="no-referrer"
                 />
             </div>

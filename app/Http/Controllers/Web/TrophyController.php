@@ -29,8 +29,13 @@ class TrophyController extends Controller
             abort(404);
         }
 
+        $productUrl = route('trophies.show', [
+            'category' => $category->id,
+            'product' => $product->id,
+        ]);
+
         $whatsAppUrl = AppSetting::current()
-            ->whatsAppUrl('Hello, I am interested in '.$product->name.'.');
+            ->whatsAppUrl($productUrl."\n\nHello, I am interested in this product.");
 
         return view(
             'trophies.show',
@@ -45,17 +50,11 @@ class TrophyController extends Controller
     public function all(Category $category)
     {
         $products = Product::where('category_id', $category->id)
-            ->orderByDesc('is_top_product')
-            ->latest()
-            ->paginate(20);
+            ->latest('id')
+            ->paginate(20)
+            ->withQueryString();
 
-        return view(
-            'trophies.trophies',
-            compact(
-                'category',
-                'products'
-            )
-        );
+        return $this->renderProductList($products, compact('category'));
     }
 
     public function newArrivals()
@@ -64,17 +63,22 @@ class TrophyController extends Controller
         $title = 'New Arrival';
 
         $products = Product::where('is_new_arrival', true)
-            ->orderByDesc('is_top_product')
-            ->latest()
-            ->paginate(20);
+            ->latest('id')
+            ->paginate(20)
+            ->withQueryString();
 
-        return view(
-            'trophies.trophies',
-            compact(
-                'category',
-                'products',
-                'title'
-            )
-        );
+        return $this->renderProductList($products, compact('category', 'title'));
+    }
+
+    private function renderProductList($products, array $data)
+    {
+        if (request()->ajax() || request()->wantsJson()) {
+            return response()->json([
+                'html' => view('trophies.partials.product-cards', compact('products'))->render(),
+                'next_page_url' => $products->nextPageUrl(),
+            ]);
+        }
+
+        return view('trophies.trophies', array_merge($data, compact('products')));
     }
 }

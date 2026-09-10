@@ -72,8 +72,8 @@
             </label>
         </div>
 
-        <button type="submit" class="btn-primary px-6 py-3 rounded-lg">
-            Create Product
+        <button type="submit" class="btn-primary px-6 py-2 rounded-lg">
+            Submit
         </button>
     </form>
 </div>

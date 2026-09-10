@@ -55,8 +55,7 @@ class CatalogController extends Controller
                         ->orWhere('slug', 'LIKE', "%{$search}%");
                 });
             })
-            ->orderByDesc('is_top_product')
-            ->latest()
+            ->latest('id')
             ->paginate(20);
 
         return response()->json([
@@ -102,7 +101,7 @@ class CatalogController extends Controller
         $mobileUser = $this->mobileUser($request);
 
         $products = Product::where('is_top_product', true)
-            ->latest()
+            ->latest('id')
             ->paginate(20);
 
         return response()->json([
@@ -137,8 +136,7 @@ class CatalogController extends Controller
                         ->orWhere('slug', 'LIKE', "%{$search}%");
                 });
             })
-            ->orderByDesc('is_top_product')
-            ->latest()
+            ->latest('id')
             ->paginate(20);
 
         return response()->json([

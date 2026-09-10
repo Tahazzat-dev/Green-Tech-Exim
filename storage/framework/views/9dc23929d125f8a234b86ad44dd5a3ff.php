@@ -1,10 +1,8 @@
-@extends('layouts.app')
+<?php $__env->startSection('title', 'Products'); ?>
 
-@section('title', 'Products')
+<?php $__env->startSection('content'); ?>
 
-@section('content')
-
-@include('partials.header')
+<?php echo $__env->make('partials.header', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 
 <div class="custom-container flex-1 flex flex-col mx-auto p-4 py-7 md:px-6 lg:p-8 xl:p-10">
 <!-- Header -->
@@ -15,7 +13,7 @@
         Products
     </h1>
     <a
-            href="{{ route('admin.products.create') }}"
+            href="<?php echo e(route('admin.products.create')); ?>"
             class="sm:hidden btn-primary px-4 py-2 rounded-lg whitespace-nowrap text-center"
         >
             Add Product
@@ -25,14 +23,14 @@
 
         <!-- Search Form -->
         <form
-            action="{{ route('admin.products.index') }}"
+            action="<?php echo e(route('admin.products.index')); ?>"
             method="GET"
             class="flex items-center w-full pr-1.5 md:w-[320px] rounded-lg overflow-hidden border border-border bg-bg-body"
         >
             <input
                 type="text"
                 name="search"
-                value="{{ request('search') }}"
+                value="<?php echo e(request('search')); ?>"
                 placeholder="Search products..."
                 class="w-full bg-transparent px-4 py-1.5 outline-none text-text-body"
             >
@@ -60,7 +58,7 @@
 
         <!-- Add Product -->
         <a
-            href="{{ route('admin.products.create') }}"
+            href="<?php echo e(route('admin.products.create')); ?>"
             class="hidden sm:block btn-primary px-4 py-2 rounded-lg whitespace-nowrap text-center"
         >
             Add Product
@@ -71,7 +69,7 @@
 </div>
 
 <!-- Search Result -->
-@if(request('search'))
+<?php if(request('search')): ?>
 
     <div class="mb-5">
 
@@ -80,20 +78,20 @@
             Search result for:
 
             <span class="font-semibold">
-                "{{ request('search') }}"
+                "<?php echo e(request('search')); ?>"
             </span>
 
         </p>
 
     </div>
 
-@endif
+<?php endif; ?>
 
 <!-- Products Grid -->
 <div class="grid grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(230px,1fr))] gap-5">
 
-    @forelse($products as $product)
-        @php
+    <?php $__empty_1 = true; $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+        <?php
             $statusClasses = match ($product->status) {
                 'in_stock' => 'text-green-500',
                 'limited' => 'text-yellow-500',
@@ -105,7 +103,7 @@
                 'limited' => 'Limited',
                 default => 'Stock Out',
             };
-        @endphp
+        ?>
 
         <div class="rounded-xl border border-border bg-background overflow-hidden shadow-sm">
 
@@ -113,25 +111,25 @@
             <!-- <div class="aspect-square relative bg-bg-body w-full p-4 max-h-56"> -->
 
                 <img
-                    src="{{ $product->image ? asset('storage/' . $product->image) : asset('images/trophy-small.jpeg') }}"
+                    src="<?php echo e($product->image ? asset('storage/' . $product->image) : asset('images/trophy-small.jpeg')); ?>"
                     class="rounded-lg"
-                    alt="{{ $product->name }}"
+                    alt="<?php echo e($product->name); ?>"
                 >
 
 
-                @if($product->is_top_product)
+                <?php if($product->is_top_product): ?>
 
                         <span class="absolute top-2.5 right-2.5 text-xs px-2 py-1 rounded bg-yellow-500 text-white shrink-0">
                             Top
                         </span>
 
-                    @endif
+                    <?php endif; ?>
 
-                @if($product->is_new_arrival)
+                <?php if($product->is_new_arrival): ?>
                     <span class="absolute top-2.5 left-2.5 text-xs px-2 py-1 rounded bg-blue-500 text-white shrink-0">
                         New
                     </span>
-                @endif
+                <?php endif; ?>
             <!-- </div> -->
 
             <!-- Product Info -->
@@ -140,18 +138,21 @@
                 <div class="flex items-start justify-between gap-2">
 
                     <h6 class="font-semibold line-clamp-2">
-                        {{ $product->name }}
+                        <?php echo e($product->name); ?>
+
                     </h6>
                 </div>
                 <!-- Status -->
                 <div class="flex justify-between">
                     <p class="text-sm text-text-body mt-1">
-                    {{ $product->category?->name }}
+                    <?php echo e($product->category?->name); ?>
+
                 </p>
                     <span
-                        class="text-sm rounded {{ $statusClasses }}"
+                        class="text-sm rounded <?php echo e($statusClasses); ?>"
                     >
-                        {{ $statusLabel }}
+                        <?php echo e($statusLabel); ?>
+
 
                     </span>
                 </div>
@@ -160,26 +161,26 @@
                 <div class="flex flex-wrap gap-2 mt-3">
 
                     <a
-                        href="{{ route('admin.products.show', $product) }}"
+                        href="<?php echo e(route('admin.products.show', $product)); ?>"
                         class="px-3 py-1 rounded bg-slate-700 text-white text-sm"
                     >
                         View
                     </a>
 
                     <a
-                        href="{{ route('admin.products.edit', $product) }}"
+                        href="<?php echo e(route('admin.products.edit', $product)); ?>"
                         class="px-3 py-1 rounded bg-blue-500 text-white text-sm"
                     >
                         Edit
                     </a>
 
                     <form
-                        action="{{ route('admin.products.destroy', $product) }}"
+                        action="<?php echo e(route('admin.products.destroy', $product)); ?>"
                         method="POST"
                     >
 
-                        @csrf
-                        @method('DELETE')
+                        <?php echo csrf_field(); ?>
+                        <?php echo method_field('DELETE'); ?>
 
                         <button
                             type="submit"
@@ -197,7 +198,7 @@
 
         </div>
 
-    @empty
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
 
         <div class="col-span-full text-center py-14">
 
@@ -205,26 +206,29 @@
                 No products found
             </h3>
 
-            @if(request('search'))
+            <?php if(request('search')): ?>
 
                 <p class="text-text-body mt-2">
                     Try searching with another keyword.
                 </p>
 
-            @endif
+            <?php endif; ?>
 
         </div>
 
-    @endforelse
+    <?php endif; ?>
 
 </div>
 
 <!-- Pagination -->
 <div class="mt-8">
 
-    {{ $products->withQueryString()->links() }}
+    <?php echo e($products->withQueryString()->links()); ?>
+
 
 </div>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH /data/projects/personal-projects/trophy-app/trophy-app-web/resources/views/admin/products/index.blade.php ENDPATH**/ ?>
