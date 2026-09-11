@@ -13,6 +13,7 @@ class AppSetting extends Model
 
     protected $fillable = [
         'whatsapp_phone',
+        'navbar_phone',
         'facebook_page_url',
         'app_download_url',
     ];
@@ -22,13 +23,29 @@ class AppSetting extends Model
         return static::firstOrCreate(['id' => 1]);
     }
 
-    public function normalizedWhatsAppPhone(): ?string
+    public function navbarPhoneHref(): ?string
     {
-        if (! $this->whatsapp_phone) {
+        $phone = $this->normalizedPhone($this->navbar_phone);
+
+        if (! $phone) {
             return null;
         }
 
-        $phone = preg_replace('/\D+/', '', $this->whatsapp_phone);
+        return 'tel:+'.$phone;
+    }
+
+    public function normalizedWhatsAppPhone(): ?string
+    {
+        return $this->normalizedPhone($this->whatsapp_phone);
+    }
+
+    private function normalizedPhone(?string $value): ?string
+    {
+        if (! $value) {
+            return null;
+        }
+
+        $phone = preg_replace('/\D+/', '', $value);
 
         if (! $phone) {
             return null;

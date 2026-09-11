@@ -48,6 +48,11 @@ class SettingController extends Controller
                 'string',
                 'max:30',
             ],
+            'navbar_phone' => [
+                'nullable',
+                'string',
+                'max:30',
+            ],
             'facebook_page_url' => [
                 'nullable',
                 'url',

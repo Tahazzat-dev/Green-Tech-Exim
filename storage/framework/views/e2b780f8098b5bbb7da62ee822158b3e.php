@@ -42,13 +42,13 @@
 
 <div class="flex items-center justify-center w-full min-h-screen h-full p-4 mx-auto" >
     <div class="w-full max-w-[500px] shadow-lg bg-background rounded-2xl p-4 md:p-5 lg:py-8 xl:py-10" >
-        <?php if($errors->has('phone') && str_contains($errors->first('phone'), 'admin login')): ?>
+        <!-- <?php if($errors->has('phone') && str_contains($errors->first('phone'), 'admin login')): ?>
             <div class="mb-5 rounded-lg border border-secondary/20 bg-bg-body px-4 py-3 text-sm">
                 <a href="<?php echo e(route('admin.signin')); ?>" class="underline link-text font-semibold">
                     Go to admin login
                 </a>
             </div>
-        <?php endif; ?>
+        <?php endif; ?> -->
 
         <div class="mb-8">
             <h4 class="text-base">Welcome Back</h4>
