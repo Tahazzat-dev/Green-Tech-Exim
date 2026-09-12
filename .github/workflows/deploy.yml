@@ -105,7 +105,7 @@ jobs:
             echo "LOG_DEPRECATIONS_CHANNEL=${LOG_DEPRECATIONS_CHANNEL}"
             echo "LOG_LEVEL=${LOG_LEVEL}"
             echo "DB_CONNECTION=${DB_CONNECTION}"
-            echo "DB_HOST=${DB_HOST}"
+            echo "DB_HOST=${DB_HOST:-127.0.0.1}"
             echo "DB_PORT=${DB_PORT}"
             echo "DB_DATABASE=${DB_DATABASE}"
             echo "DB_USERNAME=${DB_USERNAME}"
