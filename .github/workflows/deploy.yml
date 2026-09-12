@@ -136,7 +136,7 @@ jobs:
           SSH_PORT: ${{ secrets.SSH_PORT }}
         run: |
           mkdir -p ~/.ssh
-          ssh-keyscan -p "${SSH_PORT:-22}" "$SSH_HOST" >> ~/.ssh/known_hosts
+          ssh-keyscan -p "${SSH_PORT:-2036}" "$SSH_HOST" >> ~/.ssh/known_hosts
 
       - name: Upload application
         env:
@@ -145,8 +145,7 @@ jobs:
           SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
           DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
         run: |
-          rsync -az --delete \
-            -e "ssh -p ${SSH_PORT:-22} -o StrictHostKeyChecking=yes" \
+          tar \
             --exclude='.git' \
             --exclude='.github' \
             --exclude='.env.example' \
@@ -158,7 +157,19 @@ jobs:
             --exclude='storage/framework/cache' \
             --exclude='storage/framework/sessions' \
             --exclude='storage/framework/views' \
-            ./ "${SSH_USERNAME}@${SSH_HOST}:${DEPLOY_PATH}/"
+            -czf /tmp/green-tech-web.tar.gz .
+
+          ssh -p "${SSH_PORT:-2036}" -o StrictHostKeyChecking=yes \
+            "${SSH_USERNAME}@${SSH_HOST}" \
+            "mkdir -p '${DEPLOY_PATH}'"
+
+          scp -P "${SSH_PORT:-2036}" -o StrictHostKeyChecking=yes \
+            /tmp/green-tech-web.tar.gz \
+            "${SSH_USERNAME}@${SSH_HOST}:${DEPLOY_PATH}/.deploy-upload.tar.gz"
+
+          ssh -p "${SSH_PORT:-2036}" -o StrictHostKeyChecking=yes \
+            "${SSH_USERNAME}@${SSH_HOST}" \
+            "tar -xzf '${DEPLOY_PATH}/.deploy-upload.tar.gz' -C '${DEPLOY_PATH}' && rm -f '${DEPLOY_PATH}/.deploy-upload.tar.gz'"
 
       - name: Run remote Laravel commands
         env:
@@ -167,7 +178,7 @@ jobs:
           SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
           DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
         run: |
-          ssh -p "${SSH_PORT:-22}" "${SSH_USERNAME}@${SSH_HOST}" "bash -s" <<EOF
+          ssh -p "${SSH_PORT:-2036}" "${SSH_USERNAME}@${SSH_HOST}" "bash -s" <<EOF
           set -e
           cd "${DEPLOY_PATH}"
           mkdir -p storage/logs storage/framework/cache storage/framework/sessions storage/framework/views storage/app/public bootstrap/cache
