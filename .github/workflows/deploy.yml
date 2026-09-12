@@ -44,7 +44,7 @@ jobs:
       MAIL_MAILER: log
       MAIL_FROM_NAME: "Green Tech Exim"
       VITE_APP_NAME: "Green Tech Exim"
-      PHP_BIN: /opt/alt/php83/usr/bin/php
+      PHP_BIN: /opt/cpanel/ea-php83/root/usr/bin/php
 
     steps:
       - name: Checkout
@@ -181,10 +181,26 @@ jobs:
           ssh -p "${SSH_PORT:-2036}" "${SSH_USERNAME}@${SSH_HOST}" "bash -s" <<EOF
           set -e
           cd "${DEPLOY_PATH}"
-          mkdir -p storage/logs storage/framework/cache storage/framework/sessions storage/framework/views storage/app/public bootstrap/cache
-          "${PHP_BIN}" -d extension=dom.so -d extension=mbstring.so artisan storage:link --force
-          "${PHP_BIN}" -d extension=dom.so -d extension=mbstring.so artisan migrate --force
-          "${PHP_BIN}" -d extension=dom.so -d extension=mbstring.so artisan config:cache
-          "${PHP_BIN}" -d extension=dom.so -d extension=mbstring.so artisan route:cache
-          "${PHP_BIN}" -d extension=dom.so -d extension=mbstring.so artisan view:cache
+          PHP_BIN="${PHP_BIN}"
+          for candidate in \\
+            /opt/cpanel/ea-php83/root/usr/bin/php \\
+            /usr/local/bin/ea-php83 \\
+            /opt/alt/php83/usr/bin/php \\
+            php
+          do
+            if [ -x "\$candidate" ] || command -v "\$candidate" >/dev/null 2>&1; then
+              PHP_BIN="\$candidate"
+              break
+            fi
+          done
+          mkdir -p storage/logs storage/framework/cache storage/framework/sessions storage/framework/views storage/app/public bootstrap/cache public_html
+          if [ -d public ] && [ "\$(cd public && pwd)" != "\$(cd public_html && pwd)" ]; then
+            cp -a public/. public_html/
+          fi
+          "\$PHP_BIN" artisan storage:link --force
+          ln -sfn ../storage/app/public public_html/storage
+          "\$PHP_BIN" artisan migrate --force
+          "\$PHP_BIN" artisan config:cache
+          "\$PHP_BIN" artisan route:cache
+          "\$PHP_BIN" artisan view:cache
           EOF
