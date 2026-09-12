@@ -59,7 +59,8 @@ jobs:
             --exclude='storage/framework/cache/*' \
             --exclude='storage/framework/sessions/*' \
             --exclude='storage/framework/views/*' \
-            -czf green-tech-web.tar.gz .
+            -czf /tmp/green-tech-web.tar.gz .
+          mv /tmp/green-tech-web.tar.gz .
 
       - name: Upload Deployment Archive
         uses: actions/upload-artifact@v4
