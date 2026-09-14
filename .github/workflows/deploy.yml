@@ -44,7 +44,7 @@ jobs:
       MAIL_MAILER: log
       MAIL_FROM_NAME: "Green Tech Exim"
       VITE_APP_NAME: "Green Tech Exim"
-      PHP_BIN: /opt/cpanel/ea-php83/root/usr/bin/php
+      PHP_BIN: php83
 
     steps:
       - name: Checkout
@@ -183,16 +183,20 @@ jobs:
           cd "${DEPLOY_PATH}"
           PHP_BIN="${PHP_BIN}"
           for candidate in \\
+            php83 \\
             /opt/cpanel/ea-php83/root/usr/bin/php \\
             /usr/local/bin/ea-php83 \\
-            /opt/alt/php83/usr/bin/php \\
-            php
+            /opt/alt/php83/usr/bin/php
           do
             if [ -x "\$candidate" ] || command -v "\$candidate" >/dev/null 2>&1; then
               PHP_BIN="\$candidate"
               break
             fi
           done
+          if ! command -v "\$PHP_BIN" >/dev/null 2>&1 && [ ! -x "\$PHP_BIN" ]; then
+            echo "PHP 8.3 binary not found. Expected php83 or a PHP 8.3 server binary."
+            exit 1
+          fi
           mkdir -p storage/logs storage/framework/cache storage/framework/sessions storage/framework/views storage/app/public bootstrap/cache public_html
           if [ -d public ] && [ "\$(cd public && pwd)" != "\$(cd public_html && pwd)" ]; then
             cp -a public/. public_html/
