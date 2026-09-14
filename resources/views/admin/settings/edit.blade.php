@@ -170,6 +170,82 @@
     </div>
 
     <form
+        action="{{ route('admin.settings.password.update') }}"
+        method="POST"
+        class="bg-background border border-border rounded-xl p-5 space-y-5"
+    >
+        @csrf
+        @method('PUT')
+
+        <div>
+            <h2 class="font-semibold">
+                Update Admin Password
+            </h2>
+            <p class="mt-2 text-sm">
+                Change the password used for your admin login.
+            </p>
+        </div>
+
+        @if(session('password_success'))
+            <div class="rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
+                {{ session('password_success') }}
+            </div>
+        @endif
+
+        <div>
+            <label for="current_pin" class="block mb-2">
+                Current Password
+            </label>
+            <input
+                id="current_pin"
+                type="password"
+                name="current_pin"
+                autocomplete="current-password"
+                class="w-full rounded-lg border border-border bg-bg-body px-4 py-3"
+            >
+            @error('current_pin')
+                <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div>
+            <label for="pin" class="block mb-2">
+                New Password
+            </label>
+            <input
+                id="pin"
+                type="password"
+                name="pin"
+                autocomplete="new-password"
+                class="w-full rounded-lg border border-border bg-bg-body px-4 py-3"
+            >
+            @error('pin')
+                <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div>
+            <label for="pin_confirmation" class="block mb-2">
+                Confirm New Password
+            </label>
+            <input
+                id="pin_confirmation"
+                type="password"
+                name="pin_confirmation"
+                autocomplete="new-password"
+                class="w-full rounded-lg border border-border bg-bg-body px-4 py-3"
+            >
+        </div>
+
+        <button
+            type="submit"
+            class="btn-primary px-6 py-3 rounded-lg"
+        >
+            Update Password
+        </button>
+    </form>
+
+    <form
         action="{{ route('admin.settings.update') }}"
         method="POST"
         class="bg-background border border-border rounded-xl p-5 space-y-5"

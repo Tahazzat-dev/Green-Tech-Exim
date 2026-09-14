@@ -45,6 +45,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('/contacts', ContactController::class);
         Route::get('/settings', [SettingController::class, 'edit'])->name('settings.edit');
         Route::put('/settings', [SettingController::class, 'update'])->name('settings.update');
+        Route::put('/settings/password', [SettingController::class, 'updatePassword'])->name('settings.password.update');
         Route::put('/settings/privacy-policy', [SettingController::class, 'updatePrivacyPolicy'])->name('settings.privacy-policy.update');
         Route::post('/settings/two-factor/enable', [SettingController::class, 'enableTwoFactor'])->name('settings.two-factor.enable');
         Route::post('/settings/two-factor/confirm', [SettingController::class, 'confirmTwoFactor'])->name('settings.two-factor.confirm');

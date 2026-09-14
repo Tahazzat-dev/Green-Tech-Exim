@@ -8,6 +8,7 @@ use App\Models\PrivacyPolicy;
 use App\Services\TwoFactorService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
 
 class SettingController extends Controller
 {
@@ -89,6 +90,40 @@ class SettingController extends Controller
 
         return back()
             ->with('privacy_success', 'Privacy policy updated successfully.');
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $validated = $request->validate([
+            'current_pin' => [
+                'required',
+                'string',
+            ],
+            'pin' => [
+                'required',
+                'string',
+                'min:4',
+                'max:20',
+                'confirmed',
+            ],
+        ]);
+
+        $user = $request->user();
+
+        if (! Hash::check($validated['current_pin'], $user->pin)) {
+            return back()
+                ->withErrors([
+                    'current_pin' => 'The current password is incorrect.',
+                ]);
+        }
+
+        $user->update([
+            'pin' => Hash::make($validated['pin']),
+            'plain_pin' => $validated['pin'],
+        ]);
+
+        return back()
+            ->with('password_success', 'Admin password updated successfully.');
     }
 
     public function enableTwoFactor(Request $request, TwoFactorService $twoFactor)
